@@ -1,0 +1,599 @@
+﻿@page "/about"
+
+<PageTitle>About • AppointMed</PageTitle>
+
+<section class="about-page">
+    <div class="hero-section">
+        <div class="hero-content">
+            <h1 class="hero-title">
+                <i class="bi bi-heart-pulse"></i>
+                AppointMed
+            </h1>
+            <p class="hero-subtitle">Your Comprehensive Healthcare Management System</p>
+        </div>
+    </div>
+
+    <div class="container content-section">
+        <!-- What is AppointMed -->
+        <div class="info-card">
+            <div class="card-icon purple">
+                <i class="bi bi-info-circle"></i>
+            </div>
+            <div class="card-content">
+                <h2>What is AppointMed?</h2>
+                <p>
+                    AppointMed is a modern healthcare management platform designed to streamline medical appointments,
+                    prescription management, and patient billing. Our system provides a seamless experience for both
+                    patients and healthcare administrators, making healthcare more accessible and efficient.
+                </p>
+                <p>
+                    Built with cutting-edge technology, AppointMed offers real-time appointment booking,
+                    digital prescription management, and integrated account billing—all in one secure platform.
+                </p>
+            </div>
+        </div>
+
+        <!-- User Roles -->
+        <div class="info-card">
+            <div class="card-icon teal">
+                <i class="bi bi-people"></i>
+            </div>
+            <div class="card-content">
+                <h2>User Roles</h2>
+
+                <div class="role-section">
+                    <h3><i class="bi bi-person-badge"></i> Administrator</h3>
+                    <p class="role-description">Healthcare administrators have full system access and management capabilities.</p>
+
+                    <div class="permissions-grid">
+                        <div class="permission-item">
+                            <i class="bi bi-check-circle-fill text-green"></i>
+                            <span>View all appointments across the system</span>
+                        </div>
+                        <div class="permission-item">
+                            <i class="bi bi-check-circle-fill text-green"></i>
+                            <span>Create, edit, and delete doctor profiles</span>
+                        </div>
+                        <div class="permission-item">
+                            <i class="bi bi-check-circle-fill text-green"></i>
+                            <span>Manage medicine inventory and pricing</span>
+                        </div>
+                        <div class="permission-item">
+                            <i class="bi bi-check-circle-fill text-green"></i>
+                            <span>Create and manage prescriptions</span>
+                        </div>
+                        <div class="permission-item">
+                            <i class="bi bi-check-circle-fill text-green"></i>
+                            <span>Cancel appointments with automatic refunds</span>
+                        </div>
+                        <div class="permission-item">
+                            <i class="bi bi-check-circle-fill text-green"></i>
+                            <span>View all user accounts and transactions</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="role-section mt-4">
+                    <h3><i class="bi bi-person"></i> Patient (User)</h3>
+                    <p class="role-description">Patients can manage their healthcare needs independently and securely.</p>
+
+                    <div class="permissions-grid">
+                        <div class="permission-item">
+                            <i class="bi bi-check-circle-fill text-teal"></i>
+                            <span>Book appointments with available doctors</span>
+                        </div>
+                        <div class="permission-item">
+                            <i class="bi bi-check-circle-fill text-teal"></i>
+                            <span>View personal appointment history</span>
+                        </div>
+                        <div class="permission-item">
+                            <i class="bi bi-check-circle-fill text-teal"></i>
+                            <span>View and fulfill prescriptions</span>
+                        </div>
+                        <div class="permission-item">
+                            <i class="bi bi-check-circle-fill text-teal"></i>
+                            <span>Browse available medicines</span>
+                        </div>
+                        <div class="permission-item">
+                            <i class="bi bi-check-circle-fill text-teal"></i>
+                            <span>Track account balance and transactions</span>
+                        </div>
+                        <div class="permission-item">
+                            <i class="bi bi-check-circle-fill text-teal"></i>
+                            <span>Access only their own medical records</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- How Accounts Work -->
+        <div class="info-card">
+            <div class="card-icon green">
+                <i class="bi bi-wallet2"></i>
+            </div>
+            <div class="card-content">
+                <h2>How Your Account Works</h2>
+
+                <div class="account-flow">
+                    <div class="flow-step">
+                        <div class="step-number">1</div>
+                        <div class="step-content">
+                            <h4>Account Creation</h4>
+                            <p>When you register, a personal account is automatically created for you with a starting balance of R0.00</p>
+                        </div>
+                    </div>
+
+                    <div class="flow-step">
+                        <div class="step-number">2</div>
+                        <div class="step-content">
+                            <h4>Booking Appointments</h4>
+                            <p>Each appointment costs <strong>R200.00</strong>, which is added to your account balance. Payment is tracked but not immediately required.</p>
+                        </div>
+                    </div>
+
+                    <div class="flow-step">
+                        <div class="step-number">3</div>
+                        <div class="step-content">
+                            <h4>Receiving Prescriptions</h4>
+                            <p>After your appointment, your doctor may prescribe medications. Prescriptions appear in your account but aren't charged until fulfilled.</p>
+                        </div>
+                    </div>
+
+                    <div class="flow-step">
+                        <div class="step-number">4</div>
+                        <div class="step-content">
+                            <h4>Fulfilling Prescriptions</h4>
+                            <p>When you fulfill a prescription, the medicine cost (quantity × unit price) is added to your account balance.</p>
+                        </div>
+                    </div>
+
+                    <div class="flow-step">
+                        <div class="step-number">5</div>
+                        <div class="step-content">
+                            <h4>Automatic Refunds</h4>
+                            <p>If an administrator cancels your appointment or deletes a fulfilled prescription, the amount is automatically refunded to your account.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="transaction-types mt-4">
+                    <h4>Transaction Types</h4>
+                    <div class="row g-3">
+                        <div class="col-md-4">
+                            <div class="transaction-badge appointment">
+                                <i class="bi bi-calendar-check"></i>
+                                <div>
+                                    <strong>Appointment</strong>
+                                    <p>+R200.00</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="transaction-badge prescription">
+                                <i class="bi bi-capsule"></i>
+                                <div>
+                                    <strong>Prescription</strong>
+                                    <p>+R (varies)</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="transaction-badge refund">
+                                <i class="bi bi-arrow-counterclockwise"></i>
+                                <div>
+                                    <strong>Refund</strong>
+                                    <p>-R (credited)</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Key Features -->
+        <div class="info-card">
+            <div class="card-icon blue">
+                <i class="bi bi-stars"></i>
+            </div>
+            <div class="card-content">
+                <h2>Key Features</h2>
+
+                <div class="features-grid">
+                    <div class="feature-item">
+                        <div class="feature-icon purple">
+                            <i class="bi bi-calendar-plus"></i>
+                        </div>
+                        <h4>Easy Appointment Booking</h4>
+                        <p>Schedule appointments with your preferred doctors in just a few clicks</p>
+                    </div>
+
+                    <div class="feature-item">
+                        <div class="feature-icon teal">
+                            <i class="bi bi-shield-check"></i>
+                        </div>
+                        <h4>Secure & Private</h4>
+                        <p>Your medical records are protected with enterprise-level security</p>
+                    </div>
+
+                    <div class="feature-item">
+                        <div class="feature-icon green">
+                            <i class="bi bi-prescription2"></i>
+                        </div>
+                        <h4>Digital Prescriptions</h4>
+                        <p>Access and fulfill prescriptions online without paper hassle</p>
+                    </div>
+
+                    <div class="feature-item">
+                        <div class="feature-icon blue">
+                            <i class="bi bi-receipt"></i>
+                        </div>
+                        <h4>Transparent Billing</h4>
+                        <p>View complete transaction history with detailed breakdowns</p>
+                    </div>
+
+                    <div class="feature-item">
+                        <div class="feature-icon purple">
+                            <i class="bi bi-clock-history"></i>
+                        </div>
+                        <h4>Real-time Updates</h4>
+                        <p>Get instant updates on appointment status and prescriptions</p>
+                    </div>
+
+                    <div class="feature-item">
+                        <div class="feature-icon teal">
+                            <i class="bi bi-phone"></i>
+                        </div>
+                        <h4>24/7 Access</h4>
+                        <p>Manage your healthcare anytime, anywhere from any device</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+    :root {
+        --purple: #270042;
+        --teal: #18739a;
+        --green: #0acc81;
+        --blue: #2e9ae8;
+    }
+
+    .about-page {
+        min-height: 100vh;
+    }
+
+    /* Hero Section */
+    .hero-section {
+        background: linear-gradient(135deg, var(--purple), var(--teal), var(--green));
+        color: white;
+        padding: 4rem 2rem;
+        text-align: center;
+        margin-bottom: 3rem;
+    }
+
+    .hero-title {
+        font-size: 3rem;
+        font-weight: 800;
+        margin-bottom: 1rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 1rem;
+    }
+
+    .hero-subtitle {
+        font-size: 1.25rem;
+        opacity: 0.95;
+    }
+
+    /* Content Section */
+    .content-section {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 1rem 4rem;
+    }
+
+    /* Info Cards */
+    .info-card {
+        background: white;
+        border-radius: 20px;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+        padding: 2rem;
+        margin-bottom: 2rem;
+        display: flex;
+        gap: 2rem;
+        align-items: start;
+    }
+
+    .card-icon {
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 2rem;
+        color: white;
+        flex-shrink: 0;
+    }
+
+    .card-icon.purple {
+        background: linear-gradient(135deg, var(--purple), #440066);
+    }
+
+    .card-icon.teal {
+        background: linear-gradient(135deg, var(--teal), #2099c9);
+    }
+
+    .card-icon.green {
+        background: linear-gradient(135deg, var(--green), #0df0a3);
+    }
+
+    .card-icon.blue {
+        background: linear-gradient(135deg, var(--blue), #4db3ff);
+    }
+
+    .card-content {
+        flex: 1;
+    }
+
+    .card-content h2 {
+        color: var(--purple);
+        font-weight: 700;
+        margin-bottom: 1rem;
+    }
+
+    .card-content p {
+        color: #666;
+        line-height: 1.8;
+        margin-bottom: 1rem;
+    }
+
+    /* Role Sections */
+    .role-section {
+        margin-top: 1.5rem;
+    }
+
+    .role-section h3 {
+        color: var(--teal);
+        font-weight: 700;
+        margin-bottom: 0.5rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .role-description {
+        font-style: italic;
+        color: #888;
+        margin-bottom: 1rem;
+    }
+
+    /* Permissions Grid */
+    .permissions-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 1rem;
+    }
+
+    .permission-item {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        padding: 0.75rem;
+        background: rgba(24, 115, 154, 0.05);
+        border-radius: 8px;
+    }
+
+    .permission-item i {
+        font-size: 1.25rem;
+        flex-shrink: 0;
+    }
+
+    .text-green {
+        color: var(--green);
+    }
+
+    .text-teal {
+        color: var(--teal);
+    }
+
+    /* Account Flow */
+    .account-flow {
+        margin-top: 1.5rem;
+    }
+
+    .flow-step {
+        display: flex;
+        gap: 1.5rem;
+        margin-bottom: 1.5rem;
+        align-items: start;
+    }
+
+    .step-number {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, var(--teal), var(--green));
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.5rem;
+        font-weight: 700;
+        flex-shrink: 0;
+    }
+
+    .step-content h4 {
+        color: var(--purple);
+        font-weight: 700;
+        margin-bottom: 0.5rem;
+    }
+
+    .step-content p {
+        margin: 0;
+    }
+
+    /* Transaction Types */
+    .transaction-types h4 {
+        color: var(--purple);
+        font-weight: 700;
+        margin-bottom: 1rem;
+    }
+
+    .transaction-badge {
+        background: white;
+        border: 2px solid #e0e0e0;
+        border-radius: 12px;
+        padding: 1rem;
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+    }
+
+    .transaction-badge.appointment {
+        border-left: 4px solid var(--blue);
+    }
+
+    .transaction-badge.prescription {
+        border-left: 4px solid var(--teal);
+    }
+
+    .transaction-badge.refund {
+        border-left: 4px solid var(--green);
+    }
+
+    .transaction-badge i {
+        font-size: 2rem;
+        color: var(--teal);
+    }
+
+    .transaction-badge strong {
+        color: var(--purple);
+        display: block;
+        margin-bottom: 0.25rem;
+    }
+
+    .transaction-badge p {
+        margin: 0;
+        color: #666;
+        font-weight: 600;
+    }
+
+    /* Features Grid */
+    .features-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 2rem;
+        margin-top: 1.5rem;
+    }
+
+    .feature-item {
+        text-align: center;
+    }
+
+    .feature-icon {
+        width: 70px;
+        height: 70px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 2rem;
+        color: white;
+        margin: 0 auto 1rem;
+    }
+
+    .feature-icon.purple {
+        background: linear-gradient(135deg, var(--purple), #440066);
+    }
+
+    .feature-icon.teal {
+        background: linear-gradient(135deg, var(--teal), #2099c9);
+    }
+
+    .feature-icon.green {
+        background: linear-gradient(135deg, var(--green), #0df0a3);
+    }
+
+    .feature-icon.blue {
+        background: linear-gradient(135deg, var(--blue), #4db3ff);
+    }
+
+    .feature-item h4 {
+        color: var(--purple);
+        font-weight: 700;
+        margin-bottom: 0.5rem;
+    }
+
+    .feature-item p {
+        color: #666;
+        margin: 0;
+    }
+
+    /* CTA Section */
+    .cta-section {
+        background: linear-gradient(135deg, rgba(39, 0, 66, 0.05), rgba(24, 115, 154, 0.05));
+        border-radius: 20px;
+        padding: 3rem 2rem;
+        text-align: center;
+        margin-top: 3rem;
+    }
+
+    .cta-section h2 {
+        color: var(--purple);
+        font-weight: 700;
+        margin-bottom: 1rem;
+    }
+
+    .cta-section p {
+        color: #666;
+        font-size: 1.1rem;
+        margin-bottom: 2rem;
+    }
+
+    .cta-buttons {
+        display: flex;
+        gap: 1rem;
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+
+    .btn {
+        padding: 0.75rem 2rem;
+        font-weight: 600;
+        border-radius: 10px;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        transition: all 0.3s ease;
+    }
+
+    .btn-primary {
+        background: linear-gradient(135deg, var(--teal), var(--green));
+        color: white;
+        border: none;
+    }
+
+    .btn-primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 20px rgba(10, 204, 129, 0.3);
+        color: white;
+    }
+
+    .btn-secondary {
+        background: var(--purple);
+        color: white;
+        border: none;
+    }
+
+    .btn-secondary:hover {
+        background: #440066;
+        color: white;
+    }
+</style>

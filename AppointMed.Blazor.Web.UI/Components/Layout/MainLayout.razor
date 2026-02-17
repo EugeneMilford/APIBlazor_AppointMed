@@ -1,0 +1,244 @@
+﻿@inherits LayoutComponentBase
+
+<div class="page-wrapper">
+    <div class="sidebar-wrapper">
+        <NavMenu />
+    </div>
+    <div class="content-wrapper">
+        <header class="top-bar">
+            <div class="top-bar-content">
+                <h2 class="page-title">Dashboard</h2>
+                <AuthorizeView Context="auth">
+                    <Authorized>
+                        <div class="user-actions">
+                            <span class="welcome-text">Welcome, <strong>@auth.User.Identity?.Name</strong>!</span>
+                            <a href="/users/logout" class="btn btn-logout">
+                                <i class="bi bi-box-arrow-left"></i> Logout
+                            </a>
+                        </div>
+                    </Authorized>
+                    <NotAuthorized>
+                        <div class="auth-actions">
+                            <a href="/users/login" class="btn btn-login">
+                                <i class="bi bi-box-arrow-in-right"></i> Login
+                            </a>
+                            <a href="/users/register" class="btn btn-register">
+                                <i class="bi bi-person-plus"></i> Register
+                            </a>
+                        </div>
+                    </NotAuthorized>
+                </AuthorizeView>
+            </div>
+        </header>
+        <main class="main-content">
+            @Body
+        </main>
+    </div>
+</div>
+
+<div id="blazor-error-ui">
+    An unhandled error has occurred.
+    <a href="" class="reload">Reload</a>
+    <a class="dismiss">🗙</a>
+</div>
+
+<style>
+    :root {
+        --green: #0acc81;
+        --purple: #270042;
+        --teal: #18739a;
+        --red: #c90136;
+        --blue: #2e9ae8;
+        --intense-blue: #282fe2;
+    }
+
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    body {
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+        background: #f8f9fa;
+    }
+
+    .page-wrapper {
+        display: flex;
+        min-height: 100vh;
+    }
+
+    .sidebar-wrapper {
+        width: 280px;
+        position: fixed;
+        left: 0;
+        top: 0;
+        height: 100vh;
+        z-index: 1000;
+    }
+
+    .content-wrapper {
+        flex: 1;
+        margin-left: 280px;
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+    }
+
+    .top-bar {
+        background: white;
+        border-bottom: 2px solid rgba(39, 0, 66, 0.08);
+        padding: 1.25rem 2rem;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        position: sticky;
+        top: 0;
+        z-index: 100;
+    }
+
+    .top-bar-content {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        max-width: 1400px;
+        margin: 0 auto;
+    }
+
+    .page-title {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: var(--purple);
+        margin: 0;
+    }
+
+    .welcome-text {
+        font-size: 0.95rem;
+        color: #555;
+        margin-right: 1rem;
+    }
+
+    .welcome-text strong {
+        color: var(--purple);
+        font-weight: 700;
+    }
+
+    .user-actions, .auth-actions {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+    }
+
+    .btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.6rem 1.25rem;
+        border-radius: 8px;
+        font-weight: 600;
+        text-decoration: none;
+        border: none;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-size: 0.9rem;
+    }
+
+    .btn-logout {
+        background: linear-gradient(135deg, #c90136, #ff4757);
+        color: white;
+        box-shadow: 0 4px 12px rgba(201, 1, 54, 0.2);
+    }
+
+    .btn-logout:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 16px rgba(201, 1, 54, 0.3);
+    }
+
+    .btn-login {
+        background: linear-gradient(135deg, var(--intense-blue), var(--blue));
+        color: white;
+        box-shadow: 0 4px 12px rgba(40, 47, 226, 0.2);
+    }
+
+    .btn-login:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 16px rgba(40, 47, 226, 0.3);
+    }
+
+    .btn-register {
+        background: linear-gradient(135deg, var(--green), #2cba00);
+        color: var(--purple);
+        box-shadow: 0 4px 12px rgba(10, 204, 129, 0.2);
+    }
+
+    .btn-register:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 16px rgba(10, 204, 129, 0.3);
+    }
+
+    .main-content {
+        flex: 1;
+        padding: 2rem;
+        max-width: 1400px;
+        margin: 0 auto;
+        width: 100%;
+    }
+
+    #blazor-error-ui {
+        background: linear-gradient(135deg, #ff6b6b, #ee5a6f);
+        bottom: 0;
+        box-shadow: 0 -2px 20px rgba(0, 0, 0, 0.2);
+        display: none;
+        left: 0;
+        padding: 1rem 1.5rem;
+        position: fixed;
+        width: 100%;
+        z-index: 1100;
+        color: white;
+        font-weight: 600;
+    }
+
+    #blazor-error-ui .reload,
+    #blazor-error-ui .dismiss {
+        color: white;
+        text-decoration: underline;
+        margin-left: 1rem;
+        cursor: pointer;
+    }
+
+    #blazor-error-ui .reload:hover,
+    #blazor-error-ui .dismiss:hover {
+        text-decoration: none;
+    }
+
+    @@media (max-width: 767px) {
+        .sidebar-wrapper {
+            width: 100%;
+            position: relative;
+            height: auto;
+        }
+
+        .content-wrapper {
+            margin-left: 0;
+        }
+
+        .top-bar {
+            padding: 1rem 1.25rem;
+        }
+
+        .page-title {
+            font-size: 1.25rem;
+        }
+
+        .welcome-text {
+            display: none;
+        }
+
+        .main-content {
+            padding: 1.5rem 1.25rem;
+        }
+
+        .btn {
+            padding: 0.5rem 1rem;
+            font-size: 0.85rem;
+        }
+    }
+</style>

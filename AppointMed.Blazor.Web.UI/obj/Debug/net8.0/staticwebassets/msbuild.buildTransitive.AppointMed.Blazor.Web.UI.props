@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\buildMultiTargeting\AppointMed.Blazor.Web.UI.props" />
+</Project>

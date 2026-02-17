@@ -1,0 +1,671 @@
+﻿@page "/home"
+@using Microsoft.AspNetCore.Components.Authorization
+
+<PageTitle>Home • AppointMed</PageTitle>
+
+<div class="home-root">
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="hero-container">
+            <div class="hero-content">
+                <div class="hero-tag">
+                    <span class="tag-dot"></span>
+                    <span class="tag-text">Trusted Healthcare, Instant Booking</span>
+                </div>
+
+                <h1 class="hero-headline">Book appointments. See doctors. Stay healthy.</h1>
+
+                <p class="hero-text">
+                    AppointMed makes getting care fast and simple — search verified doctors, schedule in seconds,
+                    and manage your appointments in one secure place.
+                </p>
+
+                <div class="hero-cta">
+                    <a href="/doctors" class="btn btn-accent">
+                        <i class="bi bi-person-lines-fill"></i>
+                        <span>Find a Doctor</span>
+                    </a>
+                    <a href="/appointments/create" class="btn btn-book">
+                        <i class="bi bi-calendar-plus"></i>
+                        <span>Book Appointment</span>
+                    </a>
+                </div>
+            </div>
+
+            <div class="hero-stats">
+                <div class="stat-card stat-primary">
+                    <div class="stat-icon"><i class="bi bi-rocket-takeoff"></i></div>
+                    <div class="stat-info">
+                        <div class="stat-value">10k+</div>
+                        <div class="stat-title">Appointments Booked</div>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon"><i class="bi bi-people-fill"></i></div>
+                    <div class="stat-info">
+                        <div class="stat-value">2k+</div>
+                        <div class="stat-title">Verified Providers</div>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon"><i class="bi bi-clock-history"></i></div>
+                    <div class="stat-info">
+                        <div class="stat-value">24/7</div>
+                        <div class="stat-title">Online Scheduling</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about-section">
+        <div class="about-card">
+            <div class="about-grid">
+                <div class="about-content">
+                    <h2>What AppointMed Does</h2>
+                    <p class="lead-text">
+                        AppointMed streamlines how patients access care. Search specialties and book appointments — all from your phone or desktop. We prioritize
+                        safety, clarity, and convenience so care happens when you need it.
+                    </p>
+
+                    <ul class="features-list">
+                        <li><i class="bi bi-check-circle-fill"></i>Verified doctors and profiles</li>
+                        <li><i class="bi bi-check-circle-fill"></i>Real-time availability and reminders</li>
+                        <li><i class="bi bi-check-circle-fill"></i>Secure storage of appointments</li>
+                    </ul>
+                </div>
+
+                <div class="about-visual">
+                    <div class="experience-badge">
+                        <span class="years">8+</span>
+                        <span class="text">Years supporting patient care</span>
+                    </div>
+                    <div class="image-placeholder">
+                        <i class="bi bi-heart-pulse-fill"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section class="services-section">
+        <div class="section-header">
+            <h2>Our Services</h2>
+            <p>Tools to help you get the right care, at the right time.</p>
+        </div>
+
+        <div class="services-grid">
+            <div class="service-card">
+                <div class="service-icon bg-green">
+                    <i class="bi bi-calendar-check"></i>
+                </div>
+                <h5>Appointment Booking</h5>
+                <p>Quickly schedule in-person or telehealth visits with self-service booking and automated reminders.</p>
+            </div>
+
+            <div class="service-card">
+                <div class="service-icon bg-sage">
+                    <i class="bi bi-file-medical-fill"></i>
+                </div>
+                <h5>Records & Prescriptions</h5>
+                <p>Access appointment notes, manage prescriptions, and keep an up-to-date personal health timeline.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Key Features Row -->
+    <section class="features-section">
+        <div class="features-grid">
+            <div class="feature-item">
+                <i class="bi bi-shield-lock-fill feature-icon"></i>
+                <h6>HIPAA-Safe</h6>
+                <p>Privacy-first data protection for your information.</p>
+            </div>
+
+            <div class="feature-item">
+                <i class="bi bi-clock-fill feature-icon"></i>
+                <h6>Real-Time Availability</h6>
+                <p>See openings and confirm appointments instantly.</p>
+            </div>
+
+            <div class="feature-item">
+                <i class="bi bi-people-fill feature-icon"></i>
+                <h6>Verified Providers</h6>
+                <p>Profiles reviewed to help you choose confidently.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- User Greeting -->
+    <AuthorizeView>
+        <Authorized>
+            <section class="user-greeting-section">
+                <div class="user-greeting-card">
+                    <div class="greeting-content">
+                        <h3>Hi, @context.User.Identity?.Name!</h3>
+                        <p>View or manage your upcoming appointments</p>
+                    </div>
+                    <div class="greeting-actions">
+                        <a href="/appointments" class="btn btn-accent">
+                            <i class="bi bi-calendar-check"></i>
+                            <span>My Appointments</span>
+                        </a>
+                        <a href="/doctors" class="btn btn-outline">
+                            <i class="bi bi-people"></i>
+                            <span>Browse Doctors</span>
+                        </a>
+                    </div>
+                </div>
+            </section>
+        </Authorized>
+    </AuthorizeView>
+</div>
+
+<style>
+    :root {
+        --green: #0acc81;
+        --black: #000000;
+        --purple: #270042;
+        --teal: #18739a;
+        --cyan: #3ccce4;
+        --sage: #8dbdae;
+        --red: #c90136;
+        --blue: #2e9ae8;
+        --lime: #2cba00;
+        --intense-blue: #282fe2;
+    }
+
+    .home-root {
+        max-width: 1400px;
+        margin: 0 auto;
+        padding: 2rem 1rem;
+    }
+
+    /* Hero Section */
+    .hero-section {
+        background: linear-gradient(135deg, rgba(39, 0, 66, 0.05), rgba(24, 115, 154, 0.05));
+        border-radius: 24px;
+        padding: 3rem;
+        margin-bottom: 3rem;
+        border: 1px solid rgba(102, 126, 234, 0.15);
+    }
+
+    .hero-container {
+        display: grid;
+        grid-template-columns: 1fr auto;
+        gap: 3rem;
+        align-items: center;
+    }
+
+    .hero-tag {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        background: linear-gradient(135deg, rgba(10, 204, 129, 0.1), rgba(44, 186, 0, 0.1));
+        padding: 0.5rem 1rem;
+        border-radius: 20px;
+        border: 1px solid rgba(10, 204, 129, 0.3);
+        margin-bottom: 1.5rem;
+    }
+
+    .tag-dot {
+        width: 8px;
+        height: 8px;
+        background: var(--green);
+        border-radius: 50%;
+        animation: pulse 2s ease-in-out infinite;
+    }
+
+    @@keyframes pulse {
+        0%, 100% {
+            opacity: 1;
+        }
+
+        50% {
+            opacity: 0.5;
+        }
+    }
+
+    .tag-text {
+        font-size: 0.9rem;
+        font-weight: 600;
+        color: var(--green);
+    }
+
+    .hero-headline {
+        font-size: 3rem;
+        font-weight: 800;
+        background: linear-gradient(135deg, var(--purple), var(--teal));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        margin-bottom: 1.5rem;
+        line-height: 1.1;
+    }
+
+    .hero-text {
+        font-size: 1.15rem;
+        color: #555;
+        line-height: 1.7;
+        margin-bottom: 2rem;
+        max-width: 600px;
+    }
+
+    .hero-cta {
+        display: flex;
+        gap: 1rem;
+        flex-wrap: wrap;
+    }
+
+    .btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.875rem 1.5rem;
+        border-radius: 12px;
+        font-weight: 700;
+        text-decoration: none;
+        border: none;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-size: 1rem;
+    }
+
+    .btn-accent {
+        background: linear-gradient(135deg, var(--green), var(--lime));
+        color: var(--black);
+        box-shadow: 0 6px 20px rgba(10, 204, 129, 0.3);
+    }
+
+        .btn-accent:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(10, 204, 129, 0.4);
+        }
+
+    .btn-book {
+        background: linear-gradient(135deg, var(--intense-blue), var(--blue));
+        color: white;
+        box-shadow: 0 6px 20px rgba(40, 47, 226, 0.3);
+    }
+
+        .btn-book:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(40, 47, 226, 0.4);
+        }
+
+    .btn-outline {
+        background: transparent;
+        color: var(--purple);
+        border: 2px solid rgba(39, 0, 66, 0.2);
+    }
+
+        .btn-outline:hover {
+            background: rgba(39, 0, 66, 0.05);
+            transform: translateY(-2px);
+        }
+
+    .hero-stats {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .stat-card {
+        background: white;
+        border: 2px solid rgba(102, 126, 234, 0.15);
+        border-radius: 16px;
+        padding: 1.25rem;
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        min-width: 280px;
+        transition: all 0.3s ease;
+    }
+
+        .stat-card:hover {
+            transform: translateX(-5px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+        }
+
+    .stat-primary {
+        background: linear-gradient(135deg, rgba(10, 204, 129, 0.08), rgba(44, 186, 0, 0.08));
+        border-color: var(--green);
+    }
+
+    .stat-icon {
+        font-size: 2.5rem;
+        color: var(--teal);
+    }
+
+    .stat-value {
+        font-size: 2rem;
+        font-weight: 800;
+        color: var(--purple);
+        line-height: 1;
+    }
+
+    .stat-title {
+        font-size: 0.85rem;
+        color: #666;
+        font-weight: 600;
+        margin-top: 0.25rem;
+    }
+
+    /* About Section */
+    .about-section {
+        margin-bottom: 3rem;
+    }
+
+    .about-card {
+        background: white;
+        border-radius: 24px;
+        padding: 3rem;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+        border: 1px solid rgba(102, 126, 234, 0.1);
+    }
+
+    .about-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 3rem;
+        align-items: center;
+    }
+
+    .about-content h2 {
+        font-size: 2.25rem;
+        font-weight: 800;
+        color: var(--purple);
+        margin-bottom: 1.5rem;
+    }
+
+    .lead-text {
+        font-size: 1.1rem;
+        color: #555;
+        line-height: 1.7;
+        margin-bottom: 1.5rem;
+    }
+
+    .features-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+        .features-list li {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.75rem 0;
+            font-size: 1rem;
+            color: #444;
+        }
+
+        .features-list i {
+            color: var(--green);
+            font-size: 1.25rem;
+        }
+
+    .about-visual {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 2rem;
+    }
+
+    .experience-badge {
+        background: linear-gradient(135deg, var(--purple), var(--teal));
+        color: white;
+        padding: 1.5rem 2rem;
+        border-radius: 16px;
+        text-align: center;
+        box-shadow: 0 8px 24px rgba(39, 0, 66, 0.3);
+    }
+
+        .experience-badge .years {
+            display: block;
+            font-size: 3rem;
+            font-weight: 800;
+            line-height: 1;
+        }
+
+        .experience-badge .text {
+            display: block;
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+            opacity: 0.9;
+        }
+
+    .image-placeholder {
+        width: 200px;
+        height: 200px;
+        background: linear-gradient(135deg, rgba(10, 204, 129, 0.15), rgba(24, 115, 154, 0.15));
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 6rem;
+        color: var(--teal);
+        border: 4px solid rgba(24, 115, 154, 0.3);
+    }
+
+    /* Services Section */
+    .services-section {
+        margin-bottom: 3rem;
+    }
+
+    .section-header {
+        text-align: center;
+        margin-bottom: 3rem;
+    }
+
+        .section-header h2 {
+            font-size: 2.25rem;
+            font-weight: 800;
+            color: var(--purple);
+            margin-bottom: 0.75rem;
+        }
+
+        .section-header p {
+            font-size: 1.1rem;
+            color: #666;
+        }
+
+    .services-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 2rem;
+    }
+
+    .service-card {
+        background: white;
+        border: 2px solid rgba(102, 126, 234, 0.15);
+        border-radius: 20px;
+        padding: 2rem;
+        transition: all 0.3s ease;
+    }
+
+        .service-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+            border-color: var(--teal);
+        }
+
+    .service-icon {
+        width: 64px;
+        height: 64px;
+        border-radius: 16px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 2rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .bg-green {
+        background: linear-gradient(135deg, var(--green), var(--lime));
+        color: var(--black);
+    }
+
+    .bg-teal {
+        background: linear-gradient(135deg, var(--teal), var(--cyan));
+        color: white;
+    }
+
+    .bg-sage {
+        background: linear-gradient(135deg, var(--sage), var(--teal));
+        color: white;
+    }
+
+    .service-card h5 {
+        font-size: 1.35rem;
+        font-weight: 700;
+        color: var(--purple);
+        margin-bottom: 1rem;
+    }
+
+    .service-card p {
+        color: #555;
+        line-height: 1.6;
+        margin: 0;
+    }
+
+    /* Features Section */
+    .features-section {
+        margin-bottom: 3rem;
+    }
+
+    .features-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 2rem;
+    }
+
+    .feature-item {
+        background: linear-gradient(135deg, rgba(102, 126, 234, 0.05), rgba(118, 75, 162, 0.05));
+        border: 1px solid rgba(102, 126, 234, 0.2);
+        border-radius: 16px;
+        padding: 2rem;
+        text-align: center;
+        transition: all 0.3s ease;
+    }
+
+        .feature-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.2);
+        }
+
+    .feature-icon {
+        font-size: 3rem;
+        color: var(--teal);
+        margin-bottom: 1rem;
+    }
+
+    .feature-item h6 {
+        font-size: 1.1rem;
+        font-weight: 700;
+        color: var(--purple);
+        margin-bottom: 0.75rem;
+    }
+
+    .feature-item p {
+        color: #666;
+        margin: 0;
+        font-size: 0.95rem;
+    }
+
+    /* User Greeting Section */
+    .user-greeting-section {
+        margin-top: 3rem;
+    }
+
+    .user-greeting-card {
+        background: linear-gradient(135deg, rgba(10, 204, 129, 0.1), rgba(44, 186, 0, 0.05));
+        border: 2px solid var(--green);
+        border-radius: 20px;
+        padding: 2.5rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 2rem;
+    }
+
+    .greeting-content h3 {
+        font-size: 1.75rem;
+        font-weight: 800;
+        color: var(--purple);
+        margin-bottom: 0.5rem;
+    }
+
+    .greeting-content p {
+        color: #555;
+        margin: 0;
+        font-size: 1.05rem;
+    }
+
+    .greeting-actions {
+        display: flex;
+        gap: 1rem;
+        flex-wrap: wrap;
+    }
+
+    /* Responsive */
+    @@media (max-width: 992px) {
+        .hero-container {
+            grid-template-columns: 1fr;
+        }
+
+        .hero-stats {
+            flex-direction: row;
+            flex-wrap: wrap;
+        }
+
+        .about-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .hero-headline {
+            font-size: 2.25rem;
+        }
+    }
+
+    @@media (max-width: 768px) {
+        .home-root {
+            padding: 1rem;
+        }
+
+        .hero-section {
+            padding: 2rem 1.5rem;
+        }
+
+        .hero-headline {
+            font-size: 1.75rem;
+        }
+
+        .hero-text {
+            font-size: 1rem;
+        }
+
+        .about-card {
+            padding: 2rem 1.5rem;
+        }
+
+        .section-header h2 {
+            font-size: 1.75rem;
+        }
+
+        .user-greeting-card {
+            padding: 1.5rem;
+        }
+
+        .greeting-content h3 {
+            font-size: 1.35rem;
+        }
+    }
+</style>
+

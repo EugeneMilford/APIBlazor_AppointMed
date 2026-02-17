@@ -1,0 +1,516 @@
+﻿@page "/users/register"
+@attribute [LayoutAttribute(typeof(EmptyLayout))]
+@inject IClient httpClient
+@inject NavigationManager navManager
+
+<PageTitle>Register • AppointMed</PageTitle>
+
+<main class="register-root" role="main">
+    <div class="register-container">
+        <div class="register-card">
+            <header class="register-header">
+                <div class="logo-section">
+                    <span class="logo-icon">⚕️</span>
+                    <h1>AppointMed</h1>
+                </div>
+                <p class="subtitle">Create your account</p>
+            </header>
+
+            @if (!string.IsNullOrEmpty(message))
+            {
+                <div class="alert alert-danger">
+                    <i class="bi bi-exclamation-triangle-fill me-2"></i>@message
+                    <button type="button" class="btn-close" @onclick="() => message = string.Empty"></button>
+                </div>
+            }
+
+            @if (registrationSuccess)
+            {
+                <div class="alert alert-success">
+                    <i class="bi bi-check-circle-fill me-2"></i>Registration successful! Redirecting...
+                </div>
+            }
+
+            <EditForm Model="RegistrationModel" OnValidSubmit="HandleRegistration" FormName="RegisterForm">
+                <DataAnnotationsValidator />
+                <ValidationSummary class="validation-summary" />
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="firstName" class="form-label">First Name</label>
+                        <div class="input-group">
+                            <span class="input-icon"><i class="bi bi-person"></i></span>
+                            <InputText id="firstName" class="form-control" @bind-Value="RegistrationModel.FirstName" placeholder="First name" />
+                        </div>
+                        <ValidationMessage For="@(() => RegistrationModel.FirstName)" class="validation-message" />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="lastName" class="form-label">Last Name</label>
+                        <div class="input-group">
+                            <span class="input-icon"><i class="bi bi-person"></i></span>
+                            <InputText id="lastName" class="form-control" @bind-Value="RegistrationModel.LastName" placeholder="Last name" />
+                        </div>
+                        <ValidationMessage For="@(() => RegistrationModel.LastName)" class="validation-message" />
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="email" class="form-label">Email Address</label>
+                    <div class="input-group">
+                        <span class="input-icon"><i class="bi bi-envelope"></i></span>
+                        <InputText id="email" class="form-control" @bind-Value="RegistrationModel.Email" placeholder="Enter your email" />
+                    </div>
+                    <ValidationMessage For="@(() => RegistrationModel.Email)" class="validation-message" />
+                </div>
+
+                <div class="form-group">
+                    <label for="address" class="form-label">Address</label>
+                    <div class="input-group">
+                        <span class="input-icon"><i class="bi bi-geo-alt"></i></span>
+                        <InputText id="address" class="form-control" @bind-Value="RegistrationModel.Address" placeholder="Enter your address" />
+                    </div>
+                    <ValidationMessage For="@(() => RegistrationModel.Address)" class="validation-message" />
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="role" class="form-label">Role</label>
+                        <div class="input-group">
+                            <span class="input-icon"><i class="bi bi-shield-check"></i></span>
+                            <InputSelect id="role" class="form-select" @bind-Value="RegistrationModel.Role">
+                                <option value="">Select</option>
+                                <option value="User">User</option>
+                                <option value="Administrator">Admin</option>
+                            </InputSelect>
+                        </div>
+                        <ValidationMessage For="@(() => RegistrationModel.Role)" class="validation-message" />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="password" class="form-label">Password</label>
+                        <div class="input-group">
+                            <span class="input-icon"><i class="bi bi-lock"></i></span>
+                            <InputText id="password" class="form-control" type="password" @bind-Value="RegistrationModel.Password" placeholder="Password" />
+                        </div>
+                        <ValidationMessage For="@(() => RegistrationModel.Password)" class="validation-message" />
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-primary" disabled="@isProcessing">
+                    @if (isProcessing)
+                    {
+                        <span class="spinner"></span>
+                        <span>Registering...</span>
+                    }
+                    else
+                    {
+                        <i class="bi bi-person-plus me-2"></i>
+                        <span>Register</span>
+                        <span class="btn-arrow">→</span>
+                    }
+                </button>
+            </EditForm>
+
+            <footer class="register-footer">
+                <p>Already have an account? <a href="/users/login">Login here</a></p>
+            </footer>
+        </div>
+    </div>
+</main>
+
+<style>
+    :root {
+        --green: #0acc81;
+        --black: #000000;
+        --purple: #270042;
+        --teal: #18739a;
+        --cyan: #3ccce4;
+        --sage: #8dbdae;
+        --red: #c90136;
+        --blue: #2e9ae8;
+        --aqua: #16a085;
+        --orange: #ff7a00;
+        --lime: #2cba00;
+        --intense-blue: #282fe2;
+    }
+
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    .register-root {
+        min-height: 100vh;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 25%, #f093fb 50%, #4facfe 100%);
+        background-size: 400% 400%;
+        animation: gradientShift 15s ease infinite;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 1.5rem;
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    }
+
+    @@keyframes gradientShift {
+        0% {
+            background-position: 0% 50%;
+        }
+
+        50% {
+            background-position: 100% 50%;
+        }
+
+        100% {
+            background-position: 0% 50%;
+        }
+    }
+
+    .register-container {
+        width: 100%;
+        max-width: 700px;
+    }
+
+    .register-card {
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(10px);
+        border-radius: 20px;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(255, 255, 255, 0.1);
+        padding: 2rem;
+        animation: fadeIn 0.6s ease-out;
+    }
+
+    @@keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .register-header {
+        text-align: center;
+        margin-bottom: 1.25rem;
+        padding-bottom: 1rem;
+        border-bottom: 2px solid rgba(102, 126, 234, 0.2);
+    }
+
+    .logo-section {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        margin-bottom: 0.25rem;
+    }
+
+    .logo-icon {
+        font-size: 2rem;
+        animation: pulse 2s ease-in-out infinite;
+    }
+
+    @@keyframes pulse {
+        0%, 100% {
+            transform: scale(1);
+        }
+
+        50% {
+            transform: scale(1.1);
+        }
+    }
+
+    .register-header h1 {
+        font-size: 1.75rem;
+        font-weight: 800;
+        background: linear-gradient(135deg, var(--purple), var(--teal), var(--intense-blue));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        margin: 0;
+    }
+
+    .subtitle {
+        font-size: 0.9rem;
+        color: #666;
+        font-weight: 500;
+        margin-top: 0.25rem;
+    }
+
+    .alert {
+        border-radius: 10px;
+        padding: 0.75rem;
+        margin-bottom: 1rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        font-size: 0.85rem;
+    }
+
+    .alert-danger {
+        background: linear-gradient(135deg, rgba(201, 1, 54, 0.1), rgba(255, 122, 0, 0.1));
+        border: 1px solid rgba(201, 1, 54, 0.3);
+        color: var(--red);
+    }
+
+    .alert-success {
+        background: linear-gradient(135deg, rgba(10, 204, 129, 0.1), rgba(44, 186, 0, 0.1));
+        border: 1px solid rgba(10, 204, 129, 0.3);
+        color: var(--green);
+    }
+
+    .btn-close {
+        background: transparent;
+        border: none;
+        color: inherit;
+        cursor: pointer;
+        font-size: 1rem;
+        opacity: 0.7;
+    }
+
+        .btn-close:hover {
+            opacity: 1;
+        }
+
+    .validation-summary {
+        background: linear-gradient(135deg, rgba(201, 1, 54, 0.1), rgba(255, 122, 0, 0.1));
+        border: 1px solid rgba(201, 1, 54, 0.3);
+        border-radius: 10px;
+        padding: 0.75rem;
+        margin-bottom: 1rem;
+        color: var(--red);
+        font-size: 0.85rem;
+    }
+
+    .form-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 0.75rem;
+    }
+
+    .form-group {
+        margin-bottom: 0.75rem;
+    }
+
+    .form-label {
+        display: block;
+        font-weight: 600;
+        color: var(--purple);
+        margin-bottom: 0.35rem;
+        font-size: 0.85rem;
+    }
+
+    .input-group {
+        position: relative;
+        display: flex;
+        align-items: center;
+    }
+
+    .input-icon {
+        position: absolute;
+        left: 0.85rem;
+        color: var(--teal);
+        z-index: 1;
+        font-size: 1rem;
+    }
+
+    .form-control, .form-select {
+        width: 100%;
+        padding: 0.7rem 0.85rem 0.7rem 2.5rem;
+        border: 2px solid rgba(102, 126, 234, 0.2);
+        border-radius: 10px;
+        font-size: 0.9rem;
+        transition: all 0.3s ease;
+        background: rgba(255, 255, 255, 0.8);
+    }
+
+        .form-control:focus, .form-select:focus {
+            outline: none;
+            border-color: var(--intense-blue);
+            box-shadow: 0 0 0 3px rgba(40, 47, 226, 0.1);
+            background: white;
+        }
+
+    .form-select {
+        appearance: none;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%2318739a' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+        background-repeat: no-repeat;
+        background-position: right 0.85rem center;
+        padding-right: 2.25rem;
+    }
+
+    .validation-message {
+        display: block;
+        color: var(--red);
+        font-size: 0.75rem;
+        margin-top: 0.25rem;
+        font-weight: 500;
+    }
+
+    .btn {
+        width: 100%;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        padding: 0.85rem 1.5rem;
+        border-radius: 10px;
+        font-weight: 700;
+        font-size: 1rem;
+        text-decoration: none;
+        border: none;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+        margin-top: 0.5rem;
+    }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .btn:hover::before {
+            left: 100%;
+        }
+
+    .btn-arrow {
+        transition: transform 0.3s ease;
+        font-size: 1.2rem;
+    }
+
+    .btn:hover .btn-arrow {
+        transform: translateX(5px);
+    }
+
+    .btn-primary {
+        background: linear-gradient(135deg, var(--intense-blue), var(--blue));
+        color: #fff;
+        box-shadow: 0 6px 18px rgba(40, 47, 226, 0.3);
+    }
+
+        .btn-primary:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(40, 47, 226, 0.4);
+        }
+
+        .btn-primary:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+    .spinner {
+        width: 14px;
+        height: 14px;
+        border: 2px solid rgba(255, 255, 255, 0.3);
+        border-top-color: white;
+        border-radius: 50%;
+        animation: spin 0.8s linear infinite;
+    }
+
+    @@keyframes spin {
+        to {
+            transform: rotate(360deg);
+        }
+    }
+
+    .register-footer {
+        text-align: center;
+        margin-top: 1.25rem;
+        padding-top: 1rem;
+        border-top: 1px solid rgba(0, 0, 0, 0.1);
+    }
+
+        .register-footer p {
+            margin: 0;
+            font-size: 0.85rem;
+            color: #666;
+        }
+
+        .register-footer a {
+            color: var(--intense-blue);
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+
+            .register-footer a:hover {
+                color: var(--purple);
+                text-decoration: underline;
+            }
+
+    @@media (max-width: 768px) {
+        .form-row {
+            grid-template-columns: 1fr;
+        }
+
+        .register-card {
+            padding: 1.5rem;
+        }
+
+        .register-header h1 {
+            font-size: 1.5rem;
+        }
+    }
+</style>
+
+@code {
+    [SupplyParameterFromForm]
+    UserDto RegistrationModel { get; set; } = new() { Role = "User" };
+
+    string message = string.Empty;
+    bool registrationSuccess = false;
+    bool isProcessing = false;
+
+    private async Task HandleRegistration()
+    {
+        isProcessing = true;
+        message = string.Empty;
+        registrationSuccess = false;
+
+        try
+        {
+            if (string.IsNullOrWhiteSpace(RegistrationModel.Role))
+            {
+                message = "Please select a role.";
+                isProcessing = false;
+                return;
+            }
+
+            await httpClient.RegisterAsync(RegistrationModel);
+
+            registrationSuccess = true;
+            await Task.Delay(2000);
+            navManager.NavigateTo("/users/login");
+        }
+        catch (ApiException ex)
+        {
+            if (ex.StatusCode >= 200 && ex.StatusCode <= 299)
+            {
+                navManager.NavigateTo("/users/login");
+            }
+            else
+            {
+                message = ex.Response ?? "Registration failed. Please ensure password meets requirements (8+ characters, uppercase, lowercase, digit, special character).";
+            }
+        }
+        catch (Exception ex)
+        {
+            message = $"An error occurred: {ex.Message}";
+        }
+        finally
+        {
+            isProcessing = false;
+        }
+    }
+}

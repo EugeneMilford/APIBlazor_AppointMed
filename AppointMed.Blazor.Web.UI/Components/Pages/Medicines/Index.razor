@@ -1,0 +1,206 @@
+﻿@page "/medicines"
+@inject IMedicineService medicineService
+@inject IJSRuntime js
+@inject NavigationManager navManager
+
+<PageTitle>Medicines • AppointMed</PageTitle>
+
+<section class="medicines-page container my-5">
+    <div class="d-flex align-items-center justify-content-between mb-4">
+        <div>
+            <h3 class="text-purple mb-1">
+                <i class="bi bi-capsule"></i> Medicines
+            </h3>
+            <p class="text-muted mb-0">Browse available medications and their details</p>
+        </div>
+
+        <AuthorizeView Roles="Administrator">
+            <Authorized>
+                <a class="btn btn-primary" href="/medicines/create">
+                    <i class="bi bi-plus-lg"></i> Add Medicine
+                </a>
+            </Authorized>
+        </AuthorizeView>
+    </div>
+
+    @if (!response.Success)
+    {
+        <div class="alert alert-danger">
+            <i class="bi bi-exclamation-triangle-fill"></i>
+            <strong>Error:</strong> @response.Message
+        </div>
+    }
+    else if (Medicines == null)
+    {
+        <div class="text-center py-5">
+            <div class="spinner-border text-teal" role="status"></div>
+            <p class="mt-3">Loading medicines...</p>
+        </div>
+    }
+    else if (!Medicines.Any())
+    {
+        <div class="alert alert-info">
+            <i class="bi bi-info-circle"></i> No medicines available
+        </div>
+    }
+    else
+    {
+        <div class="row g-4">
+            @foreach (var medicine in Medicines.OrderBy(m => m.Name))
+            {
+                <div class="col-md-6 col-lg-4">
+                    <div class="card medicine-card h-100 @(!medicine.IsAvailable ? "unavailable" : "")">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-start mb-3">
+                                <h5 class="card-title mb-0">@medicine.Name</h5>
+                                @if (medicine.IsAvailable)
+                                {
+                                    <span class="badge bg-success">Available</span>
+                                }
+                                else
+                                {
+                                    <span class="badge bg-secondary">Unavailable</span>
+                                }
+                            </div>
+
+                            @if (!string.IsNullOrWhiteSpace(medicine.Dosage))
+                            {
+                                <p class="dosage-info">
+                                    <i class="bi bi-capsule-pill"></i>
+                                    <strong>Dosage:</strong> @medicine.Dosage
+                                </p>
+                            }
+
+                            @if (!string.IsNullOrWhiteSpace(medicine.Description))
+                            {
+                                <p class="text-muted small">@medicine.Description</p>
+                            }
+
+                            @if (!string.IsNullOrWhiteSpace(medicine.Manufacturer))
+                            {
+                                <p class="manufacturer-info">
+                                    <i class="bi bi-building"></i>
+                                    @medicine.Manufacturer
+                                </p>
+                            }
+
+                            <div class="price-tag">
+                                R @medicine.Price.ToString("N2")
+                            </div>
+
+                            <AuthorizeView Roles="Administrator">
+                                <Authorized>
+                                    <div class="admin-actions mt-3 pt-3 border-top">
+                                        <a class="btn btn-sm btn-outline-primary me-2"
+                                           href="/medicines/update/@medicine.MedicineId">
+                                            <i class="bi bi-pencil-square"></i> Edit
+                                        </a>
+                                        <button class="btn btn-sm btn-outline-danger"
+                                                @onclick="() => ConfirmDelete(medicine.MedicineId, medicine.Name)">
+                                            <i class="bi bi-trash"></i> Delete
+                                        </button>
+                                    </div>
+                                </Authorized>
+                            </AuthorizeView>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+</section>
+
+@code {
+    private List<MedicineDto> Medicines;
+    private Response<List<MedicineDto>> response = new() { Success = true };
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadMedicines();
+    }
+
+    private async Task LoadMedicines()
+    {
+        response = await medicineService.Get();
+        if (response.Success)
+        {
+            Medicines = response.Data;
+        }
+    }
+
+    private async Task ConfirmDelete(int medicineId, string medicineName)
+    {
+        var confirm = await js.InvokeAsync<bool>("confirm",
+            $"Are you sure you want to delete {medicineName}? This action cannot be undone.");
+
+        if (!confirm) return;
+
+        var deleteResponse = await medicineService.Delete(medicineId);
+        if (deleteResponse.Success)
+        {
+            await LoadMedicines();
+            StateHasChanged();
+        }
+        else
+        {
+            await js.InvokeVoidAsync("alert", deleteResponse.Message ?? "Failed to delete medicine.");
+        }
+    }
+}
+
+<style>
+    :root {
+        --purple: #270042;
+        --teal: #18739a;
+        --green: #0acc81;
+    }
+
+    .text-purple {
+        color: var(--purple);
+    }
+
+    .text-teal {
+        color: var(--teal);
+    }
+
+    .medicine-card {
+        border: none;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        border-left: 4px solid var(--teal);
+    }
+
+        .medicine-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .medicine-card.unavailable {
+            opacity: 0.7;
+            border-left-color: #ccc;
+        }
+
+    .dosage-info {
+        color: var(--purple);
+        margin-bottom: 0.75rem;
+        font-size: 0.95rem;
+    }
+
+    .manufacturer-info {
+        color: #666;
+        font-size: 0.85rem;
+        margin-bottom: 1rem;
+    }
+
+    .price-tag {
+        font-size: 1.75rem;
+        font-weight: 800;
+        color: var(--teal);
+        margin-top: 1rem;
+    }
+
+    .admin-actions {
+        display: flex;
+        gap: 0.5rem;
+    }
+</style>

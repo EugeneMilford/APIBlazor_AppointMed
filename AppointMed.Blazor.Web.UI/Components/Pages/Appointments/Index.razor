@@ -1,0 +1,230 @@
+﻿@page "/appointments/"
+@inject IAppointmentService appointmentService
+@inject IJSRuntime js
+
+<PageTitle>Appointments • AppointMed</PageTitle>
+
+<section class="appointments-page container my-5">
+    <div class="d-flex align-items-center justify-content-between mb-4">
+        <h3 class="m-0">Appointments</h3>
+
+        <AuthorizeView>
+            <Authorized>
+                <a class="btn btn-accent" href="/appointments/create" role="button">
+                    <i class="bi bi-plus-lg me-1" aria-hidden="true"></i> Create Appointment
+                </a>
+            </Authorized>
+        </AuthorizeView>
+    </div>
+
+    @if (response.Success == false)
+    {
+        <div class="alert alert-danger" role="alert">
+            <strong>Error:</strong> @response.Message
+        </div>
+    }
+    else
+    {
+        @if (Appointments == null)
+        {
+            <div class="alert alert-info" role="status">
+                Loading appointments...
+            </div>
+        }
+        else if (!Appointments.Any())
+        {
+            <div class="alert alert-warning">
+                <h5 class="mb-1">No appointments found</h5>
+                <p class="mb-0">You don't have any appointments yet. Use the button above to create one or browse doctors to book a visit.</p>
+            </div>
+        }
+        else
+        {
+            <div class="table-responsive">
+                <table class="table table-hover align-middle">
+                    <thead class="table-light">
+                        <tr>
+                            <th scope="col">Date</th>
+                            <th scope="col">Time</th>
+                            <th scope="col">Patient</th>
+                            <th scope="col">Doctor</th>
+                            <th scope="col">Type</th>
+                            <th scope="col">Status</th>
+                            <th scope="col" class="text-end">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var appt in Appointments)
+                        {
+                            <tr>
+                                <td>@FormatDate(appt.AppointmentDateTime)</td>
+                                <td>@FormatTime(appt.AppointmentDateTime)</td>
+                                <td>
+                                    <div class="fw-semibold">@GetPatientFullName(appt)</div>
+                                    @if (!string.IsNullOrWhiteSpace(appt.PatientEmail))
+                                    {
+                                        <div class="small text-muted">@appt.PatientEmail</div>
+                                    }
+                                </td>
+                                <td>
+                                    @(!string.IsNullOrWhiteSpace(appt.DoctorName) ? appt.DoctorName : "—")
+                                </td>
+                                <td>
+                                    @(!string.IsNullOrWhiteSpace(appt.AppointmentType) ? appt.AppointmentType : "Standard")
+                                </td>
+                                <td>
+                                    <span class="badge @GetStatusClass(appt.StatusName)">@(!string.IsNullOrWhiteSpace(appt.StatusName) ? appt.StatusName : "Unknown")</span>
+                                </td>
+                                <td class="text-end">
+                                    <a class="btn btn-sm btn-outline-primary me-1" href="/appointments/details/@appt.AppointmentId" aria-label="View details for appointment @appt.AppointmentId">
+                                        <i class="bi bi-info-circle"></i>
+                                    </a>
+
+                                    <AuthorizeView Roles="Administrator">
+                                        <Authorized>
+                                            <a class="btn btn-sm btn-outline-secondary me-1" href="/appointments/update/@appt.AppointmentId" aria-label="Edit appointment @appt.AppointmentId">
+                                                <i class="bi bi-pencil-square"></i>
+                                            </a>
+                                            <button class="btn btn-sm btn-danger" @onclick="() => ConfirmDelete(appt.AppointmentId)" aria-label="Delete appointment @appt.AppointmentId">
+                                                <i class="bi bi-trash"></i>
+                                            </button>
+                                        </Authorized>
+                                    </AuthorizeView>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        }
+    }
+
+    <div class="mt-4 text-muted small">
+        Tip: Click "Details" to view appointment notes, telehealth links (if any), and prescription history.
+    </div>
+</section>
+
+@code {
+    public List<AppointmentDto> Appointments;
+    private Response<List<AppointmentDto>> response = new Response<List<AppointmentDto>> { Success = true };
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadAppointments();
+    }
+
+    private async Task LoadAppointments()
+    {
+        response = await appointmentService.Get();
+        if (response.Success)
+        {
+            Appointments = response.Data;
+        }
+        else
+        {
+            Appointments = new List<AppointmentDto>();
+        }
+    }
+
+    private async Task ConfirmDelete(int appointmentId)
+    {
+        var appt = Appointments?.FirstOrDefault(a => a.AppointmentId == appointmentId);
+        var label = appt != null ? $"{GetPatientFullName(appt)} on {FormatDateTimeInline(appt.AppointmentDateTime)}" : $"#{appointmentId}";
+
+        var confirm = await js.InvokeAsync<bool>("confirm", $"Are you sure you want to delete the appointment for {label}? This action cannot be undone.");
+        if (!confirm) return;
+
+        var deleteResponse = await appointmentService.Delete(appointmentId);
+        if (deleteResponse.Success)
+        {
+            await LoadAppointments();
+            StateHasChanged();
+        }
+        else
+        {
+            await js.InvokeVoidAsync("alert", deleteResponse.Message ?? "Failed to delete appointment.");
+        }
+    }
+
+    // Helper method to get patient full name
+    private static string GetPatientFullName(AppointmentDto appointment)
+    {
+        if (appointment == null) return "Unknown";
+
+        var firstName = appointment.PatientFirstName ?? "";
+        var lastName = appointment.PatientLastName ?? "";
+        var fullName = $"{firstName} {lastName}".Trim();
+
+        return string.IsNullOrWhiteSpace(fullName) ? "Unknown Patient" : fullName;
+    }
+
+    private static string FormatDate(DateTimeOffset dto)
+    {
+        if (dto == default) return "TBD";
+        return dto.ToLocalTime().ToString("yyyy-MM-dd");
+    }
+
+    private static string FormatTime(DateTimeOffset dto)
+    {
+        if (dto == default) return "";
+        return dto.ToLocalTime().ToString("HH:mm");
+    }
+
+    private static string FormatDateTimeInline(DateTimeOffset dto)
+    {
+        if (dto == default) return "TBD";
+        return dto.ToLocalTime().ToString("yyyy-MM-dd HH:mm");
+    }
+
+    private static string GetStatusClass(string? statusName)
+    {
+        if (string.IsNullOrWhiteSpace(statusName)) return "bg-secondary text-white";
+
+        var s = statusName.Trim().ToLowerInvariant();
+        return s switch
+        {
+            "scheduled" => "bg-info text-white",
+            "confirmed" => "bg-success text-white",
+            "completed" => "bg-primary text-white",
+            "cancelled" or "canceled" => "bg-danger text-white",
+            "no show" => "bg-warning text-dark",
+            _ => "bg-secondary text-white"
+        };
+    }
+}
+
+<style>
+    :root {
+        --green: #0acc81;
+        --black: #000000;
+        --purple: #270042;
+        --teal: #18739a;
+        --cyan: #3ccce4;
+        --sage: #8dbdae;
+        --red: #c90136;
+        --blue: #2e9ae8;
+    }
+
+    .appointments-page h3 {
+        color: var(--purple);
+    }
+
+    .btn-accent {
+        background: var(--green);
+        color: var(--black);
+        border: none;
+    }
+
+    table.table thead th {
+        border-bottom: 2px solid rgba(39,0,66,0.06);
+    }
+
+    .badge {
+        padding: .35rem .6rem;
+        border-radius: .4rem;
+    }
+
+    .table td .small {
+        font-size: .85rem;
+    }
+</style>

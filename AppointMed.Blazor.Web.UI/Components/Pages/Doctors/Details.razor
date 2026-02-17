@@ -1,0 +1,587 @@
+﻿@page "/doctors/details/{id:int}"
+@inject IDoctorService doctorService
+@inject NavigationManager navManager
+
+<PageTitle>Doctor Details • AppointMed</PageTitle>
+
+<div class="details-doctor-root">
+    <div class="page-header">
+        <div class="header-content">
+            <h1><i class="bi bi-file-medical-fill"></i> Doctor Details</h1>
+            <p>View complete doctor profile and information</p>
+        </div>
+    </div>
+
+    @if (errorMessage != null)
+    {
+        <div class="alert alert-danger">
+            <i class="bi bi-exclamation-triangle-fill"></i>
+            <span>@errorMessage</span>
+        </div>
+    }
+
+    @if (isLoading)
+    {
+        <div class="loading-container">
+            <div class="spinner-large"></div>
+            <p>Loading doctor details...</p>
+        </div>
+    }
+    else if (Doctor != null)
+    {
+        <div class="details-container">
+            <div class="details-header">
+                <div class="doctor-profile">
+                    @if (!string.IsNullOrWhiteSpace(Doctor.ProfileImageUrl))
+                    {
+                        <img src="@Doctor.ProfileImageUrl"
+                             alt="Dr. @Doctor.FullName"
+                             class="profile-image"
+                             onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22100%22 height=%22100%22%3E%3Crect width=%22100%22 height=%22100%22 fill=%22%23ddd%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 dominant-baseline=%22middle%22 text-anchor=%22middle%22 fill=%22%23999%22 font-size=%2240%22%3E@Doctor.FirstName.Substring(0,1)@Doctor.LastName.Substring(0,1)%3C/text%3E%3C/svg%3E'" />
+                    }
+                    else
+                    {
+                        <div class="profile-placeholder">
+                            <span>@Doctor.FirstName.Substring(0, 1)@Doctor.LastName.Substring(0, 1)</span>
+                        </div>
+                    }
+                    <div class="doctor-info">
+                        <h2>Dr. @Doctor.FullName</h2>
+                        <p class="specialization">@Doctor.Specialization</p>
+                    </div>
+                </div>
+                <div class="status-badge status-@(Doctor.IsActive ? "active" : "inactive")">
+                    <i class="bi bi-@(Doctor.IsActive ? "check-circle-fill" : "x-circle-fill")"></i>
+                    <span>@(Doctor.IsActive ? "Active" : "Inactive")</span>
+                </div>
+            </div>
+
+            <div class="details-sections">
+                <div class="details-section">
+                    <div class="section-header">
+                        <i class="bi bi-person-fill"></i>
+                        <h5>Personal Information</h5>
+                    </div>
+
+                    <div class="info-grid">
+                        <div class="info-item">
+                            <label><i class="bi bi-person"></i> First Name</label>
+                            <div class="info-value">@Doctor.FirstName</div>
+                        </div>
+
+                        <div class="info-item">
+                            <label><i class="bi bi-person"></i> Last Name</label>
+                            <div class="info-value">@Doctor.LastName</div>
+                        </div>
+
+                        <div class="info-item">
+                            <label><i class="bi bi-envelope"></i> Email Address</label>
+                            <div class="info-value">@Doctor.Email</div>
+                        </div>
+
+                        <div class="info-item">
+                            <label><i class="bi bi-telephone"></i> Phone Number</label>
+                            <div class="info-value">@Doctor.PhoneNumber</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="details-section">
+                    <div class="section-header">
+                        <i class="bi bi-briefcase-fill"></i>
+                        <h5>Professional Information</h5>
+                    </div>
+
+                    <div class="info-grid">
+                        <div class="info-item">
+                            <label><i class="bi bi-heart-pulse"></i> Specialization</label>
+                            <div class="info-value">@Doctor.Specialization</div>
+                        </div>
+
+                        <div class="info-item">
+                            <label><i class="bi bi-calendar-event"></i> Date Joined</label>
+                            <div class="info-value">@Doctor.DateJoined.ToString("dd/MM/yyyy")</div>
+                        </div>
+                    </div>
+
+                    @if (!string.IsNullOrWhiteSpace(Doctor.Bio))
+                    {
+                        <div class="info-item full-width">
+                            <label><i class="bi bi-file-text"></i> Biography</label>
+                            <div class="info-value bio-box">@Doctor.Bio</div>
+                        </div>
+                    }
+
+                    @if (!string.IsNullOrWhiteSpace(Doctor.ProfileImageUrl))
+                    {
+                        <div class="info-item full-width">
+                            <label><i class="bi bi-image"></i> Profile Image URL</label>
+                            <div class="info-value url-value">@Doctor.ProfileImageUrl</div>
+                        </div>
+                    }
+                </div>
+
+                <div class="details-section audit-section">
+                    <div class="section-header">
+                        <i class="bi bi-clock-history"></i>
+                        <h5>Audit Information</h5>
+                    </div>
+
+                    <div class="info-grid">
+                        <div class="info-item">
+                            <label><i class="bi bi-plus-circle"></i> Created At</label>
+                            <div class="info-value">@Doctor.CreatedAt.ToString("dd/MM/yyyy HH:mm")</div>
+                        </div>
+
+                        @if (Doctor.UpdatedAt.HasValue)
+                        {
+                            <div class="info-item">
+                                <label><i class="bi bi-pencil-square"></i> Updated At</label>
+                                <div class="info-value">@Doctor.UpdatedAt.Value.ToString("dd/MM/yyyy HH:mm")</div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+
+            <div class="action-buttons">
+                <AuthorizeView Roles="Administrator">
+                    <button @onclick="GoToEdit" class="btn btn-primary">
+                        <i class="bi bi-pencil-square"></i>
+                        <span>Edit Doctor Details</span>
+                    </button>
+                </AuthorizeView>
+                <button @onclick="BackToList" class="btn btn-secondary">
+                    <i class="bi bi-arrow-left"></i>
+                    <span>Back To List</span>
+                </button>
+            </div>
+        </div>
+    }
+</div>
+
+<style>
+    :root {
+        --green: #0acc81;
+        --black: #000000;
+        --purple: #270042;
+        --teal: #18739a;
+        --cyan: #3ccce4;
+        --sage: #8dbdae;
+        --red: #c90136;
+        --blue: #2e9ae8;
+        --lime: #2cba00;
+        --intense-blue: #282fe2;
+        --orange: #ff7a00;
+    }
+
+    .details-doctor-root {
+        max-width: 1100px;
+        margin: 0 auto;
+    }
+
+    .page-header {
+        background: linear-gradient(135deg, rgba(39, 0, 66, 0.05), rgba(24, 115, 154, 0.05));
+        border-radius: 16px;
+        padding: 2rem;
+        margin-bottom: 2rem;
+        border-left: 6px solid var(--green);
+    }
+
+    .header-content h1 {
+        font-size: 2rem;
+        font-weight: 800;
+        color: var(--purple);
+        margin-bottom: 0.5rem;
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+    }
+
+    .header-content p {
+        color: #666;
+        margin: 0;
+        font-size: 1.05rem;
+    }
+
+    .alert {
+        border-radius: 12px;
+        padding: 1rem 1.25rem;
+        margin-bottom: 2rem;
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        font-weight: 600;
+        background: linear-gradient(135deg, rgba(201, 1, 54, 0.1), rgba(255, 122, 0, 0.1));
+        border: 2px solid var(--red);
+        color: var(--red);
+    }
+
+        .alert i {
+            font-size: 1.5rem;
+        }
+
+    .loading-container {
+        text-align: center;
+        padding: 3rem;
+        background: white;
+        border-radius: 20px;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+    }
+
+    .spinner-large {
+        width: 48px;
+        height: 48px;
+        border: 4px solid rgba(24, 115, 154, 0.2);
+        border-top-color: var(--teal);
+        border-radius: 50%;
+        animation: spin 0.8s linear infinite;
+        margin: 0 auto 1rem;
+    }
+
+    .loading-container p {
+        color: #666;
+        font-size: 1.1rem;
+        font-weight: 600;
+    }
+
+    .details-container {
+        background: white;
+        border-radius: 20px;
+        padding: 2.5rem;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+        border: 1px solid rgba(102, 126, 234, 0.1);
+    }
+
+    .details-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding-bottom: 2rem;
+        margin-bottom: 2rem;
+        border-bottom: 2px solid rgba(102, 126, 234, 0.15);
+        flex-wrap: wrap;
+        gap: 1.5rem;
+    }
+
+    .doctor-profile {
+        display: flex;
+        align-items: center;
+        gap: 1.5rem;
+    }
+
+    .profile-image {
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 4px solid var(--green);
+        box-shadow: 0 4px 16px rgba(10, 204, 129, 0.2);
+    }
+
+    .profile-placeholder {
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, var(--green), var(--lime));
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: 4px solid var(--green);
+        box-shadow: 0 4px 16px rgba(10, 204, 129, 0.2);
+    }
+
+        .profile-placeholder span {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--black);
+        }
+
+    .doctor-info h2 {
+        font-size: 1.75rem;
+        font-weight: 800;
+        color: var(--purple);
+        margin: 0 0 0.25rem 0;
+    }
+
+    .specialization {
+        font-size: 1.1rem;
+        color: var(--teal);
+        font-weight: 600;
+        margin: 0;
+    }
+
+    .status-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.75rem 1.5rem;
+        border-radius: 12px;
+        font-weight: 700;
+        font-size: 1rem;
+    }
+
+    .status-active {
+        background: linear-gradient(135deg, rgba(10, 204, 129, 0.15), rgba(44, 186, 0, 0.15));
+        border: 2px solid var(--green);
+        color: var(--green);
+    }
+
+    .status-inactive {
+        background: linear-gradient(135deg, rgba(201, 1, 54, 0.15), rgba(255, 122, 0, 0.15));
+        border: 2px solid var(--red);
+        color: var(--red);
+    }
+
+    .details-sections {
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+        margin-bottom: 2rem;
+    }
+
+    .details-section {
+        background: linear-gradient(135deg, rgba(102, 126, 234, 0.03), rgba(118, 75, 162, 0.03));
+        border: 1px solid rgba(102, 126, 234, 0.15);
+        border-radius: 16px;
+        padding: 1.5rem;
+    }
+
+    .audit-section {
+        background: linear-gradient(135deg, rgba(140, 189, 174, 0.05), rgba(24, 115, 154, 0.05));
+    }
+
+    .section-header {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        margin-bottom: 1.5rem;
+        padding-bottom: 1rem;
+        border-bottom: 2px solid rgba(102, 126, 234, 0.15);
+    }
+
+        .section-header i {
+            font-size: 1.5rem;
+            color: var(--teal);
+        }
+
+        .section-header h5 {
+            margin: 0;
+            font-size: 1.25rem;
+            font-weight: 800;
+            color: var(--purple);
+        }
+
+    .info-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 1.5rem;
+    }
+
+    .info-item {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+        .info-item.full-width {
+            grid-column: 1 / -1;
+        }
+
+        .info-item label {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 700;
+            color: var(--purple);
+            font-size: 0.9rem;
+        }
+
+            .info-item label i {
+                color: var(--teal);
+            }
+
+    .info-value {
+        padding: 0.875rem 1rem;
+        background: white;
+        border: 2px solid rgba(102, 126, 234, 0.15);
+        border-radius: 10px;
+        color: #444;
+        font-size: 1rem;
+        font-weight: 500;
+    }
+
+    .bio-box {
+        min-height: 80px;
+        white-space: pre-wrap;
+        line-height: 1.6;
+    }
+
+    .url-value {
+        word-break: break-all;
+        color: var(--teal);
+        font-size: 0.9rem;
+    }
+
+    .action-buttons {
+        display: flex;
+        gap: 1rem;
+        padding-top: 2rem;
+        border-top: 2px solid rgba(102, 126, 234, 0.1);
+    }
+
+    .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        padding: 0.875rem 1.75rem;
+        border-radius: 10px;
+        font-weight: 700;
+        font-size: 1rem;
+        text-decoration: none;
+        border: none;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+    }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .btn:hover::before {
+            left: 100%;
+        }
+
+    .btn-primary {
+        background: linear-gradient(135deg, var(--orange), #ff9a3c);
+        color: white;
+        box-shadow: 0 6px 20px rgba(255, 122, 0, 0.3);
+    }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(255, 122, 0, 0.4);
+        }
+
+    .btn-secondary {
+        background: transparent;
+        color: var(--purple);
+        border: 2px solid rgba(39, 0, 66, 0.2);
+    }
+
+        .btn-secondary:hover {
+            background: rgba(39, 0, 66, 0.05);
+            transform: translateY(-2px);
+        }
+
+    @@keyframes spin {
+        to {
+            transform: rotate(360deg);
+        }
+    }
+
+    @@media (max-width: 768px) {
+        .details-doctor-root {
+            padding: 0;
+        }
+
+        .page-header {
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .header-content h1 {
+            font-size: 1.5rem;
+        }
+
+        .details-container {
+            padding: 1.5rem;
+        }
+
+        .details-header {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .doctor-profile {
+            width: 100%;
+        }
+
+        .doctor-info h2 {
+            font-size: 1.5rem;
+        }
+
+        .info-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .action-buttons {
+            flex-direction: column;
+        }
+
+        .btn {
+            width: 100%;
+        }
+    }
+</style>
+
+@code {
+    [Parameter]
+    public int id { get; set; }
+
+    private DoctorDto? Doctor;
+    private bool isLoading = true;
+    private string? errorMessage;
+
+    protected async override Task OnInitializedAsync()
+    {
+        await LoadDoctor();
+    }
+
+    private async Task LoadDoctor()
+    {
+        isLoading = true;
+        errorMessage = null;
+
+        try
+        {
+            var response = await doctorService.Get(id);
+            if (response.Success)
+            {
+                Doctor = response.Data;
+            }
+            else
+            {
+                errorMessage = response.Message ?? "Failed to load doctor details";
+            }
+        }
+        catch (Exception ex)
+        {
+            errorMessage = $"Error loading doctor: {ex.Message}";
+        }
+        finally
+        {
+            isLoading = false;
+        }
+    }
+
+    private void BackToList()
+    {
+        navManager.NavigateTo("/doctors/");
+    }
+
+    private void GoToEdit()
+    {
+        navManager.NavigateTo($"/doctors/update/{Doctor?.DoctorId}");
+    }
+}

@@ -1,0 +1,625 @@
+﻿@page "/appointments/details/{id:int}"
+@inject IAppointmentService appointmentService
+@inject NavigationManager navManager
+@attribute [Authorize(Roles = Roles.Administrator)]
+
+<PageTitle>Appointment Details • AppointMed</PageTitle>
+
+<div class="details-appointment-root">
+    <div class="page-header">
+        <div class="header-content">
+            <h1><i class="bi bi-file-text-fill"></i> Appointment Details</h1>
+            <p>View complete appointment information</p>
+        </div>
+    </div>
+
+    @if (!string.IsNullOrEmpty(ErrorMessage))
+    {
+        <div class="alert alert-danger">
+            <i class="bi bi-exclamation-triangle-fill"></i>
+            <span>@ErrorMessage</span>
+        </div>
+    }
+
+    @if (IsLoading)
+    {
+        <div class="loading-container">
+            <div class="spinner-large"></div>
+            <p>Loading appointment details...</p>
+        </div>
+    }
+    else
+    {
+        <div class="details-container">
+            <div class="details-header">
+                <div class="status-badge status-@GetStatusClass()">
+                    <i class="bi bi-@GetStatusIcon()"></i>
+                    <span>@Appointment.StatusName</span>
+                </div>
+            </div>
+
+            <div class="details-sections">
+                <div class="details-section">
+                    <div class="section-header">
+                        <i class="bi bi-person-fill"></i>
+                        <h5>Patient Information</h5>
+                    </div>
+
+                    <div class="info-grid">
+                        <div class="info-item">
+                            <label><i class="bi bi-person"></i> First Name</label>
+                            <div class="info-value">@Appointment.PatientFirstName</div>
+                        </div>
+
+                        <div class="info-item">
+                            <label><i class="bi bi-person"></i> Last Name</label>
+                            <div class="info-value">@Appointment.PatientLastName</div>
+                        </div>
+
+                        <div class="info-item">
+                            <label><i class="bi bi-envelope"></i> Email Address</label>
+                            <div class="info-value">@Appointment.PatientEmail</div>
+                        </div>
+
+                        <div class="info-item">
+                            <label><i class="bi bi-telephone"></i> Phone Number</label>
+                            <div class="info-value">@Appointment.PatientPhoneNumber</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="details-section">
+                    <div class="section-header">
+                        <i class="bi bi-calendar-event-fill"></i>
+                        <h5>Appointment Information</h5>
+                    </div>
+
+                    <div class="info-grid">
+                        <div class="info-item">
+                            <label><i class="bi bi-clock"></i> Date & Time</label>
+                            <div class="info-value">@Appointment.AppointmentDateTime.ToString("dd/MM/yyyy HH:mm")</div>
+                        </div>
+
+                        <div class="info-item">
+                            <label><i class="bi bi-tag"></i> Appointment Type</label>
+                            <div class="info-value">@Appointment.AppointmentType</div>
+                        </div>
+
+                        <div class="info-item">
+                            <label><i class="bi bi-person-badge"></i> Doctor</label>
+                            <div class="info-value">@DoctorDisplay</div>
+                        </div>
+
+                        <div class="info-item">
+                            <label><i class="bi bi-check-circle"></i> Status</label>
+                            <div class="info-value">
+                                <span class="status-inline status-@GetStatusClass()">@Appointment.StatusName</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    @if (!string.IsNullOrWhiteSpace(Appointment.Notes))
+                    {
+                        <div class="info-item full-width">
+                            <label><i class="bi bi-file-text"></i> Notes</label>
+                            <div class="info-value notes-box">@Appointment.Notes</div>
+                        </div>
+                    }
+
+                    @if (!string.IsNullOrWhiteSpace(Appointment.CancellationReason))
+                    {
+                        <div class="info-item full-width cancellation-box">
+                            <label><i class="bi bi-x-circle"></i> Cancellation Reason</label>
+                            <div class="info-value">@Appointment.CancellationReason</div>
+                        </div>
+                    }
+                </div>
+
+                <div class="details-section audit-section">
+                    <div class="section-header">
+                        <i class="bi bi-clock-history"></i>
+                        <h5>Audit Information</h5>
+                    </div>
+
+                    <div class="info-grid">
+                        <div class="info-item">
+                            <label><i class="bi bi-plus-circle"></i> Created At</label>
+                            <div class="info-value">@Appointment.CreatedAt.ToString("dd/MM/yyyy HH:mm")</div>
+                        </div>
+
+                        @if (Appointment.UpdatedAt.HasValue)
+                        {
+                            <div class="info-item">
+                                <label><i class="bi bi-pencil-square"></i> Updated At</label>
+                                <div class="info-value">@Appointment.UpdatedAt.Value.ToString("dd/MM/yyyy HH:mm")</div>
+                            </div>
+                        }
+
+                        @if (Appointment.CancelledAt.HasValue)
+                        {
+                            <div class="info-item">
+                                <label><i class="bi bi-x-circle"></i> Cancelled At</label>
+                                <div class="info-value">@Appointment.CancelledAt.Value.ToString("dd/MM/yyyy HH:mm")</div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+
+            <div class="action-buttons">
+                <button @onclick="GoToEdit" class="btn btn-primary">
+                    <i class="bi bi-pencil-square"></i>
+                    <span>Edit Appointment</span>
+                </button>
+                <button @onclick="BackToList" class="btn btn-secondary">
+                    <i class="bi bi-arrow-left"></i>
+                    <span>Back To List</span>
+                </button>
+            </div>
+        </div>
+    }
+</div>
+
+<style>
+    :root {
+        --green: #0acc81;
+        --black: #000000;
+        --purple: #270042;
+        --teal: #18739a;
+        --cyan: #3ccce4;
+        --sage: #8dbdae;
+        --red: #c90136;
+        --blue: #2e9ae8;
+        --lime: #2cba00;
+        --intense-blue: #282fe2;
+        --orange: #ff7a00;
+    }
+
+    .details-appointment-root {
+        max-width: 1100px;
+        margin: 0 auto;
+    }
+
+    .page-header {
+        background: linear-gradient(135deg, rgba(39, 0, 66, 0.05), rgba(24, 115, 154, 0.05));
+        border-radius: 16px;
+        padding: 2rem;
+        margin-bottom: 2rem;
+        border-left: 6px solid var(--sage);
+    }
+
+    .header-content h1 {
+        font-size: 2rem;
+        font-weight: 800;
+        color: var(--purple);
+        margin-bottom: 0.5rem;
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+    }
+
+    .header-content p {
+        color: #666;
+        margin: 0;
+        font-size: 1.05rem;
+    }
+
+    .alert {
+        border-radius: 12px;
+        padding: 1rem 1.25rem;
+        margin-bottom: 2rem;
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        font-weight: 600;
+        background: linear-gradient(135deg, rgba(201, 1, 54, 0.1), rgba(255, 122, 0, 0.1));
+        border: 2px solid var(--red);
+        color: var(--red);
+    }
+
+    .alert i {
+        font-size: 1.5rem;
+    }
+
+    .loading-container {
+        text-align: center;
+        padding: 3rem;
+        background: white;
+        border-radius: 20px;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+    }
+
+    .spinner-large {
+        width: 48px;
+        height: 48px;
+        border: 4px solid rgba(24, 115, 154, 0.2);
+        border-top-color: var(--teal);
+        border-radius: 50%;
+        animation: spin 0.8s linear infinite;
+        margin: 0 auto 1rem;
+    }
+
+    .loading-container p {
+        color: #666;
+        font-size: 1.1rem;
+        font-weight: 600;
+    }
+
+    .details-container {
+        background: white;
+        border-radius: 20px;
+        padding: 2.5rem;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+        border: 1px solid rgba(102, 126, 234, 0.1);
+    }
+
+    .details-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding-bottom: 2rem;
+        margin-bottom: 2rem;
+        border-bottom: 2px solid rgba(102, 126, 234, 0.15);
+        flex-wrap: wrap;
+        gap: 1rem;
+    }
+
+    .appointment-badge {
+        display: flex;
+        flex-direction: column;
+        gap: 0.25rem;
+    }
+
+    .badge-label {
+        font-size: 0.85rem;
+        color: #666;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    .badge-value {
+        font-size: 2rem;
+        font-weight: 800;
+        color: var(--purple);
+    }
+
+    .status-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.75rem 1.5rem;
+        border-radius: 12px;
+        font-weight: 700;
+        font-size: 1rem;
+    }
+
+    .status-scheduled {
+        background: linear-gradient(135deg, rgba(46, 158, 232, 0.15), rgba(60, 204, 228, 0.15));
+        border: 2px solid var(--blue);
+        color: var(--blue);
+    }
+
+    .status-confirmed {
+        background: linear-gradient(135deg, rgba(10, 204, 129, 0.15), rgba(44, 186, 0, 0.15));
+        border: 2px solid var(--green);
+        color: var(--green);
+    }
+
+    .status-completed {
+        background: linear-gradient(135deg, rgba(140, 189, 174, 0.15), rgba(24, 115, 154, 0.15));
+        border: 2px solid var(--sage);
+        color: var(--sage);
+    }
+
+    .status-cancelled {
+        background: linear-gradient(135deg, rgba(201, 1, 54, 0.15), rgba(255, 122, 0, 0.15));
+        border: 2px solid var(--red);
+        color: var(--red);
+    }
+
+    .status-noshow {
+        background: linear-gradient(135deg, rgba(255, 122, 0, 0.15), rgba(201, 1, 54, 0.15));
+        border: 2px solid var(--orange);
+        color: var(--orange);
+    }
+
+    .details-sections {
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+        margin-bottom: 2rem;
+    }
+
+    .details-section {
+        background: linear-gradient(135deg, rgba(102, 126, 234, 0.03), rgba(118, 75, 162, 0.03));
+        border: 1px solid rgba(102, 126, 234, 0.15);
+        border-radius: 16px;
+        padding: 1.5rem;
+    }
+
+    .audit-section {
+        background: linear-gradient(135deg, rgba(140, 189, 174, 0.05), rgba(24, 115, 154, 0.05));
+    }
+
+    .section-header {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        margin-bottom: 1.5rem;
+        padding-bottom: 1rem;
+        border-bottom: 2px solid rgba(102, 126, 234, 0.15);
+    }
+
+    .section-header i {
+        font-size: 1.5rem;
+        color: var(--teal);
+    }
+
+    .section-header h5 {
+        margin: 0;
+        font-size: 1.25rem;
+        font-weight: 800;
+        color: var(--purple);
+    }
+
+    .info-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 1.5rem;
+    }
+
+    .info-item {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    .info-item.full-width {
+        grid-column: 1 / -1;
+    }
+
+    .info-item label {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-weight: 700;
+        color: var(--purple);
+        font-size: 0.9rem;
+    }
+
+    .info-item label i {
+        color: var(--teal);
+    }
+
+    .info-value {
+        padding: 0.875rem 1rem;
+        background: white;
+        border: 2px solid rgba(102, 126, 234, 0.15);
+        border-radius: 10px;
+        color: #444;
+        font-size: 1rem;
+        font-weight: 500;
+    }
+
+    .notes-box {
+        min-height: 80px;
+        white-space: pre-wrap;
+        line-height: 1.6;
+    }
+
+    .cancellation-box {
+        background: linear-gradient(135deg, rgba(201, 1, 54, 0.05), rgba(255, 122, 0, 0.05));
+        border: 2px solid rgba(201, 1, 54, 0.2);
+        border-radius: 12px;
+        padding: 1rem;
+        margin-top: 1rem;
+    }
+
+    .cancellation-box label {
+        color: var(--red);
+    }
+
+    .cancellation-box label i {
+        color: var(--red);
+    }
+
+    .cancellation-box .info-value {
+        background: rgba(255, 255, 255, 0.8);
+        border-color: rgba(201, 1, 54, 0.2);
+    }
+
+    .status-inline {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.35rem;
+        padding: 0.4rem 0.875rem;
+        border-radius: 8px;
+        font-weight: 700;
+        font-size: 0.9rem;
+        width: fit-content;
+    }
+
+    .action-buttons {
+        display: flex;
+        gap: 1rem;
+        padding-top: 2rem;
+        border-top: 2px solid rgba(102, 126, 234, 0.1);
+    }
+
+    .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        padding: 0.875rem 1.75rem;
+        border-radius: 10px;
+        font-weight: 700;
+        font-size: 1rem;
+        text-decoration: none;
+        border: none;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .btn::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+        transition: left 0.5s ease;
+    }
+
+    .btn:hover::before {
+        left: 100%;
+    }
+
+    .btn-primary {
+        background: linear-gradient(135deg, var(--orange), #ff9a3c);
+        color: white;
+        box-shadow: 0 6px 20px rgba(255, 122, 0, 0.3);
+    }
+
+    .btn-primary:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 10px 30px rgba(255, 122, 0, 0.4);
+    }
+
+    .btn-secondary {
+        background: transparent;
+        color: var(--purple);
+        border: 2px solid rgba(39, 0, 66, 0.2);
+    }
+
+    .btn-secondary:hover {
+        background: rgba(39, 0, 66, 0.05);
+        transform: translateY(-2px);
+    }
+
+    @@keyframes spin {
+        to { transform: rotate(360deg); }
+    }
+
+    @@media (max-width: 768px) {
+        .details-appointment-root {
+            padding: 0;
+        }
+
+        .page-header {
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .header-content h1 {
+            font-size: 1.5rem;
+        }
+
+        .details-container {
+            padding: 1.5rem;
+        }
+
+        .details-header {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .info-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .action-buttons {
+            flex-direction: column;
+        }
+
+        .btn {
+            width: 100%;
+        }
+    }
+</style>
+
+@code {
+    [Parameter]
+    public int id { get; set; }
+
+    private AppointmentDto Appointment = new AppointmentDto();
+    private bool IsLoading = true;
+    private string ErrorMessage = string.Empty;
+
+    private string DoctorDisplay =>
+        !string.IsNullOrWhiteSpace(Appointment.DoctorName)
+            ? $"Dr. {Appointment.DoctorName}"
+            : "No Doctor Assigned";
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadAppointment();
+    }
+
+    private async Task LoadAppointment()
+    {
+        IsLoading = true;
+        ErrorMessage = string.Empty;
+
+        try
+        {
+            var response = await appointmentService.Get(id);
+            if (response.Success)
+            {
+                Appointment = response.Data;
+            }
+            else
+            {
+                ErrorMessage = response.Message ?? "Failed to load appointment";
+            }
+        }
+        catch (Exception ex)
+        {
+            ErrorMessage = $"Error loading appointment: {ex.Message}";
+        }
+        finally
+        {
+            IsLoading = false;
+        }
+    }
+
+    private void BackToList()
+    {
+        navManager.NavigateTo("/appointments/");
+    }
+
+    private void GoToEdit()
+    {
+        navManager.NavigateTo($"/appointments/update/{Appointment.AppointmentId}");
+    }
+
+    private string GetStatusClass()
+    {
+        return Appointment.StatusName?.ToLower() switch
+        {
+            "scheduled" => "scheduled",
+            "confirmed" => "confirmed",
+            "completed" => "completed",
+            "cancelled" => "cancelled",
+            "no show" => "noshow",
+            _ => "scheduled"
+        };
+    }
+
+    private string GetStatusIcon()
+    {
+        return Appointment.StatusName?.ToLower() switch
+        {
+            "scheduled" => "calendar-check",
+            "confirmed" => "check-circle-fill",
+            "completed" => "check-all",
+            "cancelled" => "x-circle-fill",
+            "no show" => "exclamation-circle-fill",
+            _ => "calendar-check"
+        };
+    }
+}

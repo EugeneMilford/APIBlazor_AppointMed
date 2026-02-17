@@ -1,0 +1,91 @@
+2026-01-26 13:56:20.966 +02:00 [INF] Now listening on: https://localhost:7017
+2026-01-26 13:56:21.032 +02:00 [INF] Now listening on: http://localhost:5001
+2026-01-26 13:56:21.143 +02:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-01-26 13:56:21.145 +02:00 [INF] Hosting environment: Development
+2026-01-26 13:56:21.147 +02:00 [INF] Content root path: D:\Projects\AppointMed Project\AppointMed\AppointMed.API
+2026-01-26 13:56:37.625 +02:00 [INF] Login Attempt for lisa.wilson@email.com 
+2026-01-26 14:03:16.431 +02:00 [INF] Now listening on: https://localhost:7017
+2026-01-26 14:03:16.525 +02:00 [INF] Now listening on: http://localhost:5001
+2026-01-26 14:03:16.717 +02:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-01-26 14:03:16.737 +02:00 [INF] Hosting environment: Development
+2026-01-26 14:03:16.746 +02:00 [INF] Content root path: D:\Projects\AppointMed Project\AppointMed\AppointMed.API
+2026-01-26 14:03:27.542 +02:00 [INF] Login Attempt for lisa.wilson@email.com 
+2026-01-26 14:03:27.542 +02:00 [INF] Login Attempt for lisa.wilson@email.com 
+2026-01-26 14:03:27.542 +02:00 [INF] Login Attempt for lisa.wilson@email.com 
+2026-01-26 14:03:28.007 +02:00 [INF] Login Attempt for lisa.wilson@email.com 
+2026-01-26 14:03:29.133 +02:00 [INF] Login Attempt for lisa.wilson@email.com 
+2026-01-26 14:03:29.387 +02:00 [INF] Login Attempt for lisa.wilson@email.com 
+2026-01-26 14:03:34.570 +02:00 [INF] Login Attempt for lisa.wilson@email.com 
+2026-01-26 14:04:40.610 +02:00 [INF] Login Attempt for lisa.wilson@email.com 
+2026-01-26 14:05:47.005 +02:00 [INF] Now listening on: https://localhost:7017
+2026-01-26 14:05:47.066 +02:00 [INF] Now listening on: http://localhost:5001
+2026-01-26 14:05:47.387 +02:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-01-26 14:05:47.391 +02:00 [INF] Hosting environment: Development
+2026-01-26 14:05:47.392 +02:00 [INF] Content root path: D:\Projects\AppointMed Project\AppointMed\AppointMed.API
+2026-01-26 14:06:09.068 +02:00 [INF] Login Attempt for lisa.wilson@email.com 
+2026-01-26 14:08:20.104 +02:00 [INF] Now listening on: https://localhost:7017
+2026-01-26 14:08:20.195 +02:00 [INF] Now listening on: http://localhost:5001
+2026-01-26 14:08:20.342 +02:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-01-26 14:08:20.370 +02:00 [INF] Hosting environment: Development
+2026-01-26 14:08:20.373 +02:00 [INF] Content root path: D:\Projects\AppointMed Project\AppointMed\AppointMed.API
+2026-01-26 14:08:27.359 +02:00 [INF] Login Attempt for lisa.wilson@email.com 
+2026-01-26 14:08:29.012 +02:00 [INF] Login Attempt for lisa.wilson@email.com 
+2026-01-26 14:40:02.965 +02:00 [INF] Now listening on: https://localhost:7017
+2026-01-26 14:40:03.065 +02:00 [INF] Now listening on: http://localhost:5001
+2026-01-26 14:40:03.255 +02:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-01-26 14:40:03.463 +02:00 [INF] Hosting environment: Development
+2026-01-26 14:40:03.572 +02:00 [INF] Content root path: D:\Projects\AppointMed Project\AppointMed\AppointMed.API
+2026-01-26 14:45:53.487 +02:00 [INF] Now listening on: https://localhost:7017
+2026-01-26 14:45:53.586 +02:00 [INF] Now listening on: http://localhost:5001
+2026-01-26 14:45:53.718 +02:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-01-26 14:45:53.758 +02:00 [INF] Hosting environment: Development
+2026-01-26 14:45:53.764 +02:00 [INF] Content root path: D:\Projects\AppointMed Project\AppointMed\AppointMed.API
+2026-01-26 14:46:10.576 +02:00 [INF] Login Attempt for lisa.wilson@email.com 
+2026-01-26 14:46:28.295 +02:00 [INF] Login Attempt for lisa.wilson@email.com 
+2026-01-26 14:47:32.143 +02:00 [INF] Now listening on: https://localhost:7017
+2026-01-26 14:47:32.220 +02:00 [INF] Now listening on: http://localhost:5001
+2026-01-26 14:47:32.367 +02:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-01-26 14:47:32.382 +02:00 [INF] Hosting environment: Development
+2026-01-26 14:47:32.391 +02:00 [INF] Content root path: D:\Projects\AppointMed Project\AppointMed\AppointMed.API
+2026-01-26 14:47:43.021 +02:00 [INF] Login Attempt for lisa.wilson@email.com 
+2026-01-26 14:47:54.774 +02:00 [INF] Login Attempt for lisa.wilson@email.com 
+2026-01-26 14:52:00.287 +02:00 [INF] Now listening on: https://localhost:7017
+2026-01-26 14:52:00.389 +02:00 [INF] Now listening on: http://localhost:5001
+2026-01-26 14:52:00.578 +02:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-01-26 14:52:00.585 +02:00 [INF] Hosting environment: Development
+2026-01-26 14:52:00.601 +02:00 [INF] Content root path: D:\Projects\AppointMed Project\AppointMed\AppointMed.API
+2026-01-26 14:52:08.363 +02:00 [INF] Login Attempt for lisa.wilson@email.com 
+2026-01-26 14:53:27.499 +02:00 [INF] Now listening on: https://localhost:7017
+2026-01-26 14:53:27.592 +02:00 [INF] Now listening on: http://localhost:5001
+2026-01-26 14:53:27.693 +02:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-01-26 14:53:27.696 +02:00 [INF] Hosting environment: Development
+2026-01-26 14:53:27.699 +02:00 [INF] Content root path: D:\Projects\AppointMed Project\AppointMed\AppointMed.API
+2026-01-26 14:53:34.380 +02:00 [INF] Login Attempt for lisa.wilson@email.com 
+2026-01-26 14:54:49.629 +02:00 [INF] Now listening on: https://localhost:7017
+2026-01-26 14:54:49.726 +02:00 [INF] Now listening on: http://localhost:5001
+2026-01-26 14:54:49.894 +02:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-01-26 14:54:49.918 +02:00 [INF] Hosting environment: Development
+2026-01-26 14:54:49.925 +02:00 [INF] Content root path: D:\Projects\AppointMed Project\AppointMed\AppointMed.API
+2026-01-26 14:54:57.190 +02:00 [INF] Login Attempt for lisa.wilson@email.com 
+2026-01-26 14:56:25.658 +02:00 [INF] Now listening on: https://localhost:7017
+2026-01-26 14:56:25.719 +02:00 [INF] Now listening on: http://localhost:5001
+2026-01-26 14:56:25.862 +02:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-01-26 14:56:25.865 +02:00 [INF] Hosting environment: Development
+2026-01-26 14:56:25.867 +02:00 [INF] Content root path: D:\Projects\AppointMed Project\AppointMed\AppointMed.API
+2026-01-26 14:56:31.461 +02:00 [INF] Login Attempt for lisa.wilson@email.com 
+2026-01-26 15:39:27.131 +02:00 [INF] Now listening on: https://localhost:7017
+2026-01-26 15:39:27.190 +02:00 [INF] Now listening on: http://localhost:5001
+2026-01-26 15:39:27.480 +02:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-01-26 15:39:27.563 +02:00 [INF] Hosting environment: Development
+2026-01-26 15:39:27.645 +02:00 [INF] Content root path: D:\Projects\AppointMed Project\AppointMed\AppointMed.API
+2026-01-26 15:40:56.504 +02:00 [INF] Registration Attempt for john.admin@appointmed.com 
+2026-01-26 15:40:58.654 +02:00 [INF] User john.admin@appointmed.com registered successfully with role Administrator
+2026-01-26 15:42:23.721 +02:00 [INF] Login Attempt for john.admin@appointmed.com 
+2026-01-26 15:43:44.918 +02:00 [INF] Login Attempt for john.admin@appointmed.com 
+2026-01-26 16:57:35.276 +02:00 [INF] Now listening on: https://localhost:7017
+2026-01-26 16:57:35.457 +02:00 [INF] Now listening on: http://localhost:5001
+2026-01-26 16:57:35.836 +02:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-01-26 16:57:35.845 +02:00 [INF] Hosting environment: Development
+2026-01-26 16:57:35.868 +02:00 [INF] Content root path: D:\Projects\AppointMed Project\AppointMed\AppointMed.API
+2026-01-26 16:57:45.538 +02:00 [INF] Login Attempt for john.admin@appointmed.com 
+2026-01-26 16:58:22.912 +02:00 [INF] Login Attempt for john.admin@appointmed.com 

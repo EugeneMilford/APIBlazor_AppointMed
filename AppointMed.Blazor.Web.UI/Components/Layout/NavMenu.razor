@@ -1,0 +1,321 @@
+﻿@using Microsoft.AspNetCore.Components.Authorization
+
+<nav class="sidebar-nav">
+    <div class="brand-section">
+        <div class="brand-content">
+            <span class="brand-icon">⚕️</span>
+            <a class="brand-name" href="">AppointMed</a>
+        </div>
+        <button class="navbar-toggler" type="button" @onclick="ToggleNavMenu" aria-label="Toggle navigation">
+            <span class="bi bi-list"></span>
+        </button>
+    </div>
+
+    <div class="@NavMenuCssClass">
+        <AuthorizeView Context="authState">
+            <Authorized>
+                <div class="nav-main">
+                    <ul class="nav-list">
+                        <li class="nav-item">
+                            <NavLink class="nav-link" href="/home" Match="NavLinkMatch.All">
+                                <i class="bi bi-house-door-fill"></i>
+                                <span>Home</span>
+                            </NavLink>
+                        </li>
+                        <li class="nav-item">
+                            <NavLink class="nav-link" href="/about/">
+                                <i class="bi bi-calendar-check-fill"></i>
+                                <span>About</span>
+                            </NavLink>
+                        </li>
+                        <li class="nav-item">
+                            <NavLink class="nav-link" href="/appointments/">
+                                <i class="bi bi-calendar-check-fill"></i>
+                                <span>Appointments</span>
+                            </NavLink>
+                        </li>
+                        <li class="nav-item">
+                            <NavLink class="nav-link" href="/doctors/">
+                                <i class="bi bi-people-fill"></i>
+                                <span>Doctors</span>
+                            </NavLink>
+                        </li>
+                        <li class="nav-item">
+                            <NavLink class="nav-link" href="/medicines">
+                                <i class="bi bi-capsule-fill"></i>
+                                <span>Medicines</span>
+                            </NavLink>
+                        </li>
+                        <li class="nav-item">
+                            <NavLink class="nav-link" href="/prescriptions">
+                                <i class="bi bi-capsule-pill"></i>
+                                <span>My Prescriptions</span>
+                            </NavLink>
+                        </li>
+                        <li class="nav-item">
+                            <NavLink class="nav-link" href="/account">
+                                <i class="bi bi-wallet2"></i>
+                                <span>My Account</span>
+                            </NavLink>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="nav-footer">
+                    <NavLink class="nav-link logout-link" href="/users/logout">
+                        <i class="bi bi-box-arrow-left"></i>
+                        <span>Log Out</span>
+                    </NavLink>
+                </div>
+            </Authorized>
+            <NotAuthorized>
+                <div class="nav-main">
+                    <ul class="nav-list">
+                        <li class="nav-item">
+                            <NavLink class="nav-link" href="/users/register">
+                                <i class="bi bi-person-plus-fill"></i>
+                                <span>Register</span>
+                            </NavLink>
+                        </li>
+                        <li class="nav-item">
+                            <NavLink class="nav-link" href="/users/login">
+                                <i class="bi bi-box-arrow-in-right"></i>
+                                <span>Login</span>
+                            </NavLink>
+                        </li>
+                    </ul>
+                </div>
+            </NotAuthorized>
+        </AuthorizeView>
+    </div>
+</nav>
+
+<style>
+    .sidebar-nav {
+        height: 100vh;
+        background: linear-gradient(180deg, #270042 0%, #18739a 100%);
+        display: flex;
+        flex-direction: column;
+        width: 280px;
+        position: fixed;
+        left: 0;
+        top: 0;
+        box-shadow: 4px 0 20px rgba(0, 0, 0, 0.15);
+        z-index: 1000;
+    }
+
+    .brand-section {
+        padding: 1.5rem 1.25rem;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .brand-content {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+    }
+
+    .brand-icon {
+        font-size: 1.75rem;
+        animation: pulse 2s ease-in-out infinite;
+    }
+
+    @@keyframes pulse {
+        0%, 100% {
+            transform: scale(1);
+        }
+
+        50% {
+            transform: scale(1.05);
+        }
+    }
+
+    .brand-name {
+        font-size: 1.5rem;
+        font-weight: 800;
+        color: white;
+        text-decoration: none;
+        letter-spacing: -0.5px;
+    }
+
+        .brand-name:hover {
+            color: #0acc81;
+        }
+
+    .navbar-toggler {
+        display: none;
+        background: transparent;
+        border: none;
+        color: white;
+        font-size: 1.5rem;
+        cursor: pointer;
+    }
+
+    .nav-main {
+        flex: 1;
+        overflow-y: auto;
+        padding: 1rem 0;
+    }
+
+    .profile-section {
+        padding: 1.25rem 1.25rem 1.5rem;
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        background: rgba(255, 255, 255, 0.05);
+        margin: 0 1rem 1rem;
+        border-radius: 12px;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .profile-avatar {
+        font-size: 2.5rem;
+        color: #0acc81;
+    }
+
+    .profile-info {
+        display: flex;
+        flex-direction: column;
+        gap: 0.15rem;
+    }
+
+    .profile-name {
+        font-weight: 700;
+        color: white;
+        font-size: 1rem;
+        line-height: 1.2;
+    }
+
+    .profile-role {
+        font-size: 0.8rem;
+        color: rgba(255, 255, 255, 0.6);
+    }
+
+    .nav-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    .nav-item {
+        margin: 0;
+    }
+
+    .nav-link {
+        display: flex;
+        align-items: center;
+        gap: 0.875rem;
+        padding: 0.875rem 1.25rem;
+        color: rgba(255, 255, 255, 0.8);
+        text-decoration: none;
+        transition: all 0.3s ease;
+        font-weight: 500;
+        position: relative;
+    }
+
+        .nav-link i {
+            font-size: 1.25rem;
+            width: 24px;
+            text-align: center;
+        }
+
+        .nav-link:hover {
+            background: rgba(255, 255, 255, 0.08);
+            color: white;
+            padding-left: 1.5rem;
+        }
+
+        .nav-link.active {
+            background: rgba(10, 204, 129, 0.15);
+            color: #0acc81;
+            border-left: 4px solid #0acc81;
+            font-weight: 700;
+        }
+
+            .nav-link.active::before {
+                content: '';
+                position: absolute;
+                left: 0;
+                top: 0;
+                bottom: 0;
+                width: 4px;
+                background: linear-gradient(180deg, #0acc81, #2cba00);
+            }
+
+    .nav-footer {
+        padding: 1rem;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        margin-top: auto;
+    }
+
+    .logout-link {
+        background: rgba(201, 1, 54, 0.1);
+        border: 1px solid rgba(201, 1, 54, 0.3);
+        border-radius: 10px;
+        color: #ff6b6b !important;
+        font-weight: 600;
+    }
+
+        .logout-link:hover {
+            background: rgba(201, 1, 54, 0.2);
+            color: #ff4757 !important;
+            transform: translateX(0);
+            padding-left: 1.25rem;
+        }
+
+        .logout-link.active {
+            background: rgba(201, 1, 54, 0.25);
+            border-left: none;
+        }
+
+            .logout-link.active::before {
+                display: none;
+            }
+
+    .collapse {
+        display: none;
+    }
+
+    @@media (min-width: 768px) {
+        .collapse {
+            display: flex !important;
+            flex-direction: column;
+            height: calc(100vh - 80px);
+        }
+    }
+
+    @@media (max-width: 767px) {
+        .sidebar-nav {
+            width: 100%;
+            height: auto;
+            position: relative;
+        }
+
+        .navbar-toggler {
+            display: block;
+        }
+
+        .collapse.show {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .nav-footer {
+            position: relative;
+        }
+    }
+</style>
+
+@code {
+    private bool collapseNavMenu = true;
+    private string NavMenuCssClass => collapseNavMenu ? "collapse" : "show";
+
+    private void ToggleNavMenu()
+    {
+        collapseNavMenu = !collapseNavMenu;
+    }
+}
+      

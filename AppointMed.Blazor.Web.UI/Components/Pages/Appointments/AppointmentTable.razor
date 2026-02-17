@@ -1,0 +1,87 @@
+﻿@inject IJSRuntime js
+@inject IAppointmentService appointmentService
+
+<table class="table table-responsive">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Surname</th>
+            <th>Appointment Date</th>
+            <th>Doctor</th>
+            <th>Status</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var appointment in Appointments)
+        {
+            <tr>
+                <td>@appointment.PatientFirstName</td>
+                <td>@appointment.PatientLastName</td>
+                <td>@appointment.AppointmentDateTime.ToString("dd/MM/yyyy HH:mm")</td>
+                <td>
+                    @if (!string.IsNullOrWhiteSpace(appointment.DoctorName))
+                    {
+                        <text>Dr. @appointment.DoctorName</text>
+                    }
+                    else
+                    {
+                        <text>-</text>
+                    }
+                </td>
+                <td>
+                    <span class="badge @GetStatusBadgeClass(appointment.StatusName)">
+                        @appointment.StatusName
+                    </span>
+                </td>
+                <td>
+                    <a class="btn btn-primary" href="/appointments/details/@appointment.AppointmentId">
+                        <span class="oi oi-book" aria-hidden="true"></span> Details
+                    </a>
+                    <AuthorizeView Roles="Administrator">
+                        <a class="btn btn-warning" href="/appointments/update/@appointment.AppointmentId">
+                            <span class="oi oi-pencil" aria-hidden="true"></span> Edit
+                        </a>
+                        <button class="btn btn-danger" @onclick="@(() => Delete(@appointment.AppointmentId))">
+                            <span class="oi oi-delete" aria-hidden="true"></span> Delete
+                        </button>
+                    </AuthorizeView>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@code {
+    [Parameter]
+    public List<AppointmentDto> Appointments { get; set; }
+
+    [Parameter]
+    public EventCallback<int> OnDeleted { get; set; }
+
+    private async Task Delete(int appointmentId)
+    {
+        var appointment = Appointments.First(q => q.AppointmentId == appointmentId);
+        var confirm = await js.InvokeAsync<bool>("confirm",
+            $"Are You Sure You Want To Delete the appointment for {appointment.PatientFirstName} {appointment.PatientLastName}?");
+
+        if (confirm)
+        {
+            await OnDeleted.InvokeAsync(appointmentId);
+        }
+    }
+
+    private string GetStatusBadgeClass(string status)
+    {
+        return status switch
+        {
+            "Scheduled" => "bg-primary",
+            "Confirmed" => "bg-success",
+            "Completed" => "bg-secondary",
+            "Cancelled" => "bg-danger",
+            "No Show" => "bg-warning",
+            _ => "bg-info"
+        };
+    }
+}
+

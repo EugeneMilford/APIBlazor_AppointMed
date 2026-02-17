@@ -1,0 +1,127 @@
+﻿@page "/medicines/update/{id:int}"
+@inject IMedicineService medicineService
+@inject NavigationManager navManager
+@attribute [Authorize(Roles = "Administrator")]
+
+<PageTitle>Edit Medicine • AppointMed</PageTitle>
+
+<section class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card">
+                <div class="card-header bg-warning">
+                    <h4 class="mb-0">
+                        <i class="bi bi-pencil-square"></i> Edit Medicine
+                    </h4>
+                </div>
+                <div class="card-body">
+                    @if (medicine == null)
+                    {
+                        <div class="text-center py-4">
+                            <div class="spinner-border text-primary"></div>
+                            <p class="mt-3">Loading medicine details...</p>
+                        </div>
+                    }
+                    else
+                    {
+                        <EditForm Model="@medicine" OnValidSubmit="UpdateMedicine">
+                            <DataAnnotationsValidator />
+                            <ValidationSummary class="text-danger" />
+
+                            <div class="row g-3">
+                                <div class="col-md-8">
+                                    <label class="form-label">Medicine Name *</label>
+                                    <InputText @bind-Value="medicine.Name" class="form-control" />
+                                    <ValidationMessage For="@(() => medicine.Name)" />
+                                </div>
+
+                                <div class="col-md-4">
+                                    <label class="form-label">Dosage</label>
+                                    <InputText @bind-Value="medicine.Dosage" class="form-control" />
+                                    <ValidationMessage For="@(() => medicine.Dosage)" />
+                                </div>
+
+                                <div class="col-12">
+                                    <label class="form-label">Description</label>
+                                    <InputTextArea @bind-Value="medicine.Description" class="form-control" rows="3" />
+                                    <ValidationMessage For="@(() => medicine.Description)" />
+                                </div>
+
+                                <div class="col-md-6">
+                                    <label class="form-label">Price (R) *</label>
+                                    <InputNumber @bind-Value="medicine.Price" class="form-control" step="0.01" />
+                                    <ValidationMessage For="@(() => medicine.Price)" />
+                                </div>
+
+                                <div class="col-md-6">
+                                    <label class="form-label">Manufacturer</label>
+                                    <InputText @bind-Value="medicine.Manufacturer" class="form-control" />
+                                    <ValidationMessage For="@(() => medicine.Manufacturer)" />
+                                </div>
+
+                                <div class="col-12">
+                                    <div class="form-check">
+                                        <InputCheckbox @bind-Value="medicine.IsAvailable" class="form-check-input" id="isAvailable" />
+                                        <label class="form-check-label" for="isAvailable">
+                                            Available for prescription
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="mt-4 d-flex gap-2">
+                                <button type="submit" class="btn btn-warning" disabled="@isBusy">
+                                    @if (isBusy)
+                                    {
+                                        <span class="spinner-border spinner-border-sm me-2"></span>
+                                    }
+                                    <i class="bi bi-check-lg"></i> Update Medicine
+                                </button>
+                                <a class="btn btn-secondary" href="/medicines">
+                                    <i class="bi bi-x-lg"></i> Cancel
+                                </a>
+                            </div>
+                        </EditForm>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@code {
+    [Parameter] public int Id { get; set; }
+
+    private UpdateMedicineDto medicine;
+    private bool isBusy = false;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var response = await medicineService.Get(Id);
+        if (response.Success && response.Data != null)
+        {
+            medicine = new UpdateMedicineDto
+                {
+                    Id = response.Data.MedicineId,
+                    Name = response.Data.Name,
+                    Description = response.Data.Description,
+                    Price = response.Data.Price,
+                    Dosage = response.Data.Dosage,
+                    Manufacturer = response.Data.Manufacturer,
+                    IsAvailable = response.Data.IsAvailable
+                };
+        }
+    }
+
+    private async Task UpdateMedicine()
+    {
+        isBusy = true;
+        var response = await medicineService.Edit(Id, medicine);
+        isBusy = false;
+
+        if (response.Success)
+        {
+            navManager.NavigateTo("/medicines");
+        }
+    }
+}

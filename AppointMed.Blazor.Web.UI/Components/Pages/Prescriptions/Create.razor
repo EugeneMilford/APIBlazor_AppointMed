@@ -1,0 +1,424 @@
+﻿@page "/prescriptions/create"
+@inject IPrescriptionService prescriptionService
+@inject IAppointmentService appointmentService
+@inject IMedicineService medicineService
+@inject NavigationManager navManager
+@inject IJSRuntime js
+@attribute [Authorize(Roles = "Administrator")]
+
+<PageTitle>Create Prescription • AppointMed</PageTitle>
+
+<section class="prescription-create-page">
+    <div class="form-container">
+        <div class="form-header">
+            <h3>
+                <i class="bi bi-clipboard-plus"></i>
+                Create New Prescription
+            </h3>
+        </div>
+
+        @if (isLoading)
+        {
+            <div class="loading-state">
+                <div class="spinner-border text-teal"></div>
+                <p>Loading data...</p>
+            </div>
+        }
+        else
+        {
+            <EditForm Model="@prescription" OnValidSubmit="CreatePrescription" class="prescription-form">
+                <DataAnnotationsValidator />
+                <ValidationSummary class="alert alert-danger" />
+
+                <div class="row g-3">
+                    <div class="col-12">
+                        <h5 class="section-title">Prescription Details</h5>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label class="form-label">Appointment *</label>
+                        <select class="form-control" @onchange="OnAppointmentChanged">
+                            <option value="0">-- Select Appointment --</option>
+                            @if (Appointments != null)
+                            {
+                                @foreach (var appt in Appointments)
+                                {
+                                    <option value="@appt.AppointmentId">
+                                        @appt.PatientFirstName @appt.PatientLastName - @appt.AppointmentDateTime.ToString("dd MMM yyyy HH:mm")
+                                    </option>
+                                }
+                            }
+                        </select>
+                        @if (prescription.AppointmentId == 0)
+                        {
+                            <div class="text-danger small mt-1">Please select an appointment</div>
+                        }
+                    </div>
+
+                    <div class="col-md-6">
+                        <label class="form-label">Patient</label>
+                        <input type="text" class="form-control" value="@selectedPatientName" disabled />
+                        <small class="text-muted">Auto-filled from appointment</small>
+                    </div>
+
+                    <div class="col-md-8">
+                        <label class="form-label">Medicine *</label>
+                        <select class="form-control" @onchange="OnMedicineChanged">
+                            <option value="0">-- Select Medicine --</option>
+                            @if (Medicines != null)
+                            {
+                                @foreach (var medicine in Medicines.Where(m => m.IsAvailable))
+                                {
+                                    <option value="@medicine.MedicineId">
+                                        @medicine.Name @(!string.IsNullOrWhiteSpace(medicine.Dosage) ? $"({medicine.Dosage})" : "") - R@medicine.Price.ToString("N2")
+                                    </option>
+                                }
+                            }
+                        </select>
+                        @if (prescription.MedicineId == 0)
+                        {
+                            <div class="text-danger small mt-1">Please select a medicine</div>
+                        }
+                    </div>
+
+                    <div class="col-md-4">
+                        <label class="form-label">Quantity *</label>
+                        <InputNumber @bind-Value="prescription.Quantity" class="form-control" min="1" max="100" @onchange="CalculateCost" />
+                        <ValidationMessage For="@(() => prescription.Quantity)" />
+                    </div>
+
+                    <div class="col-12">
+                        <label class="form-label">Instructions</label>
+                        <InputTextArea @bind-Value="prescription.Instructions" class="form-control" rows="3" 
+                                       placeholder="e.g., Take one tablet twice daily after meals for 7 days" />
+                        <ValidationMessage For="@(() => prescription.Instructions)" />
+                    </div>
+
+                    @if (estimatedCost > 0)
+                    {
+                        <div class="col-12">
+                            <div class="cost-info">
+                                <i class="bi bi-info-circle"></i>
+                                <div>
+                                    <strong>Estimated Cost:</strong> R@estimatedCost.ToString("N2")
+                                    <br />
+                                    <small class="text-muted">Patient will be charged when they fulfill this prescription</small>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary" disabled="@isBusy">
+                        @if (isBusy)
+                        {
+                            <span class="spinner-border spinner-border-sm me-2"></span>
+                        }
+                        <i class="bi bi-check-lg"></i>
+                        Create Prescription
+                    </button>
+                    <a class="btn btn-secondary" href="/prescriptions">
+                        <i class="bi bi-x-lg"></i>
+                        Cancel
+                    </a>
+                </div>
+            </EditForm>
+        }
+    </div>
+</section>
+
+@code {
+    private AddPrescriptionDto prescription = new() 
+    { 
+        Quantity = 1, 
+        AppointmentId = 0, 
+        MedicineId = 0, 
+        UserId = "" 
+    };
+    
+    private List<AppointmentDto> Appointments;
+    private List<MedicineDto> Medicines;
+    private bool isBusy = false;
+    private bool isLoading = true;
+    private string selectedPatientName = "";
+    private decimal estimatedCost = 0;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadData();
+    }
+
+    private async Task LoadData()
+    {
+        isLoading = true;
+
+        // Load all appointments (admin can see all)
+        var appointmentsResponse = await appointmentService.Get();
+        if (appointmentsResponse.Success)
+        {
+            Appointments = appointmentsResponse.Data
+                .Where(a => a.StatusName?.ToLower() != "cancelled")
+                .OrderByDescending(a => a.AppointmentDateTime)
+                .ToList();
+        }
+        else
+        {
+            Appointments = new List<AppointmentDto>();
+        }
+
+        // Load available medicines
+        var medicinesResponse = await medicineService.Get();
+        if (medicinesResponse.Success)
+        {
+            Medicines = medicinesResponse.Data;
+        }
+        else
+        {
+            Medicines = new List<MedicineDto>();
+        }
+
+        isLoading = false;
+    }
+
+    private void OnAppointmentChanged(ChangeEventArgs e)
+    {
+        if (int.TryParse(e.Value?.ToString(), out int appointmentId) && appointmentId > 0)
+        {
+            // Update the prescription.AppointmentId
+            prescription.AppointmentId = appointmentId;
+            
+            var selectedAppointment = Appointments?.FirstOrDefault(a => a.AppointmentId == appointmentId);
+            if (selectedAppointment != null)
+            {
+                selectedPatientName = $"{selectedAppointment.PatientFirstName} {selectedAppointment.PatientLastName}";
+                prescription.UserId = selectedAppointment.UserId;
+                
+                Console.WriteLine($"Selected appointment: {appointmentId}, UserId: {prescription.UserId}");
+            }
+        }
+        else
+        {
+            selectedPatientName = "";
+            prescription.UserId = "";
+            prescription.AppointmentId = 0;
+        }
+        
+        StateHasChanged();
+    }
+
+    private void OnMedicineChanged(ChangeEventArgs e)
+    {
+        if (int.TryParse(e.Value?.ToString(), out int medicineId) && medicineId > 0)
+        {
+            prescription.MedicineId = medicineId;
+        }
+        else
+        {
+            prescription.MedicineId = 0;
+        }
+        
+        CalculateCost();
+        StateHasChanged();
+    }
+
+    private void CalculateCost()
+    {
+        if (prescription.MedicineId > 0 && prescription.Quantity > 0)
+        {
+            var selectedMedicine = Medicines?.FirstOrDefault(m => m.MedicineId == prescription.MedicineId);
+            if (selectedMedicine != null)
+            {
+                estimatedCost = (decimal)selectedMedicine.Price * prescription.Quantity;
+            }
+        }
+        else
+        {
+            estimatedCost = 0;
+        }
+    }
+
+    private async Task CreatePrescription()
+    {
+        // Validation
+        if (prescription.AppointmentId == 0)
+        {
+            await js.InvokeVoidAsync("alert", "Please select an appointment.");
+            return;
+        }
+
+        if (prescription.MedicineId == 0)
+        {
+            await js.InvokeVoidAsync("alert", "Please select a medicine.");
+            return;
+        }
+
+        if (string.IsNullOrEmpty(prescription.UserId))
+        {
+            await js.InvokeVoidAsync("alert", "User ID is missing. Please select an appointment again.");
+            return;
+        }
+
+        // Debug log
+        Console.WriteLine($"Creating prescription - AppointmentId: {prescription.AppointmentId}, MedicineId: {prescription.MedicineId}, UserId: {prescription.UserId}, Quantity: {prescription.Quantity}");
+
+        isBusy = true;
+        var response = await prescriptionService.Create(prescription);
+        isBusy = false;
+
+        if (response.Success)
+        {
+            await js.InvokeVoidAsync("alert", "Prescription created successfully! Patient can now view and fulfill it.");
+            navManager.NavigateTo("/prescriptions");
+        }
+        else
+        {
+            await js.InvokeVoidAsync("alert", response.Message ?? "Failed to create prescription.");
+        }
+    }
+}
+
+<style>
+    :root {
+        --purple: #270042;
+        --teal: #18739a;
+        --green: #0acc81;
+        --blue: #2e9ae8;
+    }
+
+    .prescription-create-page {
+        max-width: 900px;
+        margin: 2rem auto;
+        padding: 0 1rem;
+    }
+
+    .form-container {
+        background: white;
+        border-radius: 20px;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+    }
+
+    .form-header {
+        background: linear-gradient(135deg, var(--green), var(--teal));
+        color: white;
+        padding: 2rem;
+        text-align: center;
+    }
+
+    .form-header h3 {
+        margin: 0;
+        font-size: 1.75rem;
+        font-weight: 800;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.75rem;
+    }
+
+    .prescription-form {
+        padding: 2rem;
+    }
+
+    .section-title {
+        color: var(--purple);
+        font-weight: 700;
+        margin-bottom: 1rem;
+        padding-bottom: 0.5rem;
+        border-bottom: 2px solid rgba(39, 0, 66, 0.1);
+    }
+
+    .form-label {
+        font-weight: 600;
+        color: #333;
+        margin-bottom: 0.5rem;
+    }
+
+    .form-control, .form-select {
+        border: 2px solid #e0e0e0;
+        border-radius: 8px;
+        padding: 0.75rem;
+        transition: all 0.3s ease;
+    }
+
+    .form-control:focus, .form-select:focus {
+        border-color: var(--teal);
+        box-shadow: 0 0 0 0.2rem rgba(24, 115, 154, 0.15);
+    }
+
+    .form-control:disabled {
+        background-color: #f8f9fa;
+    }
+
+    .cost-info {
+        background: linear-gradient(135deg, rgba(10, 204, 129, 0.1), rgba(24, 115, 154, 0.1));
+        border-left: 4px solid var(--green);
+        padding: 1rem;
+        border-radius: 8px;
+        display: flex;
+        align-items: start;
+        gap: 0.75rem;
+    }
+
+    .cost-info i {
+        font-size: 1.5rem;
+        color: var(--teal);
+        margin-top: 0.25rem;
+    }
+
+    .form-actions {
+        display: flex;
+        gap: 1rem;
+        margin-top: 2rem;
+        padding-top: 2rem;
+        border-top: 2px solid rgba(0, 0, 0, 0.05);
+    }
+
+    .btn {
+        padding: 0.75rem 2rem;
+        font-weight: 600;
+        border-radius: 10px;
+        transition: all 0.3s ease;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .btn-primary {
+        background: linear-gradient(135deg, var(--green), var(--teal));
+        border: none;
+        color: white;
+    }
+
+    .btn-primary:hover:not(:disabled) {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 20px rgba(10, 204, 129, 0.3);
+    }
+
+    .btn-secondary {
+        background: #6c757d;
+        border: none;
+        color: white;
+    }
+
+    .btn-secondary:hover {
+        background: #5a6268;
+    }
+
+    .loading-state {
+        text-align: center;
+        padding: 4rem 2rem;
+    }
+
+    .text-teal {
+        color: var(--teal);
+    }
+
+    .validation-message {
+        color: #dc3545;
+        font-size: 0.875rem;
+        margin-top: 0.25rem;
+    }
+</style>
+  

@@ -1,0 +1,235 @@
+﻿@page "/account"
+@inject IAccountService accountService
+@inject IJSRuntime js
+
+<PageTitle>My Account • AppointMed</PageTitle>
+
+<section class="account-page container my-5">
+    <div class="mb-4">
+        <h3 class="text-purple">
+            <i class="bi bi-wallet2"></i> My Account
+        </h3>
+        <p class="text-muted">View your account balance and transaction history</p>
+    </div>
+
+    @if (!accountResponse.Success)
+    {
+        <div class="alert alert-danger" role="alert">
+            <strong>Error:</strong> @accountResponse.Message
+        </div>
+    }
+    else if (Account == null)
+    {
+        <div class="text-center py-5">
+            <div class="spinner-border text-teal" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+            <p class="mt-3">Loading account information...</p>
+        </div>
+    }
+    else
+    {
+        <!-- Account Balance Card -->
+        <div class="row mb-4">
+            <div class="col-md-6">
+                <div class="card balance-card">
+                    <div class="card-body">
+                        <h5 class="card-title">
+                            <i class="bi bi-cash-stack"></i> Account Balance
+                        </h5>
+                        <div class="balance-amount">
+                            R @Account.Balance.ToString("N2")
+                        </div>
+                        <p class="text-muted small mb-0">
+                            Total charges from appointments and prescriptions
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card info-card">
+                    <div class="card-body">
+                        <h5 class="card-title">
+                            <i class="bi bi-person-circle"></i> Account Holder
+                        </h5>
+                        <div class="account-info">
+                            <p class="mb-1"><strong>@Account.UserName</strong></p>
+                            <p class="text-muted small mb-1">Account ID: #@Account.AccountId</p>
+                            <p class="text-muted small mb-0">
+                                Created: @Account.CreatedAt.ToString("dd MMM yyyy")
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Transaction History -->
+        <div class="card">
+            <div class="card-header bg-light">
+                <h5 class="mb-0">
+                    <i class="bi bi-receipt"></i> Transaction History
+                </h5>
+            </div>
+            <div class="card-body">
+                @if (!transactionsResponse.Success)
+                {
+                    <div class="alert alert-danger">
+                        <strong>Error loading transactions:</strong> @transactionsResponse.Message
+                    </div>
+                }
+                else if (Transactions == null)
+                {
+                    <div class="text-center py-3">
+                        <div class="spinner-border text-teal" role="status"></div>
+                    </div>
+                }
+                else if (!Transactions.Any())
+                {
+                    <div class="text-center py-4">
+                        <i class="bi bi-inbox display-4 text-muted"></i>
+                        <p class="mt-3">No transactions yet</p>
+                    </div>
+                }
+                else
+                {
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Type</th>
+                                    <th>Description</th>
+                                    <th class="text-end">Amount</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var transaction in Transactions.OrderByDescending(t => t.TransactionDate))
+                                {
+                                    <tr>
+                                        <td>@transaction.TransactionDate.ToString("dd MMM yyyy HH:mm")</td>
+                                        <td>
+                                            <span class="badge @GetTransactionTypeClass(transaction.TransactionType)">
+                                                <i class="bi bi-@GetTransactionIcon(transaction.TransactionType)"></i>
+                                                @transaction.TransactionType
+                                            </span>
+                                        </td>
+                                        <td>@transaction.Description</td>
+                                        <td class="text-end fw-bold text-danger">
+                                            R @transaction.Amount.ToString("N2")
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                            <tfoot>
+                                <tr class="table-light fw-bold">
+                                    <td colspan="3" class="text-end">Total Balance:</td>
+                                    <td class="text-end text-danger">R @Account.Balance.ToString("N2")</td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                }
+            </div>
+        </div>
+    }
+</section>
+
+@code {
+    private AccountDto Account;
+    private List<AccountTransactionDto> Transactions;
+    private Response<AccountDto> accountResponse = new() { Success = true };
+    private Response<List<AccountTransactionDto>> transactionsResponse = new() { Success = true };
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadAccountData();
+    }
+
+    private async Task LoadAccountData()
+    {
+        accountResponse = await accountService.GetMyAccount();
+        if (accountResponse.Success)
+        {
+            Account = accountResponse.Data;
+        }
+
+        transactionsResponse = await accountService.GetMyTransactions();
+        if (transactionsResponse.Success)
+        {
+            Transactions = transactionsResponse.Data;
+        }
+    }
+
+    private static string GetTransactionTypeClass(string type)
+    {
+        return type?.ToLower() switch
+        {
+            "appointment" => "bg-primary",
+            "prescription" => "bg-success",
+            "payment" => "bg-warning text-dark",
+            _ => "bg-secondary"
+        };
+    }
+
+    private static string GetTransactionIcon(string type)
+    {
+        return type?.ToLower() switch
+        {
+            "appointment" => "calendar-check",
+            "prescription" => "capsule",
+            "payment" => "credit-card",
+            _ => "receipt"
+        };
+    }
+}
+
+<style>
+    :root {
+        --green: #0acc81;
+        --purple: #270042;
+        --teal: #18739a;
+        --red: #c90136;
+    }
+
+    .text-purple {
+        color: var(--purple);
+    }
+
+    .text-teal {
+        color: var(--teal);
+    }
+
+    .balance-card {
+        background: linear-gradient(135deg, rgba(24, 115, 154, 0.1), rgba(10, 204, 129, 0.1));
+        border: none;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .balance-amount {
+        font-size: 2.5rem;
+        font-weight: 800;
+        color: var(--teal);
+        margin: 1rem 0;
+    }
+
+    .info-card {
+        border: none;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .account-info p {
+        margin: 0.5rem 0;
+    }
+
+    .table thead th {
+        background-color: rgba(39, 0, 66, 0.05);
+        border-bottom: 2px solid var(--purple);
+        font-weight: 600;
+    }
+
+    .badge {
+        padding: 0.35rem 0.6rem;
+        font-size: 0.85rem;
+    }
+</style>

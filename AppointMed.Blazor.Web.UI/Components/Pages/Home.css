@@ -1,0 +1,55 @@
+﻿/* Hero Section */
+.hero-section {
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    border: 2px solid #cbd8df;
+    border-radius: 10px;
+    padding: 40px;
+}
+
+/* About Section */
+.about-card {
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    padding: 20px;
+}
+
+/* Feature Cards and Service Cards */
+.feature-card, .service-card {
+    transition: transform 0.2s ease-in-out;
+    border-width: 2px;
+    border-radius: 10px;
+}
+
+    .feature-card:hover, .service-card:hover {
+        transform: scale(1.05);
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    }
+
+/* Buttons */
+.btn {
+    padding: 10px 18px;
+    border-radius: 25px;
+    font-weight: bold;
+}
+
+    .btn:hover {
+        background-color: #e51010;
+        color: #ffffff;
+    }
+
+/* Utility Classes */
+.text-black {
+    color: #000000 !important;
+}
+
+.border-green {
+    border-color: #0acc81 !important;
+}
+
+.border-red {
+    border-color: #dc2262 !important;
+}
+
+.border-primary {
+    border-color: #9ac5d3 !important;
+}

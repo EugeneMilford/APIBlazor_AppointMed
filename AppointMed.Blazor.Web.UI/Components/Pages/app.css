@@ -1,0 +1,18 @@
+﻿/* Navigation menu alignment */
+.navbar {
+    align-items: flex-start !important;
+}
+
+    .navbar .container-fluid {
+        padding-top: 0.5rem;
+        padding-bottom: 0.5rem;
+    }
+
+.nav {
+    padding-left: 0;
+    margin-bottom: 0;
+}
+
+.nav-item {
+    width: 100%;
+}

@@ -1,0 +1,12 @@
+{
+  "Version": 1,
+  "Hash": "VBVRXT9tJFALeTDuA0HiJImUDEgBQQ8bgep7JWUWrMY=",
+  "Source": "AppointMed.API",
+  "BasePath": "_content/AppointMed.API",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": [],
+  "Endpoints": []
+}

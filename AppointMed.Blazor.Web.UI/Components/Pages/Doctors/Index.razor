@@ -1,0 +1,659 @@
+﻿@page "/doctors/"
+@inject IDoctorService doctorService
+@inject IJSRuntime js
+@using System.Linq
+
+<PageTitle>Doctors • AppointMed</PageTitle>
+
+<div class="doctors-root">
+    <div class="hero-section">
+        <div class="hero-content">
+            <div class="hero-text">
+                <h1><i class="bi bi-people-fill"></i> Find a Trusted Doctor</h1>
+                <p>
+                    Browse verified specialists, read profiles, and book appointments in a few clicks. We connect you with compassionate, vetted clinicians so you can focus on getting better.
+                </p>
+            </div>
+
+            <div class="hero-actions">
+                <a class="btn btn-accent" href="/appointments">
+                    <i class="bi bi-calendar-check"></i>
+                    <span>My Appointments</span>
+                </a>
+
+                <AuthorizeView Roles="Administrator">
+                    <Authorized>
+                        <a class="btn btn-admin" href="/doctors/create">
+                            <i class="bi bi-plus-lg"></i>
+                            <span>Add Doctor</span>
+                        </a>
+                    </Authorized>
+                </AuthorizeView>
+            </div>
+        </div>
+    </div>
+
+    @if (response.Success == false)
+    {
+        <div class="alert alert-danger">
+            <i class="bi bi-exclamation-triangle-fill"></i>
+            <span>@response.Message</span>
+        </div>
+    }
+    else
+    {
+        @if (Doctors == null)
+        {
+            <div class="loading-container">
+                <div class="spinner-large"></div>
+                <p>Loading doctors...</p>
+            </div>
+        }
+        else if (!Doctors.Any())
+        {
+            <div class="alert alert-warning">
+                <i class="bi bi-exclamation-circle-fill"></i>
+                <div>
+                    <h4>No doctors found</h4>
+                    <p>Try refreshing or come back later. Administrators can add new providers.</p>
+                </div>
+            </div>
+        }
+        else
+        {
+            <div class="doctors-grid">
+                @foreach (var doctor in Doctors)
+                {
+                    <article class="doctor-card">
+                        <div class="card-header">
+                            <div class="doctor-profile">
+                                @if (!string.IsNullOrWhiteSpace(doctor.ProfileImageUrl))
+                                {
+                                    <img src="@doctor.ProfileImageUrl"
+                                         alt="Dr. @doctor.FullName"
+                                         class="profile-image"
+                                         loading="lazy"
+                                         onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+                                    <div class="profile-initials" style="display: none;">
+                                        <span>@GetInitials(doctor)</span>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="profile-initials">
+                                        <span>@GetInitials(doctor)</span>
+                                    </div>
+                                }
+
+                                <div class="doctor-info">
+                                    <h5>Dr. @doctor.FullName</h5>
+                                    <p class="specialization">@(!string.IsNullOrWhiteSpace(doctor.Specialization) ? doctor.Specialization : "General Practitioner")</p>
+                                </div>
+                            </div>
+
+                            <div class="status-badge">
+                                <i class="bi bi-@(doctor.IsActive ? "check-circle-fill" : "x-circle-fill")"></i>
+                            </div>
+                        </div>
+
+                        <div class="card-body">
+                            <p class="bio">
+                                @(!string.IsNullOrWhiteSpace(doctor.Bio) ? doctor.Bio : "Experienced clinician committed to delivering patient-centered care.")
+                            </p>
+
+                            <div class="doctor-meta">
+                                <div class="meta-item">
+                                    <i class="bi bi-envelope"></i>
+                                    <a href="mailto:@doctor.Email">@doctor.Email</a>
+                                </div>
+                                @if (!string.IsNullOrWhiteSpace(doctor.PhoneNumber))
+                                {
+                                    <div class="meta-item">
+                                        <i class="bi bi-telephone"></i>
+                                        <a href="tel:@doctor.PhoneNumber">@doctor.PhoneNumber</a>
+                                    </div>
+                                }
+                                <div class="meta-item">
+                                    <i class="bi bi-calendar-event"></i>
+                                    <span>@GetYearsExperience(doctor) years experience</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card-footer">
+                            <a class="btn btn-details" href="/doctors/details/@doctor.DoctorId">
+                                <i class="bi bi-info-circle"></i>
+                                <span>View Details</span>
+                            </a>
+
+                            <AuthorizeView Roles="Administrator">
+                                <Authorized>
+                                    <div class="admin-actions">
+                                        <a class="btn btn-edit" href="/doctors/update/@doctor.DoctorId" title="Edit @doctor.FullName">
+                                            <i class="bi bi-pencil-square"></i>
+                                        </a>
+                                        <button class="btn btn-delete" @onclick="@(() => Delete(doctor.DoctorId))" title="Delete @doctor.FullName">
+                                            <i class="bi bi-trash"></i>
+                                        </button>
+                                    </div>
+                                </Authorized>
+                            </AuthorizeView>
+                        </div>
+                    </article>
+                }
+            </div>
+        }
+    }
+</div>
+
+<style>
+    :root {
+        --green: #0acc81;
+        --black: #000000;
+        --purple: #270042;
+        --teal: #18739a;
+        --cyan: #3ccce4;
+        --sage: #8dbdae;
+        --red: #c90136;
+        --blue: #2e9ae8;
+        --lime: #2cba00;
+        --intense-blue: #282fe2;
+        --orange: #ff7a00;
+    }
+
+    .doctors-root {
+        max-width: 1400px;
+        margin: 0 auto;
+    }
+
+    .hero-section {
+        background: linear-gradient(135deg, rgba(39, 0, 66, 0.05), rgba(24, 115, 154, 0.05));
+        border-radius: 20px;
+        padding: 2.5rem;
+        margin-bottom: 2.5rem;
+        border-left: 6px solid var(--green);
+    }
+
+    .hero-content {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 2rem;
+        flex-wrap: wrap;
+    }
+
+    .hero-text {
+        flex: 1;
+        min-width: 300px;
+    }
+
+        .hero-text h1 {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--purple);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .hero-text p {
+            font-size: 1.05rem;
+            color: #666;
+            line-height: 1.6;
+            margin: 0;
+        }
+
+    .hero-actions {
+        display: flex;
+        gap: 1rem;
+        flex-wrap: wrap;
+    }
+
+    .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        padding: 0.75rem 1.5rem;
+        border-radius: 10px;
+        font-weight: 700;
+        font-size: 0.95rem;
+        text-decoration: none;
+        border: none;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+    }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .btn:hover::before {
+            left: 100%;
+        }
+
+    .btn-accent {
+        background: linear-gradient(135deg, var(--teal), var(--cyan));
+        color: white;
+        box-shadow: 0 6px 20px rgba(24, 115, 154, 0.3);
+    }
+
+        .btn-accent:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(24, 115, 154, 0.4);
+        }
+
+    .btn-admin {
+        background: linear-gradient(135deg, var(--green), var(--lime));
+        color: var(--black);
+        box-shadow: 0 6px 20px rgba(10, 204, 129, 0.3);
+    }
+
+        .btn-admin:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(10, 204, 129, 0.4);
+        }
+
+    .alert {
+        border-radius: 12px;
+        padding: 1.25rem 1.5rem;
+        margin-bottom: 2rem;
+        display: flex;
+        align-items: flex-start;
+        gap: 1rem;
+        font-weight: 600;
+    }
+
+    .alert-danger {
+        background: linear-gradient(135deg, rgba(201, 1, 54, 0.1), rgba(255, 122, 0, 0.1));
+        border: 2px solid var(--red);
+        color: var(--red);
+    }
+
+    .alert-warning {
+        background: linear-gradient(135deg, rgba(255, 122, 0, 0.1), rgba(255, 193, 7, 0.1));
+        border: 2px solid var(--orange);
+        color: var(--orange);
+    }
+
+    .alert i {
+        font-size: 1.75rem;
+        flex-shrink: 0;
+    }
+
+    .alert h4 {
+        margin: 0 0 0.5rem 0;
+        font-size: 1.1rem;
+    }
+
+    .alert p {
+        margin: 0;
+        font-weight: 500;
+        opacity: 0.9;
+    }
+
+    .loading-container {
+        text-align: center;
+        padding: 4rem 2rem;
+        background: white;
+        border-radius: 20px;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+    }
+
+    .spinner-large {
+        width: 56px;
+        height: 56px;
+        border: 5px solid rgba(24, 115, 154, 0.2);
+        border-top-color: var(--teal);
+        border-radius: 50%;
+        animation: spin 0.8s linear infinite;
+        margin: 0 auto 1.5rem;
+    }
+
+    .loading-container p {
+        color: #666;
+        font-size: 1.1rem;
+        font-weight: 600;
+        margin: 0;
+    }
+
+    @@keyframes spin {
+        to {
+            transform: rotate(360deg);
+        }
+    }
+
+    .doctors-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+        gap: 2rem;
+    }
+
+    .doctor-card {
+        background: white;
+        border-radius: 20px;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+        border: 1px solid rgba(102, 126, 234, 0.1);
+        transition: all 0.3s ease;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+    }
+
+        .doctor-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 16px 48px rgba(0, 0, 0, 0.15);
+        }
+
+    .card-header {
+        padding: 1.75rem;
+        background: linear-gradient(135deg, rgba(10, 204, 129, 0.05), rgba(24, 115, 154, 0.05));
+        border-bottom: 2px solid rgba(102, 126, 234, 0.1);
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        gap: 1rem;
+    }
+
+    .doctor-profile {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        flex: 1;
+    }
+
+    .profile-image {
+        width: 64px;
+        height: 64px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 3px solid var(--green);
+        box-shadow: 0 4px 12px rgba(10, 204, 129, 0.2);
+        flex-shrink: 0;
+    }
+
+    .profile-initials {
+        width: 64px;
+        height: 64px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, var(--green), var(--lime));
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: 3px solid var(--green);
+        box-shadow: 0 4px 12px rgba(10, 204, 129, 0.2);
+        flex-shrink: 0;
+    }
+
+        .profile-initials span {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--black);
+        }
+
+    .doctor-info {
+        flex: 1;
+        min-width: 0;
+    }
+
+        .doctor-info h5 {
+            font-size: 1.2rem;
+            font-weight: 800;
+            color: var(--purple);
+            margin: 0 0 0.25rem 0;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+    .specialization {
+        font-size: 0.9rem;
+        color: var(--teal);
+        font-weight: 600;
+        margin: 0;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    .status-badge {
+        font-size: 1.5rem;
+        color: var(--green);
+    }
+
+    .card-body {
+        padding: 1.5rem 1.75rem;
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        gap: 1.25rem;
+    }
+
+    .bio {
+        color: #555;
+        line-height: 1.6;
+        margin: 0;
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        font-size: 0.95rem;
+    }
+
+    .doctor-meta {
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+    }
+
+    .meta-item {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-size: 0.9rem;
+        color: #666;
+    }
+
+        .meta-item i {
+            color: var(--teal);
+            font-size: 1rem;
+            width: 18px;
+            text-align: center;
+        }
+
+        .meta-item a {
+            color: var(--teal);
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+
+            .meta-item a:hover {
+                color: var(--purple);
+                text-decoration: underline;
+            }
+
+    .card-footer {
+        padding: 1.25rem 1.75rem;
+        background: rgba(102, 126, 234, 0.03);
+        border-top: 1px solid rgba(102, 126, 234, 0.1);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 1rem;
+    }
+
+    .btn-details {
+        background: linear-gradient(135deg, var(--intense-blue), var(--blue));
+        color: white;
+        box-shadow: 0 4px 12px rgba(40, 47, 226, 0.2);
+        font-size: 0.9rem;
+        padding: 0.65rem 1.25rem;
+    }
+
+        .btn-details:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(40, 47, 226, 0.3);
+        }
+
+    .admin-actions {
+        display: flex;
+        gap: 0.5rem;
+    }
+
+    .btn-edit, .btn-delete {
+        width: 40px;
+        height: 40px;
+        padding: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.1rem;
+    }
+
+    .btn-edit {
+        background: linear-gradient(135deg, var(--orange), #ff9a3c);
+        color: white;
+        box-shadow: 0 4px 12px rgba(255, 122, 0, 0.2);
+    }
+
+        .btn-edit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(255, 122, 0, 0.3);
+        }
+
+    .btn-delete {
+        background: linear-gradient(135deg, var(--red), #ff4757);
+        color: white;
+        box-shadow: 0 4px 12px rgba(201, 1, 54, 0.2);
+    }
+
+        .btn-delete:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(201, 1, 54, 0.3);
+        }
+
+    @@media (max-width: 768px) {
+        .doctors-root {
+            padding: 0;
+        }
+
+        .hero-section {
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .hero-text h1 {
+            font-size: 1.5rem;
+        }
+
+        .hero-text p {
+            font-size: 0.95rem;
+        }
+
+        .hero-content {
+            flex-direction: column;
+            align-items: stretch;
+        }
+
+        .hero-actions {
+            flex-direction: column;
+        }
+
+        .btn {
+            width: 100%;
+            justify-content: center;
+        }
+
+        .doctors-grid {
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+        }
+
+        .card-footer {
+            flex-direction: column;
+            align-items: stretch;
+        }
+
+        .btn-details {
+            width: 100%;
+        }
+
+        .admin-actions {
+            width: 100%;
+            justify-content: center;
+        }
+    }
+</style>
+
+@code {
+    public List<DoctorDto> Doctors;
+    private Response<List<DoctorDto>> response = new Response<List<DoctorDto>> { Success = true };
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadDoctors();
+    }
+
+    private async Task LoadDoctors()
+    {
+        response = await doctorService.Get();
+        if (response.Success)
+        {
+            Doctors = response.Data;
+        }
+    }
+
+    private async Task Delete(int doctorId)
+    {
+        var doctor = Doctors.First(q => q.DoctorId == doctorId);
+        var confirm = await js.InvokeAsync<bool>("confirm", $"Are you sure you want to delete Dr. {doctor.FullName}? This action cannot be undone.");
+
+        if (confirm)
+        {
+            var deleteResponse = await doctorService.Delete(doctorId);
+            if (deleteResponse.Success)
+            {
+                await LoadDoctors();
+                StateHasChanged();
+            }
+            else
+            {
+                await js.InvokeVoidAsync("alert", deleteResponse.Message ?? "Unable to delete doctor.");
+            }
+        }
+    }
+
+    private static string GetInitials(DoctorDto d)
+    {
+        var f = string.IsNullOrWhiteSpace(d.FirstName) ? "" : d.FirstName.Trim();
+        var l = string.IsNullOrWhiteSpace(d.LastName) ? "" : d.LastName.Trim();
+
+        if (f == "" && l == "") return "?";
+        if (f == "") return l.Substring(0, 1).ToUpperInvariant();
+        if (l == "") return f.Substring(0, 1).ToUpperInvariant();
+
+        return (f[0].ToString() + l[0].ToString()).ToUpperInvariant();
+    }
+
+    private static int GetYearsExperience(DoctorDto d)
+    {
+        if (d.DateJoined == default) return 0;
+        var now = DateTime.UtcNow;
+        var years = now.Year - d.DateJoined.Year;
+        if (d.DateJoined > now.AddYears(-years)) years--;
+        return Math.Max(0, years);
+    }
+}
+
+

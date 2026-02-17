@@ -1,0 +1,98 @@
+﻿@page "/medicines/create"
+@inject IMedicineService medicineService
+@inject NavigationManager navManager
+@attribute [Authorize(Roles = "Administrator")]
+
+<PageTitle>Add Medicine • AppointMed</PageTitle>
+
+<section class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    <h4 class="mb-0">
+                        <i class="bi bi-plus-circle"></i> Add New Medicine
+                    </h4>
+                </div>
+                <div class="card-body">
+                    <EditForm Model="@medicine" OnValidSubmit="CreateMedicine">
+                        <DataAnnotationsValidator />
+                        <ValidationSummary class="text-danger" />
+
+                        <div class="row g-3">
+                            <div class="col-md-8">
+                                <label class="form-label">Medicine Name *</label>
+                                <InputText @bind-Value="medicine.Name" class="form-control" placeholder="e.g., Amoxicillin" />
+                                <ValidationMessage For="@(() => medicine.Name)" />
+                            </div>
+
+                            <div class="col-md-4">
+                                <label class="form-label">Dosage</label>
+                                <InputText @bind-Value="medicine.Dosage" class="form-control" placeholder="e.g., 500mg" />
+                                <ValidationMessage For="@(() => medicine.Dosage)" />
+                            </div>
+
+                            <div class="col-12">
+                                <label class="form-label">Description</label>
+                                <InputTextArea @bind-Value="medicine.Description" class="form-control" rows="3"
+                                               placeholder="Brief description of the medicine" />
+                                <ValidationMessage For="@(() => medicine.Description)" />
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="form-label">Price (R) *</label>
+                                <InputNumber @bind-Value="medicine.Price" class="form-control" step="0.01" />
+                                <ValidationMessage For="@(() => medicine.Price)" />
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="form-label">Manufacturer</label>
+                                <InputText @bind-Value="medicine.Manufacturer" class="form-control" placeholder="e.g., PharmaCorp" />
+                                <ValidationMessage For="@(() => medicine.Manufacturer)" />
+                            </div>
+
+                            <div class="col-12">
+                                <div class="form-check">
+                                    <InputCheckbox @bind-Value="medicine.IsAvailable" class="form-check-input" id="isAvailable" />
+                                    <label class="form-check-label" for="isAvailable">
+                                        Available for prescription
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mt-4 d-flex gap-2">
+                            <button type="submit" class="btn btn-primary" disabled="@isBusy">
+                                @if (isBusy)
+                                {
+                                    <span class="spinner-border spinner-border-sm me-2"></span>
+                                }
+                                <i class="bi bi-check-lg"></i> Create Medicine
+                            </button>
+                            <a class="btn btn-secondary" href="/medicines">
+                                <i class="bi bi-x-lg"></i> Cancel
+                            </a>
+                        </div>
+                    </EditForm>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@code {
+    private AddMedicineDto medicine = new() { IsAvailable = true };
+    private bool isBusy = false;
+
+    private async Task CreateMedicine()
+    {
+        isBusy = true;
+        var response = await medicineService.Create(medicine);
+        isBusy = false;
+
+        if (response.Success)
+        {
+            navManager.NavigateTo("/medicines");
+        }
+    }
+}

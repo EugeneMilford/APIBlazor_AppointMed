@@ -1,0 +1,243 @@
+2026-02-04 18:33:15.228 +02:00 [INF] Now listening on: https://localhost:7017
+2026-02-04 18:33:15.276 +02:00 [INF] Now listening on: http://localhost:5001
+2026-02-04 18:33:15.378 +02:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-02-04 18:33:15.389 +02:00 [INF] Hosting environment: Development
+2026-02-04 18:33:15.391 +02:00 [INF] Content root path: D:\Projects\AppointMed Project\AppointMed\AppointMed.API
+2026-02-04 18:33:57.409 +02:00 [INF] Login Attempt for john.admin@appointmed.com 
+2026-02-04 19:32:36.124 +02:00 [INF] Now listening on: https://localhost:7017
+2026-02-04 19:32:36.207 +02:00 [INF] Now listening on: http://localhost:5001
+2026-02-04 19:32:36.358 +02:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-02-04 19:32:36.376 +02:00 [INF] Hosting environment: Development
+2026-02-04 19:32:36.385 +02:00 [INF] Content root path: D:\Projects\AppointMed Project\AppointMed\AppointMed.API
+2026-02-04 19:33:15.130 +02:00 [INF] Login Attempt for john.admin@appointmed.com 
+2026-02-04 19:36:37.532 +02:00 [INF] Now listening on: https://localhost:7017
+2026-02-04 19:36:37.631 +02:00 [INF] Now listening on: http://localhost:5001
+2026-02-04 19:36:37.832 +02:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-02-04 19:36:37.843 +02:00 [INF] Hosting environment: Development
+2026-02-04 19:36:37.845 +02:00 [INF] Content root path: D:\Projects\AppointMed Project\AppointMed\AppointMed.API
+2026-02-04 19:36:56.902 +02:00 [INF] Login Attempt for lisa.wilson@email.com 
+2026-02-04 19:38:56.842 +02:00 [INF] Added R200 appointment charge to account 1 for user 6e083999-b903-47bf-886b-3e2f2ab8c06e
+2026-02-04 19:40:03.333 +02:00 [INF] Login Attempt for john.admin@appointmed.com 
+2026-02-04 21:07:05.592 +02:00 [ERR] Failed executing DbCommand (207ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+ALTER TABLE [Appointments] ADD CONSTRAINT [FK_Appointments_Users] FOREIGN KEY ([UserId]) REFERENCES [AspNetUsers] ([Id]);
+2026-02-04 21:09:17.291 +02:00 [INF] Now listening on: https://localhost:7017
+2026-02-04 21:09:17.377 +02:00 [INF] Now listening on: http://localhost:5001
+2026-02-04 21:09:17.545 +02:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-02-04 21:09:17.549 +02:00 [INF] Hosting environment: Development
+2026-02-04 21:09:17.551 +02:00 [INF] Content root path: D:\Projects\AppointMed Project\AppointMed\AppointMed.API
+2026-02-04 21:09:52.594 +02:00 [INF] Login Attempt for john.admin@appointmed.com 
+2026-02-04 21:10:23.297 +02:00 [ERR] An exception occurred while iterating over the results of a query for context type 'AppointMed.API.Data.AppointMedDbContext'.
+System.Data.SqlTypes.SqlNullValueException: Data is Null. This method or property cannot be called on Null values.
+   at Microsoft.Data.SqlClient.SqlBuffer.ThrowIfNull()
+   at Microsoft.Data.SqlClient.SqlBuffer.get_String()
+   at Microsoft.Data.SqlClient.SqlDataReader.GetString(Int32 i)
+   at lambda_method261(Closure, QueryContext, DbDataReader, ResultContext, SingleQueryResultCoordinator)
+   at Microsoft.EntityFrameworkCore.Query.Internal.SingleQueryingEnumerable`1.AsyncEnumerator.MoveNextAsync()
+System.Data.SqlTypes.SqlNullValueException: Data is Null. This method or property cannot be called on Null values.
+   at Microsoft.Data.SqlClient.SqlBuffer.ThrowIfNull()
+   at Microsoft.Data.SqlClient.SqlBuffer.get_String()
+   at Microsoft.Data.SqlClient.SqlDataReader.GetString(Int32 i)
+   at lambda_method261(Closure, QueryContext, DbDataReader, ResultContext, SingleQueryResultCoordinator)
+   at Microsoft.EntityFrameworkCore.Query.Internal.SingleQueryingEnumerable`1.AsyncEnumerator.MoveNextAsync()
+2026-02-04 21:10:23.644 +02:00 [ERR] Error Performing GET in GetAppointments
+System.Data.SqlTypes.SqlNullValueException: Data is Null. This method or property cannot be called on Null values.
+   at Microsoft.Data.SqlClient.SqlBuffer.ThrowIfNull()
+   at Microsoft.Data.SqlClient.SqlBuffer.get_String()
+   at Microsoft.Data.SqlClient.SqlDataReader.GetString(Int32 i)
+   at lambda_method261(Closure, QueryContext, DbDataReader, ResultContext, SingleQueryResultCoordinator)
+   at Microsoft.EntityFrameworkCore.Query.Internal.SingleQueryingEnumerable`1.AsyncEnumerator.MoveNextAsync()
+   at Microsoft.EntityFrameworkCore.EntityFrameworkQueryableExtensions.ToListAsync[TSource](IQueryable`1 source, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.EntityFrameworkQueryableExtensions.ToListAsync[TSource](IQueryable`1 source, CancellationToken cancellationToken)
+   at AppointMed.API.Repository.Implementation.AppointmentRepository.GetAllAppointmentsAsync() in D:\Projects\AppointMed Project\AppointMed\AppointMed.API\Repository\Implementation\AppointmentRepository.cs:line 23
+   at AppointMed.API.Controllers.AppointmentsController.GetAppointments() in D:\Projects\AppointMed Project\AppointMed\AppointMed.API\Controllers\AppointmentsController.cs:line 54
+2026-02-04 21:11:23.931 +02:00 [INF] Now listening on: https://localhost:7017
+2026-02-04 21:11:24.022 +02:00 [INF] Now listening on: http://localhost:5001
+2026-02-04 21:11:24.200 +02:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-02-04 21:11:24.235 +02:00 [INF] Hosting environment: Development
+2026-02-04 21:11:24.263 +02:00 [INF] Content root path: D:\Projects\AppointMed Project\AppointMed\AppointMed.API
+2026-02-04 21:11:49.346 +02:00 [INF] Login Attempt for lisa.wilson@email.com 
+2026-02-04 21:13:55.196 +02:00 [INF] Added R200 appointment charge to account 1 for user 6e083999-b903-47bf-886b-3e2f2ab8c06e
+2026-02-04 21:13:55.237 +02:00 [ERR] An exception occurred while iterating over the results of a query for context type 'AppointMed.API.Data.AppointMedDbContext'.
+System.Data.SqlTypes.SqlNullValueException: Data is Null. This method or property cannot be called on Null values.
+   at Microsoft.Data.SqlClient.SqlBuffer.ThrowIfNull()
+   at Microsoft.Data.SqlClient.SqlBuffer.get_String()
+   at Microsoft.Data.SqlClient.SqlDataReader.GetString(Int32 i)
+   at lambda_method620(Closure, QueryContext, DbDataReader, ResultContext, SingleQueryResultCoordinator)
+   at Microsoft.EntityFrameworkCore.Query.Internal.SingleQueryingEnumerable`1.AsyncEnumerator.MoveNextAsync()
+System.Data.SqlTypes.SqlNullValueException: Data is Null. This method or property cannot be called on Null values.
+   at Microsoft.Data.SqlClient.SqlBuffer.ThrowIfNull()
+   at Microsoft.Data.SqlClient.SqlBuffer.get_String()
+   at Microsoft.Data.SqlClient.SqlDataReader.GetString(Int32 i)
+   at lambda_method620(Closure, QueryContext, DbDataReader, ResultContext, SingleQueryResultCoordinator)
+   at Microsoft.EntityFrameworkCore.Query.Internal.SingleQueryingEnumerable`1.AsyncEnumerator.MoveNextAsync()
+2026-02-04 21:13:55.412 +02:00 [ERR] Error Performing POST in PostAppointment
+System.Data.SqlTypes.SqlNullValueException: Data is Null. This method or property cannot be called on Null values.
+   at Microsoft.Data.SqlClient.SqlBuffer.ThrowIfNull()
+   at Microsoft.Data.SqlClient.SqlBuffer.get_String()
+   at Microsoft.Data.SqlClient.SqlDataReader.GetString(Int32 i)
+   at lambda_method620(Closure, QueryContext, DbDataReader, ResultContext, SingleQueryResultCoordinator)
+   at Microsoft.EntityFrameworkCore.Query.Internal.SingleQueryingEnumerable`1.AsyncEnumerator.MoveNextAsync()
+   at Microsoft.EntityFrameworkCore.Query.ShapedQueryCompilingExpressionVisitor.SingleOrDefaultAsync[TSource](IAsyncEnumerable`1 asyncEnumerable, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.ShapedQueryCompilingExpressionVisitor.SingleOrDefaultAsync[TSource](IAsyncEnumerable`1 asyncEnumerable, CancellationToken cancellationToken)
+   at AppointMed.API.Repository.Implementation.AppointmentRepository.GetAppointmentAsync(Int32 id) in D:\Projects\AppointMed Project\AppointMed\AppointMed.API\Repository\Implementation\AppointmentRepository.cs:line 32
+   at AppointMed.API.Controllers.AppointmentsController.PostAppointment(AddAppointmentDto appointmentDto) in D:\Projects\AppointMed Project\AppointMed\AppointMed.API\Controllers\AppointmentsController.cs:line 276
+2026-02-04 21:17:46.769 +02:00 [INF] Now listening on: https://localhost:7017
+2026-02-04 21:17:46.841 +02:00 [INF] Now listening on: http://localhost:5001
+2026-02-04 21:17:47.496 +02:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-02-04 21:17:47.521 +02:00 [INF] Hosting environment: Development
+2026-02-04 21:17:47.559 +02:00 [INF] Content root path: D:\Projects\AppointMed Project\AppointMed\AppointMed.API
+2026-02-04 21:18:06.915 +02:00 [INF] Login Attempt for lisa.wilson@email.com 
+2026-02-04 21:19:16.758 +02:00 [INF] Added R200 appointment charge to account 1 for user 6e083999-b903-47bf-886b-3e2f2ab8c06e
+2026-02-04 21:19:16.864 +02:00 [ERR] An exception occurred while iterating over the results of a query for context type 'AppointMed.API.Data.AppointMedDbContext'.
+System.Data.SqlTypes.SqlNullValueException: Data is Null. This method or property cannot be called on Null values.
+   at Microsoft.Data.SqlClient.SqlBuffer.ThrowIfNull()
+   at Microsoft.Data.SqlClient.SqlBuffer.get_String()
+   at Microsoft.Data.SqlClient.SqlDataReader.GetString(Int32 i)
+   at lambda_method600(Closure, QueryContext, DbDataReader, ResultContext, SingleQueryResultCoordinator)
+   at Microsoft.EntityFrameworkCore.Query.Internal.SingleQueryingEnumerable`1.AsyncEnumerator.MoveNextAsync()
+System.Data.SqlTypes.SqlNullValueException: Data is Null. This method or property cannot be called on Null values.
+   at Microsoft.Data.SqlClient.SqlBuffer.ThrowIfNull()
+   at Microsoft.Data.SqlClient.SqlBuffer.get_String()
+   at Microsoft.Data.SqlClient.SqlDataReader.GetString(Int32 i)
+   at lambda_method600(Closure, QueryContext, DbDataReader, ResultContext, SingleQueryResultCoordinator)
+   at Microsoft.EntityFrameworkCore.Query.Internal.SingleQueryingEnumerable`1.AsyncEnumerator.MoveNextAsync()
+2026-02-04 21:19:17.045 +02:00 [ERR] Error Performing POST in PostAppointment
+System.Data.SqlTypes.SqlNullValueException: Data is Null. This method or property cannot be called on Null values.
+   at Microsoft.Data.SqlClient.SqlBuffer.ThrowIfNull()
+   at Microsoft.Data.SqlClient.SqlBuffer.get_String()
+   at Microsoft.Data.SqlClient.SqlDataReader.GetString(Int32 i)
+   at lambda_method600(Closure, QueryContext, DbDataReader, ResultContext, SingleQueryResultCoordinator)
+   at Microsoft.EntityFrameworkCore.Query.Internal.SingleQueryingEnumerable`1.AsyncEnumerator.MoveNextAsync()
+   at Microsoft.EntityFrameworkCore.Query.ShapedQueryCompilingExpressionVisitor.SingleOrDefaultAsync[TSource](IAsyncEnumerable`1 asyncEnumerable, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.ShapedQueryCompilingExpressionVisitor.SingleOrDefaultAsync[TSource](IAsyncEnumerable`1 asyncEnumerable, CancellationToken cancellationToken)
+   at AppointMed.API.Repository.Implementation.AppointmentRepository.GetAppointmentAsync(Int32 id) in D:\Projects\AppointMed Project\AppointMed\AppointMed.API\Repository\Implementation\AppointmentRepository.cs:line 54
+   at AppointMed.API.Controllers.AppointmentsController.PostAppointment(AddAppointmentDto appointmentDto) in D:\Projects\AppointMed Project\AppointMed\AppointMed.API\Controllers\AppointmentsController.cs:line 276
+2026-02-04 21:23:49.519 +02:00 [INF] Now listening on: https://localhost:7017
+2026-02-04 21:23:49.606 +02:00 [INF] Now listening on: http://localhost:5001
+2026-02-04 21:23:49.834 +02:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-02-04 21:23:49.847 +02:00 [INF] Hosting environment: Development
+2026-02-04 21:23:49.849 +02:00 [INF] Content root path: D:\Projects\AppointMed Project\AppointMed\AppointMed.API
+2026-02-04 21:24:12.470 +02:00 [INF] Login Attempt for lisa.wilson@email.com 
+2026-02-04 21:25:57.986 +02:00 [INF] Added R200 appointment charge to account 1 for user 6e083999-b903-47bf-886b-3e2f2ab8c06e
+2026-02-04 21:26:09.345 +02:00 [INF] Login Attempt for john.admin@appointmed.com 
+2026-02-04 21:26:11.763 +02:00 [ERR] An exception occurred while iterating over the results of a query for context type 'AppointMed.API.Data.AppointMedDbContext'.
+System.Data.SqlTypes.SqlNullValueException: Data is Null. This method or property cannot be called on Null values.
+   at Microsoft.Data.SqlClient.SqlBuffer.ThrowIfNull()
+   at Microsoft.Data.SqlClient.SqlBuffer.get_String()
+   at Microsoft.Data.SqlClient.SqlDataReader.GetString(Int32 i)
+   at lambda_method719(Closure, QueryContext, DbDataReader, ResultContext, SingleQueryResultCoordinator)
+   at Microsoft.EntityFrameworkCore.Query.Internal.SingleQueryingEnumerable`1.AsyncEnumerator.MoveNextAsync()
+System.Data.SqlTypes.SqlNullValueException: Data is Null. This method or property cannot be called on Null values.
+   at Microsoft.Data.SqlClient.SqlBuffer.ThrowIfNull()
+   at Microsoft.Data.SqlClient.SqlBuffer.get_String()
+   at Microsoft.Data.SqlClient.SqlDataReader.GetString(Int32 i)
+   at lambda_method719(Closure, QueryContext, DbDataReader, ResultContext, SingleQueryResultCoordinator)
+   at Microsoft.EntityFrameworkCore.Query.Internal.SingleQueryingEnumerable`1.AsyncEnumerator.MoveNextAsync()
+2026-02-04 21:26:11.945 +02:00 [ERR] Error Performing GET in GetAppointments
+System.Data.SqlTypes.SqlNullValueException: Data is Null. This method or property cannot be called on Null values.
+   at Microsoft.Data.SqlClient.SqlBuffer.ThrowIfNull()
+   at Microsoft.Data.SqlClient.SqlBuffer.get_String()
+   at Microsoft.Data.SqlClient.SqlDataReader.GetString(Int32 i)
+   at lambda_method719(Closure, QueryContext, DbDataReader, ResultContext, SingleQueryResultCoordinator)
+   at Microsoft.EntityFrameworkCore.Query.Internal.SingleQueryingEnumerable`1.AsyncEnumerator.MoveNextAsync()
+   at Microsoft.EntityFrameworkCore.EntityFrameworkQueryableExtensions.ToListAsync[TSource](IQueryable`1 source, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.EntityFrameworkQueryableExtensions.ToListAsync[TSource](IQueryable`1 source, CancellationToken cancellationToken)
+   at AppointMed.API.Repository.Implementation.AppointmentRepository.GetAllAppointmentsAsync() in D:\Projects\AppointMed Project\AppointMed\AppointMed.API\Repository\Implementation\AppointmentRepository.cs:line 22
+   at AppointMed.API.Controllers.AppointmentsController.GetAppointments() in D:\Projects\AppointMed Project\AppointMed\AppointMed.API\Controllers\AppointmentsController.cs:line 54
+2026-02-04 21:26:24.197 +02:00 [INF] Login Attempt for lisa.wilson@email.com 
+2026-02-04 21:26:26.106 +02:00 [ERR] An exception occurred while iterating over the results of a query for context type 'AppointMed.API.Data.AppointMedDbContext'.
+System.Data.SqlTypes.SqlNullValueException: Data is Null. This method or property cannot be called on Null values.
+   at Microsoft.Data.SqlClient.SqlBuffer.ThrowIfNull()
+   at Microsoft.Data.SqlClient.SqlBuffer.get_String()
+   at Microsoft.Data.SqlClient.SqlDataReader.GetString(Int32 i)
+   at lambda_method724(Closure, QueryContext, DbDataReader, ResultContext, SingleQueryResultCoordinator)
+   at Microsoft.EntityFrameworkCore.Query.Internal.SingleQueryingEnumerable`1.AsyncEnumerator.MoveNextAsync()
+System.Data.SqlTypes.SqlNullValueException: Data is Null. This method or property cannot be called on Null values.
+   at Microsoft.Data.SqlClient.SqlBuffer.ThrowIfNull()
+   at Microsoft.Data.SqlClient.SqlBuffer.get_String()
+   at Microsoft.Data.SqlClient.SqlDataReader.GetString(Int32 i)
+   at lambda_method724(Closure, QueryContext, DbDataReader, ResultContext, SingleQueryResultCoordinator)
+   at Microsoft.EntityFrameworkCore.Query.Internal.SingleQueryingEnumerable`1.AsyncEnumerator.MoveNextAsync()
+2026-02-04 21:26:26.222 +02:00 [ERR] Error Performing GET in GetAppointments
+System.Data.SqlTypes.SqlNullValueException: Data is Null. This method or property cannot be called on Null values.
+   at Microsoft.Data.SqlClient.SqlBuffer.ThrowIfNull()
+   at Microsoft.Data.SqlClient.SqlBuffer.get_String()
+   at Microsoft.Data.SqlClient.SqlDataReader.GetString(Int32 i)
+   at lambda_method724(Closure, QueryContext, DbDataReader, ResultContext, SingleQueryResultCoordinator)
+   at Microsoft.EntityFrameworkCore.Query.Internal.SingleQueryingEnumerable`1.AsyncEnumerator.MoveNextAsync()
+   at Microsoft.EntityFrameworkCore.EntityFrameworkQueryableExtensions.ToListAsync[TSource](IQueryable`1 source, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.EntityFrameworkQueryableExtensions.ToListAsync[TSource](IQueryable`1 source, CancellationToken cancellationToken)
+   at AppointMed.API.Repository.Implementation.AppointmentRepository.GetAppointmentsByUserIdAsync(String userId) in D:\Projects\AppointMed Project\AppointMed\AppointMed.API\Repository\Implementation\AppointmentRepository.cs:line 68
+   at AppointMed.API.Controllers.AppointmentsController.GetAppointments() in D:\Projects\AppointMed Project\AppointMed\AppointMed.API\Controllers\AppointmentsController.cs:line 62
+2026-02-04 21:26:48.264 +02:00 [ERR] An exception occurred while iterating over the results of a query for context type 'AppointMed.API.Data.AppointMedDbContext'.
+System.Data.SqlTypes.SqlNullValueException: Data is Null. This method or property cannot be called on Null values.
+   at Microsoft.Data.SqlClient.SqlDataReader.GetString(Int32 i)
+   at lambda_method724(Closure, QueryContext, DbDataReader, ResultContext, SingleQueryResultCoordinator)
+   at Microsoft.EntityFrameworkCore.Query.Internal.SingleQueryingEnumerable`1.AsyncEnumerator.MoveNextAsync()
+System.Data.SqlTypes.SqlNullValueException: Data is Null. This method or property cannot be called on Null values.
+   at Microsoft.Data.SqlClient.SqlDataReader.GetString(Int32 i)
+   at lambda_method724(Closure, QueryContext, DbDataReader, ResultContext, SingleQueryResultCoordinator)
+   at Microsoft.EntityFrameworkCore.Query.Internal.SingleQueryingEnumerable`1.AsyncEnumerator.MoveNextAsync()
+2026-02-04 21:26:48.366 +02:00 [ERR] Error Performing GET in GetAppointments
+System.Data.SqlTypes.SqlNullValueException: Data is Null. This method or property cannot be called on Null values.
+   at Microsoft.Data.SqlClient.SqlDataReader.GetString(Int32 i)
+   at lambda_method724(Closure, QueryContext, DbDataReader, ResultContext, SingleQueryResultCoordinator)
+   at Microsoft.EntityFrameworkCore.Query.Internal.SingleQueryingEnumerable`1.AsyncEnumerator.MoveNextAsync()
+   at Microsoft.EntityFrameworkCore.EntityFrameworkQueryableExtensions.ToListAsync[TSource](IQueryable`1 source, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.EntityFrameworkQueryableExtensions.ToListAsync[TSource](IQueryable`1 source, CancellationToken cancellationToken)
+   at AppointMed.API.Repository.Implementation.AppointmentRepository.GetAppointmentsByUserIdAsync(String userId) in D:\Projects\AppointMed Project\AppointMed\AppointMed.API\Repository\Implementation\AppointmentRepository.cs:line 68
+   at AppointMed.API.Controllers.AppointmentsController.GetAppointments() in D:\Projects\AppointMed Project\AppointMed\AppointMed.API\Controllers\AppointmentsController.cs:line 62
+2026-02-04 21:27:39.913 +02:00 [INF] Now listening on: https://localhost:7017
+2026-02-04 21:27:39.985 +02:00 [INF] Now listening on: http://localhost:5001
+2026-02-04 21:27:40.152 +02:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-02-04 21:27:40.183 +02:00 [INF] Hosting environment: Development
+2026-02-04 21:27:40.187 +02:00 [INF] Content root path: D:\Projects\AppointMed Project\AppointMed\AppointMed.API
+2026-02-04 21:27:53.022 +02:00 [INF] Login Attempt for john.admin@appointmed.com 
+2026-02-04 21:28:24.471 +02:00 [ERR] An exception occurred while iterating over the results of a query for context type 'AppointMed.API.Data.AppointMedDbContext'.
+System.Data.SqlTypes.SqlNullValueException: Data is Null. This method or property cannot be called on Null values.
+   at Microsoft.Data.SqlClient.SqlBuffer.ThrowIfNull()
+   at Microsoft.Data.SqlClient.SqlBuffer.get_String()
+   at Microsoft.Data.SqlClient.SqlDataReader.GetString(Int32 i)
+   at lambda_method270(Closure, QueryContext, DbDataReader, ResultContext, SingleQueryResultCoordinator)
+   at Microsoft.EntityFrameworkCore.Query.Internal.SingleQueryingEnumerable`1.AsyncEnumerator.MoveNextAsync()
+System.Data.SqlTypes.SqlNullValueException: Data is Null. This method or property cannot be called on Null values.
+   at Microsoft.Data.SqlClient.SqlBuffer.ThrowIfNull()
+   at Microsoft.Data.SqlClient.SqlBuffer.get_String()
+   at Microsoft.Data.SqlClient.SqlDataReader.GetString(Int32 i)
+   at lambda_method270(Closure, QueryContext, DbDataReader, ResultContext, SingleQueryResultCoordinator)
+   at Microsoft.EntityFrameworkCore.Query.Internal.SingleQueryingEnumerable`1.AsyncEnumerator.MoveNextAsync()
+2026-02-04 21:28:24.748 +02:00 [ERR] Error Performing GET in GetAppointments
+System.Data.SqlTypes.SqlNullValueException: Data is Null. This method or property cannot be called on Null values.
+   at Microsoft.Data.SqlClient.SqlBuffer.ThrowIfNull()
+   at Microsoft.Data.SqlClient.SqlBuffer.get_String()
+   at Microsoft.Data.SqlClient.SqlDataReader.GetString(Int32 i)
+   at lambda_method270(Closure, QueryContext, DbDataReader, ResultContext, SingleQueryResultCoordinator)
+   at Microsoft.EntityFrameworkCore.Query.Internal.SingleQueryingEnumerable`1.AsyncEnumerator.MoveNextAsync()
+   at Microsoft.EntityFrameworkCore.EntityFrameworkQueryableExtensions.ToListAsync[TSource](IQueryable`1 source, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.EntityFrameworkQueryableExtensions.ToListAsync[TSource](IQueryable`1 source, CancellationToken cancellationToken)
+   at AppointMed.API.Repository.Implementation.AppointmentRepository.GetAllAppointmentsAsync() in D:\Projects\AppointMed Project\AppointMed\AppointMed.API\Repository\Implementation\AppointmentRepository.cs:line 22
+   at AppointMed.API.Controllers.AppointmentsController.GetAppointments() in D:\Projects\AppointMed Project\AppointMed\AppointMed.API\Controllers\AppointmentsController.cs:line 54
+2026-02-04 21:30:35.132 +02:00 [INF] Now listening on: https://localhost:7017
+2026-02-04 21:30:35.193 +02:00 [INF] Now listening on: http://localhost:5001
+2026-02-04 21:30:35.351 +02:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-02-04 21:30:35.354 +02:00 [INF] Hosting environment: Development
+2026-02-04 21:30:35.356 +02:00 [INF] Content root path: D:\Projects\AppointMed Project\AppointMed\AppointMed.API
+2026-02-04 21:30:47.130 +02:00 [INF] Login Attempt for john.admin@appointmed.com 
+2026-02-04 21:31:26.146 +02:00 [INF] Now listening on: https://localhost:7017
+2026-02-04 21:31:26.215 +02:00 [INF] Now listening on: http://localhost:5001
+2026-02-04 21:31:26.389 +02:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-02-04 21:31:26.403 +02:00 [INF] Hosting environment: Development
+2026-02-04 21:31:26.412 +02:00 [INF] Content root path: D:\Projects\AppointMed Project\AppointMed\AppointMed.API
+2026-02-04 21:31:44.246 +02:00 [INF] Login Attempt for john.admin@appointmed.com 
+2026-02-04 21:32:53.047 +02:00 [INF] Now listening on: https://localhost:7017
+2026-02-04 21:32:53.118 +02:00 [INF] Now listening on: http://localhost:5001
+2026-02-04 21:32:53.338 +02:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-02-04 21:32:53.362 +02:00 [INF] Hosting environment: Development
+2026-02-04 21:32:53.368 +02:00 [INF] Content root path: D:\Projects\AppointMed Project\AppointMed\AppointMed.API
+2026-02-04 21:33:09.619 +02:00 [INF] Login Attempt for lisa.wilson@email.com 
+2026-02-04 21:34:00.724 +02:00 [INF] Now listening on: https://localhost:7017
+2026-02-04 21:34:00.790 +02:00 [INF] Now listening on: http://localhost:5001
+2026-02-04 21:34:00.971 +02:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-02-04 21:34:00.995 +02:00 [INF] Hosting environment: Development
+2026-02-04 21:34:00.997 +02:00 [INF] Content root path: D:\Projects\AppointMed Project\AppointMed\AppointMed.API
+2026-02-04 21:34:12.379 +02:00 [INF] Login Attempt for lisa.wilson@email.com 

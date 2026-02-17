@@ -1,0 +1,625 @@
+﻿@page "/appointments/update/{id:int}"
+@inject IAppointmentService appointmentService
+@inject IDoctorService doctorService
+@inject NavigationManager navManager
+@attribute [Authorize(Roles = Roles.Administrator)]
+
+<PageTitle>Edit Appointment • AppointMed</PageTitle>
+
+<div class="update-appointment-root">
+    <div class="page-header">
+        <div class="header-content">
+            <h1><i class="bi bi-pencil-square"></i> Edit Appointment</h1>
+            <p>Update appointment details and patient information</p>
+        </div>
+    </div>
+
+    <div class="form-container">
+        @if (errorMessage != null)
+        {
+            <div class="alert alert-danger">
+                <i class="bi bi-exclamation-triangle-fill"></i>
+                <span>@errorMessage</span>
+            </div>
+        }
+
+        @if (successMessage != null)
+        {
+            <div class="alert alert-success">
+                <i class="bi bi-check-circle-fill"></i>
+                <span>@successMessage</span>
+            </div>
+        }
+
+        @if (isLoading)
+        {
+            <div class="loading-container">
+                <div class="spinner-large"></div>
+                <p>Loading appointment data...</p>
+            </div>
+        }
+        else
+        {
+            <EditForm Model="Appointment" OnValidSubmit="HandleUpdateAppointment">
+                <DataAnnotationsValidator />
+                <ValidationSummary class="validation-summary" />
+
+                <div class="form-sections">
+                    <div class="form-section">
+                        <div class="section-header">
+                            <i class="bi bi-person-fill"></i>
+                            <h5>Patient Information</h5>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="firstname" class="form-label">
+                                    <i class="bi bi-person"></i> First Name
+                                </label>
+                                <InputText @bind-Value="Appointment.PatientFirstName" class="form-control" id="firstname" placeholder="Enter first name" />
+                                <ValidationMessage For="@(() => Appointment.PatientFirstName)" class="validation-message" />
+                            </div>
+
+                            <div class="form-group">
+                                <label for="surname" class="form-label">
+                                    <i class="bi bi-person"></i> Last Name
+                                </label>
+                                <InputText @bind-Value="Appointment.PatientLastName" class="form-control" id="surname" placeholder="Enter last name" />
+                                <ValidationMessage For="@(() => Appointment.PatientLastName)" class="validation-message" />
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="email" class="form-label">
+                                    <i class="bi bi-envelope"></i> Email Address
+                                </label>
+                                <InputText @bind-Value="Appointment.PatientEmail" class="form-control" id="email" placeholder="patient@example.com" />
+                                <ValidationMessage For="@(() => Appointment.PatientEmail)" class="validation-message" />
+                            </div>
+
+                            <div class="form-group">
+                                <label for="phonenumber" class="form-label">
+                                    <i class="bi bi-telephone"></i> Phone Number
+                                </label>
+                                <InputText @bind-Value="Appointment.PatientPhoneNumber" class="form-control" id="phonenumber" placeholder="+1 (555) 000-0000" />
+                                <ValidationMessage For="@(() => Appointment.PatientPhoneNumber)" class="validation-message" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-section">
+                        <div class="section-header">
+                            <i class="bi bi-calendar-event-fill"></i>
+                            <h5>Appointment Details</h5>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="appointmentdatetime" class="form-label">
+                                <i class="bi bi-clock"></i> Appointment Date & Time
+                            </label>
+                            <InputDate Type="InputDateType.DateTimeLocal" @bind-Value="Appointment.AppointmentDateTime" class="form-control" id="appointmentdatetime" />
+                            <ValidationMessage For="@(() => Appointment.AppointmentDateTime)" class="validation-message" />
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="appointmenttype" class="form-label">
+                                    <i class="bi bi-tag"></i> Appointment Type
+                                </label>
+                                <InputSelect @bind-Value="Appointment.AppointmentType" class="form-select" id="appointmenttype">
+                                    <option value="">-- Select Type --</option>
+                                    <option value="Consultation">Consultation</option>
+                                    <option value="Follow-up">Follow-up</option>
+                                    <option value="Emergency">Emergency</option>
+                                    <option value="Routine Checkup">Routine Checkup</option>
+                                    <option value="Vaccination">Vaccination</option>
+                                    <option value="Surgery">Surgery</option>
+                                </InputSelect>
+                                <ValidationMessage For="@(() => Appointment.AppointmentType)" class="validation-message" />
+                            </div>
+
+                            <div class="form-group">
+                                <label for="status" class="form-label">
+                                    <i class="bi bi-check-circle"></i> Status
+                                </label>
+                                <InputSelect @bind-Value="Appointment.StatusId" class="form-select" id="status">
+                                    <option value="0">-- Select Status --</option>
+                                    <option value="1">Scheduled</option>
+                                    <option value="2">Confirmed</option>
+                                    <option value="3">Completed</option>
+                                    <option value="4">Cancelled</option>
+                                    <option value="5">No Show</option>
+                                </InputSelect>
+                                <ValidationMessage For="@(() => Appointment.StatusId)" class="validation-message" />
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="doctorid" class="form-label">
+                                <i class="bi bi-person-badge"></i> Doctor
+                            </label>
+                            <InputSelect @bind-Value="Appointment.DoctorId" class="form-select" id="doctorid">
+                                <option value="0">-- Select Doctor --</option>
+                                @foreach (var doctor in Doctors)
+                                {
+                                    <option value="@doctor.DoctorId">Dr. @doctor.FirstName @doctor.LastName</option>
+                                }
+                            </InputSelect>
+                            <ValidationMessage For="@(() => Appointment.DoctorId)" class="validation-message" />
+                        </div>
+
+                        @if (Appointment.StatusId == 4)
+                        {
+                            <div class="form-group cancellation-section">
+                                <label for="cancellationreason" class="form-label">
+                                    <i class="bi bi-x-circle"></i> Cancellation Reason
+                                </label>
+                                <InputTextArea @bind-Value="Appointment.CancellationReason" class="form-control" id="cancellationreason" rows="3" placeholder="Reason for cancellation..." />
+                                <ValidationMessage For="@(() => Appointment.CancellationReason)" class="validation-message" />
+                            </div>
+                        }
+
+                        <div class="form-group">
+                            <label for="notes" class="form-label">
+                                <i class="bi bi-file-text"></i> Notes (Optional)
+                            </label>
+                            <InputTextArea @bind-Value="Appointment.Notes" class="form-control" id="notes" rows="4" placeholder="Any additional notes or special instructions..." />
+                            <ValidationMessage For="@(() => Appointment.Notes)" class="validation-message" />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-actions">
+                    <button class="btn btn-primary" type="submit" disabled="@isLoading">
+                        @if (isLoading)
+                        {
+                            <span class="spinner"></span>
+                            <span>Updating...</span>
+                        }
+                        else
+                        {
+                            <i class="bi bi-check-circle"></i>
+                            <span>Update Appointment</span>
+                        }
+                    </button>
+                    <button @onclick="BackToList" class="btn btn-secondary" type="button" disabled="@isLoading">
+                        <i class="bi bi-arrow-left"></i>
+                        <span>Back To List</span>
+                    </button>
+                </div>
+            </EditForm>
+        }
+    </div>
+</div>
+
+<style>
+    :root {
+        --green: #0acc81;
+        --black: #000000;
+        --purple: #270042;
+        --teal: #18739a;
+        --cyan: #3ccce4;
+        --sage: #8dbdae;
+        --red: #c90136;
+        --blue: #2e9ae8;
+        --lime: #2cba00;
+        --intense-blue: #282fe2;
+    }
+
+    .update-appointment-root {
+        max-width: 1100px;
+        margin: 0 auto;
+    }
+
+    .page-header {
+        background: linear-gradient(135deg, rgba(39, 0, 66, 0.05), rgba(24, 115, 154, 0.05));
+        border-radius: 16px;
+        padding: 2rem;
+        margin-bottom: 2rem;
+        border-left: 6px solid var(--blue);
+    }
+
+    .header-content h1 {
+        font-size: 2rem;
+        font-weight: 800;
+        color: var(--purple);
+        margin-bottom: 0.5rem;
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+    }
+
+    .header-content p {
+        color: #666;
+        margin: 0;
+        font-size: 1.05rem;
+    }
+
+    .form-container {
+        background: white;
+        border-radius: 20px;
+        padding: 2.5rem;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+        border: 1px solid rgba(102, 126, 234, 0.1);
+    }
+
+    .alert {
+        border-radius: 12px;
+        padding: 1rem 1.25rem;
+        margin-bottom: 2rem;
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        font-weight: 600;
+    }
+
+    .alert-success {
+        background: linear-gradient(135deg, rgba(10, 204, 129, 0.1), rgba(44, 186, 0, 0.1));
+        border: 2px solid var(--green);
+        color: var(--green);
+    }
+
+    .alert-danger {
+        background: linear-gradient(135deg, rgba(201, 1, 54, 0.1), rgba(255, 122, 0, 0.1));
+        border: 2px solid var(--red);
+        color: var(--red);
+    }
+
+    .alert i {
+        font-size: 1.5rem;
+    }
+
+    .loading-container {
+        text-align: center;
+        padding: 3rem;
+    }
+
+    .spinner-large {
+        width: 48px;
+        height: 48px;
+        border: 4px solid rgba(24, 115, 154, 0.2);
+        border-top-color: var(--teal);
+        border-radius: 50%;
+        animation: spin 0.8s linear infinite;
+        margin: 0 auto 1rem;
+    }
+
+    .loading-container p {
+        color: #666;
+        font-size: 1.1rem;
+        font-weight: 600;
+    }
+
+    .validation-summary {
+        background: linear-gradient(135deg, rgba(201, 1, 54, 0.1), rgba(255, 122, 0, 0.1));
+        border: 2px solid rgba(201, 1, 54, 0.3);
+        border-radius: 12px;
+        padding: 1rem;
+        margin-bottom: 1.5rem;
+        color: var(--red);
+    }
+
+    .form-sections {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 2rem;
+        margin-bottom: 2rem;
+    }
+
+    .form-section {
+        background: linear-gradient(135deg, rgba(102, 126, 234, 0.03), rgba(118, 75, 162, 0.03));
+        border: 1px solid rgba(102, 126, 234, 0.15);
+        border-radius: 16px;
+        padding: 1.5rem;
+    }
+
+    .section-header {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        margin-bottom: 1.5rem;
+        padding-bottom: 1rem;
+        border-bottom: 2px solid rgba(102, 126, 234, 0.15);
+    }
+
+        .section-header i {
+            font-size: 1.5rem;
+            color: var(--teal);
+        }
+
+        .section-header h5 {
+            margin: 0;
+            font-size: 1.25rem;
+            font-weight: 800;
+            color: var(--purple);
+        }
+
+    .form-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1rem;
+    }
+
+    .form-group {
+        margin-bottom: 1.25rem;
+    }
+
+    .cancellation-section {
+        background: linear-gradient(135deg, rgba(201, 1, 54, 0.05), rgba(255, 122, 0, 0.05));
+        border: 2px solid rgba(201, 1, 54, 0.2);
+        border-radius: 12px;
+        padding: 1rem;
+    }
+
+    .form-label {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-weight: 700;
+        color: var(--purple);
+        margin-bottom: 0.5rem;
+        font-size: 0.9rem;
+    }
+
+        .form-label i {
+            color: var(--teal);
+        }
+
+    .cancellation-section .form-label i {
+        color: var(--red);
+    }
+
+    .form-control, .form-select {
+        width: 100%;
+        padding: 0.875rem 1rem;
+        border: 2px solid rgba(102, 126, 234, 0.2);
+        border-radius: 10px;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+        background: rgba(255, 255, 255, 0.8);
+        font-family: inherit;
+    }
+
+        .form-control:focus, .form-select:focus {
+            outline: none;
+            border-color: var(--intense-blue);
+            box-shadow: 0 0 0 4px rgba(40, 47, 226, 0.1);
+            background: white;
+        }
+
+    .form-select {
+        appearance: none;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%2318739a' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+        background-repeat: no-repeat;
+        background-position: right 1rem center;
+        padding-right: 2.5rem;
+    }
+
+    textarea.form-control {
+        resize: vertical;
+        min-height: 100px;
+    }
+
+    .validation-message {
+        display: block;
+        color: var(--red);
+        font-size: 0.85rem;
+        margin-top: 0.5rem;
+        font-weight: 600;
+    }
+
+    .form-actions {
+        display: flex;
+        gap: 1rem;
+        margin-top: 2rem;
+        padding-top: 2rem;
+        border-top: 2px solid rgba(102, 126, 234, 0.1);
+    }
+
+    .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        padding: 0.875rem 1.75rem;
+        border-radius: 10px;
+        font-weight: 700;
+        font-size: 1rem;
+        text-decoration: none;
+        border: none;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+    }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .btn:hover::before {
+            left: 100%;
+        }
+
+    .btn-primary {
+        background: linear-gradient(135deg, var(--blue), var(--cyan));
+        color: white;
+        box-shadow: 0 6px 20px rgba(46, 158, 232, 0.3);
+    }
+
+        .btn-primary:hover:not(:disabled) {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(46, 158, 232, 0.4);
+        }
+
+        .btn-primary:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+    .btn-secondary {
+        background: transparent;
+        color: var(--purple);
+        border: 2px solid rgba(39, 0, 66, 0.2);
+    }
+
+        .btn-secondary:hover:not(:disabled) {
+            background: rgba(39, 0, 66, 0.05);
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+    .spinner {
+        width: 16px;
+        height: 16px;
+        border: 2px solid rgba(255, 255, 255, 0.3);
+        border-top-color: white;
+        border-radius: 50%;
+        animation: spin 0.8s linear infinite;
+    }
+
+    @@keyframes spin {
+        to {
+            transform: rotate(360deg);
+        }
+    }
+
+    @@media (max-width: 992px) {
+        .form-sections {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    @@media (max-width: 768px) {
+        .update-appointment-root {
+            padding: 0;
+        }
+
+        .page-header {
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .header-content h1 {
+            font-size: 1.5rem;
+        }
+
+        .form-container {
+            padding: 1.5rem;
+        }
+
+        .form-row {
+            grid-template-columns: 1fr;
+        }
+
+        .form-actions {
+            flex-direction: column;
+        }
+
+        .btn {
+            width: 100%;
+        }
+    }
+</style>
+
+@code {
+    [Parameter]
+    public int id { get; set; }
+
+    private UpdateAppointmentDto Appointment = new UpdateAppointmentDto();
+    private List<DoctorDto> Doctors = new List<DoctorDto>();
+    private bool isLoading = true;
+    private string? errorMessage;
+    private string? successMessage;
+
+    protected async override Task OnInitializedAsync()
+    {
+        await LoadData();
+    }
+
+    private async Task LoadData()
+    {
+        isLoading = true;
+        errorMessage = null;
+
+        try
+        {
+            // Load appointment data
+            var appointmentResponse = await appointmentService.GetForUpdate(id);
+            if (appointmentResponse.Success)
+            {
+                Appointment = appointmentResponse.Data;
+            }
+            else
+            {
+                errorMessage = appointmentResponse.Message ?? "Failed to load appointment";
+            }
+
+            // Load doctors for dropdown
+            var doctorsResponse = await doctorService.Get();
+            if (doctorsResponse.Success)
+            {
+                Doctors = doctorsResponse.Data;
+            }
+            else
+            {
+                errorMessage = doctorsResponse.Message ?? "Failed to load doctors";
+            }
+        }
+        catch (Exception ex)
+        {
+            errorMessage = $"Error loading data: {ex.Message}";
+        }
+        finally
+        {
+            isLoading = false;
+        }
+    }
+
+    private async Task HandleUpdateAppointment()
+    {
+        isLoading = true;
+        errorMessage = null;
+        successMessage = null;
+
+        try
+        {
+            var response = await appointmentService.Edit(id, Appointment);
+            if (response.Success)
+            {
+                successMessage = "Appointment updated successfully!";
+                await Task.Delay(1500);
+                BackToList();
+            }
+            else
+            {
+                errorMessage = response.Message ?? "Failed to update appointment";
+            }
+        }
+        catch (Exception ex)
+        {
+            errorMessage = $"Error updating appointment: {ex.Message}";
+        }
+        finally
+        {
+            isLoading = false;
+        }
+    }
+
+    private void BackToList()
+    {
+        navManager.NavigateTo("/appointments/");
+    }
+}

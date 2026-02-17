@@ -1,0 +1,64 @@
+2026-01-27 16:52:50.003 +02:00 [INF] Now listening on: https://localhost:7017
+2026-01-27 16:52:50.063 +02:00 [INF] Now listening on: http://localhost:5001
+2026-01-27 16:52:50.172 +02:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-01-27 16:52:50.174 +02:00 [INF] Hosting environment: Development
+2026-01-27 16:52:50.176 +02:00 [INF] Content root path: D:\Projects\AppointMed Project\AppointMed\AppointMed.API
+2026-01-27 16:53:14.393 +02:00 [INF] Login Attempt for john.admin@appointmed.com 
+2026-01-27 18:39:42.399 +02:00 [INF] Now listening on: https://localhost:7017
+2026-01-27 18:39:42.456 +02:00 [INF] Now listening on: http://localhost:5001
+2026-01-27 18:39:42.579 +02:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-01-27 18:39:42.583 +02:00 [INF] Hosting environment: Development
+2026-01-27 18:39:42.584 +02:00 [INF] Content root path: D:\Projects\AppointMed Project\AppointMed\AppointMed.API
+2026-01-27 18:39:52.489 +02:00 [INF] Login Attempt for john.admin@appointmed.com 
+2026-01-27 18:42:44.480 +02:00 [INF] Now listening on: https://localhost:7017
+2026-01-27 18:42:44.559 +02:00 [INF] Now listening on: http://localhost:5001
+2026-01-27 18:42:44.671 +02:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-01-27 18:42:44.701 +02:00 [INF] Hosting environment: Development
+2026-01-27 18:42:44.709 +02:00 [INF] Content root path: D:\Projects\AppointMed Project\AppointMed\AppointMed.API
+2026-01-27 18:43:02.775 +02:00 [INF] Login Attempt for john.admin@appointmed.com 
+2026-01-27 18:50:37.513 +02:00 [INF] Now listening on: https://localhost:7017
+2026-01-27 18:50:37.601 +02:00 [INF] Now listening on: http://localhost:5001
+2026-01-27 18:50:37.803 +02:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-01-27 18:50:37.815 +02:00 [INF] Hosting environment: Development
+2026-01-27 18:50:37.822 +02:00 [INF] Content root path: D:\Projects\AppointMed Project\AppointMed\AppointMed.API
+2026-01-27 18:50:48.821 +02:00 [INF] Login Attempt for john.admin@appointmed.com 
+2026-01-27 18:53:46.753 +02:00 [INF] Now listening on: https://localhost:7017
+2026-01-27 18:53:46.894 +02:00 [INF] Now listening on: http://localhost:5001
+2026-01-27 18:53:47.083 +02:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-01-27 18:53:47.096 +02:00 [INF] Hosting environment: Development
+2026-01-27 18:53:47.099 +02:00 [INF] Content root path: D:\Projects\AppointMed Project\AppointMed\AppointMed.API
+2026-01-27 18:53:53.284 +02:00 [INF] Login Attempt for john.admin@appointmed.com 
+2026-01-27 18:55:19.166 +02:00 [INF] Now listening on: https://localhost:7017
+2026-01-27 18:55:19.243 +02:00 [INF] Now listening on: http://localhost:5001
+2026-01-27 18:55:19.375 +02:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-01-27 18:55:19.383 +02:00 [INF] Hosting environment: Development
+2026-01-27 18:55:19.392 +02:00 [INF] Content root path: D:\Projects\AppointMed Project\AppointMed\AppointMed.API
+2026-01-27 18:55:29.406 +02:00 [INF] Login Attempt for john.admin@appointmed.com 
+2026-01-27 21:39:32.680 +02:00 [INF] Now listening on: https://localhost:7017
+2026-01-27 21:39:32.761 +02:00 [INF] Now listening on: http://localhost:5001
+2026-01-27 21:39:33.134 +02:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-01-27 21:39:33.151 +02:00 [INF] Hosting environment: Development
+2026-01-27 21:39:33.155 +02:00 [INF] Content root path: D:\Projects\AppointMed Project\AppointMed\AppointMed.API
+2026-01-27 21:39:43.006 +02:00 [INF] Login Attempt for john.admin@appointmed.com 
+2026-01-27 21:53:38.395 +02:00 [INF] Now listening on: https://localhost:7017
+2026-01-27 21:53:38.459 +02:00 [INF] Now listening on: http://localhost:5001
+2026-01-27 21:53:38.716 +02:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-01-27 21:53:38.898 +02:00 [INF] Hosting environment: Development
+2026-01-27 21:53:38.902 +02:00 [INF] Content root path: D:\Projects\AppointMed Project\AppointMed\AppointMed.API
+2026-01-27 21:53:47.558 +02:00 [INF] Login Attempt for john.admin@appointmed.com 
+2026-01-27 22:01:56.237 +02:00 [INF] Now listening on: https://localhost:7017
+2026-01-27 22:01:56.296 +02:00 [INF] Now listening on: http://localhost:5001
+2026-01-27 22:01:56.390 +02:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-01-27 22:01:56.393 +02:00 [INF] Hosting environment: Development
+2026-01-27 22:01:56.394 +02:00 [INF] Content root path: D:\Projects\AppointMed Project\AppointMed\AppointMed.API
+2026-01-27 22:05:32.138 +02:00 [INF] Now listening on: https://localhost:7017
+2026-01-27 22:05:32.210 +02:00 [INF] Now listening on: http://localhost:5001
+2026-01-27 22:05:32.330 +02:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-01-27 22:05:32.332 +02:00 [INF] Hosting environment: Development
+2026-01-27 22:05:32.334 +02:00 [INF] Content root path: D:\Projects\AppointMed Project\AppointMed\AppointMed.API
+2026-01-27 22:06:08.302 +02:00 [INF] Now listening on: https://localhost:7017
+2026-01-27 22:06:08.403 +02:00 [INF] Now listening on: http://localhost:5001
+2026-01-27 22:06:08.630 +02:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-01-27 22:06:08.645 +02:00 [INF] Hosting environment: Development
+2026-01-27 22:06:08.648 +02:00 [INF] Content root path: D:\Projects\AppointMed Project\AppointMed\AppointMed.API
+2026-01-27 22:06:23.776 +02:00 [INF] Login Attempt for john.admin@appointmed.com 

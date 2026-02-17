@@ -1,0 +1,6 @@
+@AppointMed.API_HostAddress = http://localhost:5001
+
+GET {{AppointMed.API_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

@@ -1,0 +1,15 @@
+2026-01-12 21:34:28.368 +02:00 [INF] Now listening on: https://localhost:7017
+2026-01-12 21:34:28.402 +02:00 [INF] Now listening on: http://localhost:5001
+2026-01-12 21:34:28.570 +02:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-01-12 21:34:28.572 +02:00 [INF] Hosting environment: Development
+2026-01-12 21:34:28.574 +02:00 [INF] Content root path: D:\Projects\AppointMed Project\AppointMed\AppointMed.API
+2026-01-12 22:00:50.456 +02:00 [INF] Now listening on: https://localhost:7017
+2026-01-12 22:00:50.510 +02:00 [INF] Now listening on: http://localhost:5001
+2026-01-12 22:00:50.594 +02:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-01-12 22:00:50.598 +02:00 [INF] Hosting environment: Development
+2026-01-12 22:00:50.601 +02:00 [INF] Content root path: D:\Projects\AppointMed Project\AppointMed\AppointMed.API
+2026-01-12 22:18:58.338 +02:00 [INF] Now listening on: https://localhost:7017
+2026-01-12 22:18:58.374 +02:00 [INF] Now listening on: http://localhost:5001
+2026-01-12 22:18:58.442 +02:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-01-12 22:18:58.444 +02:00 [INF] Hosting environment: Development
+2026-01-12 22:18:58.445 +02:00 [INF] Content root path: D:\Projects\AppointMed Project\AppointMed\AppointMed.API

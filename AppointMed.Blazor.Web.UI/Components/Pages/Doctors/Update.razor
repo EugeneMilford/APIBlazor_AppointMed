@@ -1,0 +1,545 @@
+﻿@page "/doctors/update/{id:int}"
+@inject IDoctorService doctorService
+@inject NavigationManager navManager
+@attribute [Authorize(Roles = Roles.Administrator)]
+
+<PageTitle>Edit Doctor • AppointMed</PageTitle>
+
+<div class="update-doctor-root">
+    <div class="page-header">
+        <div class="header-content">
+            <h1><i class="bi bi-pencil-square"></i> Edit Doctor Details</h1>
+            <p>Update doctor profile and professional information</p>
+        </div>
+    </div>
+
+    <div class="form-container">
+        @if (!string.IsNullOrEmpty(Message))
+        {
+            <div class="alert alert-@StatusClass">
+                <i class="bi bi-@(StatusClass == "success" ? "check-circle-fill" : "exclamation-triangle-fill")"></i>
+                <span>@Message</span>
+            </div>
+        }
+
+        @if (Doctor == null)
+        {
+            <div class="loading-container">
+                <div class="spinner-large"></div>
+                <p>Loading doctor details...</p>
+            </div>
+        }
+        else
+        {
+            <EditForm Model="Doctor" OnValidSubmit="HandleUpdateDoctor">
+                <DataAnnotationsValidator />
+                <ValidationSummary class="validation-summary" />
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="firstname" class="form-label">
+                            <i class="bi bi-person"></i> First Name
+                        </label>
+                        <InputText @bind-Value="Doctor.FirstName" class="form-control" id="firstname" placeholder="Enter first name" />
+                        <ValidationMessage For="@(() => Doctor.FirstName)" class="validation-message" />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="lastname" class="form-label">
+                            <i class="bi bi-person"></i> Last Name
+                        </label>
+                        <InputText @bind-Value="Doctor.LastName" class="form-control" id="lastname" placeholder="Enter last name" />
+                        <ValidationMessage For="@(() => Doctor.LastName)" class="validation-message" />
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="email" class="form-label">
+                            <i class="bi bi-envelope"></i> Email Address
+                        </label>
+                        <InputText @bind-Value="Doctor.Email" class="form-control" id="email" type="email" placeholder="doctor@example.com" />
+                        <ValidationMessage For="@(() => Doctor.Email)" class="validation-message" />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="phonenumber" class="form-label">
+                            <i class="bi bi-telephone"></i> Phone Number
+                        </label>
+                        <InputText @bind-Value="Doctor.PhoneNumber" class="form-control" id="phonenumber" placeholder="+1 (555) 000-0000" />
+                        <ValidationMessage For="@(() => Doctor.PhoneNumber)" class="validation-message" />
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="specialization" class="form-label">
+                        <i class="bi bi-heart-pulse"></i> Specialization
+                    </label>
+                    <InputText @bind-Value="Doctor.Specialization" class="form-control" id="specialization" placeholder="e.g., Cardiology, Pediatrics" />
+                    <ValidationMessage For="@(() => Doctor.Specialization)" class="validation-message" />
+                </div>
+
+                <div class="form-group">
+                    <label for="bio" class="form-label">
+                        <i class="bi bi-file-text"></i> Biography
+                    </label>
+                    <InputTextArea @bind-Value="Doctor.Bio" class="form-control" id="bio" rows="4" placeholder="Brief professional biography..." />
+                    <ValidationMessage For="@(() => Doctor.Bio)" class="validation-message" />
+                </div>
+
+                <div class="form-group">
+                    <label for="profileimageurl" class="form-label">
+                        <i class="bi bi-image"></i> Profile Image URL
+                    </label>
+                    <InputText @bind-Value="Doctor.ProfileImageUrl" class="form-control" id="profileimageurl" placeholder="https://example.com/image.jpg" />
+                    <ValidationMessage For="@(() => Doctor.ProfileImageUrl)" class="validation-message" />
+                </div>
+
+                @if (!string.IsNullOrWhiteSpace(Doctor.ProfileImageUrl))
+                {
+                    <div class="image-preview-section">
+                        <label class="form-label">Image Preview</label>
+                        <div class="image-preview-container">
+                            <img src="@Doctor.ProfileImageUrl"
+                                 alt="Profile Preview"
+                                 class="preview-image"
+                                 onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22200%22 height=%22200%22%3E%3Crect width=%22200%22 height=%22200%22 fill=%22%23ddd%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 dominant-baseline=%22middle%22 text-anchor=%22middle%22 fill=%22%23999%22%3EInvalid Image%3C/text%3E%3C/svg%3E'" />
+                        </div>
+                    </div>
+                }
+
+                <div class="form-group">
+                    <div class="status-toggle">
+                        <InputCheckbox @bind-Value="Doctor.IsActive" class="form-check-input" id="isactive" />
+                        <label class="form-check-label" for="isactive">
+                            <i class="bi bi-@(Doctor.IsActive ? "check-circle-fill" : "x-circle-fill")"></i>
+                            <span>Doctor is @(Doctor.IsActive ? "Active" : "Inactive")</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="form-actions">
+                    <button class="btn btn-primary" type="submit" disabled="@IsProcessing">
+                        @if (IsProcessing)
+                        {
+                            <span class="spinner"></span>
+                            <span>Updating...</span>
+                        }
+                        else
+                        {
+                            <i class="bi bi-check-circle"></i>
+                            <span>Update Doctor</span>
+                        }
+                    </button>
+                    <button @onclick="BackToList" class="btn btn-secondary" type="button" disabled="@IsProcessing">
+                        <i class="bi bi-arrow-left"></i>
+                        <span>Back To List</span>
+                    </button>
+                </div>
+            </EditForm>
+        }
+    </div>
+</div>
+
+<style>
+    :root {
+        --green: #0acc81;
+        --black: #000000;
+        --purple: #270042;
+        --teal: #18739a;
+        --cyan: #3ccce4;
+        --sage: #8dbdae;
+        --red: #c90136;
+        --blue: #2e9ae8;
+        --lime: #2cba00;
+        --intense-blue: #282fe2;
+    }
+
+    .update-doctor-root {
+        max-width: 900px;
+        margin: 0 auto;
+    }
+
+    .page-header {
+        background: linear-gradient(135deg, rgba(39, 0, 66, 0.05), rgba(24, 115, 154, 0.05));
+        border-radius: 16px;
+        padding: 2rem;
+        margin-bottom: 2rem;
+        border-left: 6px solid var(--blue);
+    }
+
+    .header-content h1 {
+        font-size: 2rem;
+        font-weight: 800;
+        color: var(--purple);
+        margin-bottom: 0.5rem;
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+    }
+
+    .header-content p {
+        color: #666;
+        margin: 0;
+        font-size: 1.05rem;
+    }
+
+    .form-container {
+        background: white;
+        border-radius: 20px;
+        padding: 2.5rem;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+        border: 1px solid rgba(102, 126, 234, 0.1);
+    }
+
+    .alert {
+        border-radius: 12px;
+        padding: 1rem 1.25rem;
+        margin-bottom: 2rem;
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        font-weight: 600;
+    }
+
+    .alert-success {
+        background: linear-gradient(135deg, rgba(10, 204, 129, 0.1), rgba(44, 186, 0, 0.1));
+        border: 2px solid var(--green);
+        color: var(--green);
+    }
+
+    .alert-danger {
+        background: linear-gradient(135deg, rgba(201, 1, 54, 0.1), rgba(255, 122, 0, 0.1));
+        border: 2px solid var(--red);
+        color: var(--red);
+    }
+
+    .alert i {
+        font-size: 1.5rem;
+    }
+
+    .loading-container {
+        text-align: center;
+        padding: 3rem;
+    }
+
+    .spinner-large {
+        width: 48px;
+        height: 48px;
+        border: 4px solid rgba(24, 115, 154, 0.2);
+        border-top-color: var(--teal);
+        border-radius: 50%;
+        animation: spin 0.8s linear infinite;
+        margin: 0 auto 1rem;
+    }
+
+    .loading-container p {
+        color: #666;
+        font-size: 1.1rem;
+        font-weight: 600;
+    }
+
+    .validation-summary {
+        background: linear-gradient(135deg, rgba(201, 1, 54, 0.1), rgba(255, 122, 0, 0.1));
+        border: 2px solid rgba(201, 1, 54, 0.3);
+        border-radius: 12px;
+        padding: 1rem;
+        margin-bottom: 1.5rem;
+        color: var(--red);
+    }
+
+    .form-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1.5rem;
+    }
+
+    .form-group {
+        margin-bottom: 1.5rem;
+    }
+
+    .form-label {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-weight: 700;
+        color: var(--purple);
+        margin-bottom: 0.5rem;
+        font-size: 0.95rem;
+    }
+
+        .form-label i {
+            color: var(--teal);
+        }
+
+    .form-control {
+        width: 100%;
+        padding: 0.875rem 1rem;
+        border: 2px solid rgba(102, 126, 234, 0.2);
+        border-radius: 10px;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+        background: rgba(255, 255, 255, 0.8);
+        font-family: inherit;
+    }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--intense-blue);
+            box-shadow: 0 0 0 4px rgba(40, 47, 226, 0.1);
+            background: white;
+        }
+
+    textarea.form-control {
+        resize: vertical;
+        min-height: 100px;
+    }
+
+    .validation-message {
+        display: block;
+        color: var(--red);
+        font-size: 0.85rem;
+        margin-top: 0.5rem;
+        font-weight: 600;
+    }
+
+    .image-preview-section {
+        margin-bottom: 1.5rem;
+    }
+
+    .image-preview-container {
+        background: linear-gradient(135deg, rgba(102, 126, 234, 0.05), rgba(118, 75, 162, 0.05));
+        border: 2px dashed rgba(102, 126, 234, 0.3);
+        border-radius: 12px;
+        padding: 1.5rem;
+        text-align: center;
+        margin-top: 0.5rem;
+    }
+
+    .preview-image {
+        max-width: 200px;
+        max-height: 200px;
+        border-radius: 12px;
+        object-fit: cover;
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+    }
+
+    .status-toggle {
+        background: linear-gradient(135deg, rgba(102, 126, 234, 0.05), rgba(118, 75, 162, 0.05));
+        border: 2px solid rgba(102, 126, 234, 0.2);
+        border-radius: 12px;
+        padding: 1rem 1.25rem;
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+    }
+
+    .form-check-input {
+        width: 24px;
+        height: 24px;
+        cursor: pointer;
+        border: 2px solid var(--teal);
+    }
+
+        .form-check-input:checked {
+            background-color: var(--green);
+            border-color: var(--green);
+        }
+
+    .form-check-label {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-weight: 700;
+        color: var(--purple);
+        margin: 0;
+        cursor: pointer;
+        font-size: 1rem;
+    }
+
+        .form-check-label i {
+            font-size: 1.25rem;
+            color: var(--teal);
+        }
+
+    .form-actions {
+        display: flex;
+        gap: 1rem;
+        margin-top: 2rem;
+        padding-top: 2rem;
+        border-top: 2px solid rgba(102, 126, 234, 0.1);
+    }
+
+    .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        padding: 0.875rem 1.75rem;
+        border-radius: 10px;
+        font-weight: 700;
+        font-size: 1rem;
+        text-decoration: none;
+        border: none;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+    }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .btn:hover::before {
+            left: 100%;
+        }
+
+    .btn-primary {
+        background: linear-gradient(135deg, var(--blue), var(--cyan));
+        color: white;
+        box-shadow: 0 6px 20px rgba(46, 158, 232, 0.3);
+    }
+
+        .btn-primary:hover:not(:disabled) {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(46, 158, 232, 0.4);
+        }
+
+        .btn-primary:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+    .btn-secondary {
+        background: transparent;
+        color: var(--purple);
+        border: 2px solid rgba(39, 0, 66, 0.2);
+    }
+
+        .btn-secondary:hover:not(:disabled) {
+            background: rgba(39, 0, 66, 0.05);
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+    .spinner {
+        width: 16px;
+        height: 16px;
+        border: 2px solid rgba(255, 255, 255, 0.3);
+        border-top-color: white;
+        border-radius: 50%;
+        animation: spin 0.8s linear infinite;
+    }
+
+    @@keyframes spin {
+        to {
+            transform: rotate(360deg);
+        }
+    }
+
+    @@media (max-width: 768px) {
+        .update-doctor-root {
+            padding: 0;
+        }
+
+        .page-header {
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .header-content h1 {
+            font-size: 1.5rem;
+        }
+
+        .form-container {
+            padding: 1.5rem;
+        }
+
+        .form-row {
+            grid-template-columns: 1fr;
+            gap: 0;
+        }
+
+        .form-actions {
+            flex-direction: column;
+        }
+
+        .btn {
+            width: 100%;
+        }
+    }
+</style>
+
+@code {
+    [Parameter]
+    public int id { get; set; }
+
+    private UpdateDoctorDto? Doctor;
+    private string Message = string.Empty;
+    private string StatusClass = string.Empty;
+    private bool IsProcessing = false;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var response = await doctorService.GetForUpdate(id);
+        if (response.Success)
+        {
+            Doctor = response.Data;
+        }
+        else
+        {
+            Message = response.Message ?? "Failed to load doctor details.";
+            StatusClass = "danger";
+        }
+    }
+
+    private async Task HandleUpdateDoctor()
+    {
+        IsProcessing = true;
+        Message = string.Empty;
+
+        try
+        {
+            var response = await doctorService.Edit(id, Doctor);
+
+            if (response.Success)
+            {
+                Message = "Doctor updated successfully!";
+                StatusClass = "success";
+                await Task.Delay(1500);
+                BackToList();
+            }
+            else
+            {
+                Message = response.Message ?? "Failed to update doctor.";
+                StatusClass = "danger";
+            }
+        }
+        catch (Exception ex)
+        {
+            Message = $"Error updating doctor: {ex.Message}";
+            StatusClass = "danger";
+        }
+        finally
+        {
+            IsProcessing = false;
+        }
+    }
+
+    private void BackToList()
+    {
+        navManager.NavigateTo("/doctors/");
+    }
+}
