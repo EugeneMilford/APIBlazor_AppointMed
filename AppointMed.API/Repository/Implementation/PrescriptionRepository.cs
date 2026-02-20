@@ -29,7 +29,7 @@ namespace AppointMed.API.Repository.Implementation
                 .ToListAsync();
         }
 
-        public async Task<PrescriptionDto> GetPrescriptionDetailsAsync(int id)
+        public async Task<PrescriptionDto> GetPrescriptionAsync(int id)
         {
             return await context.Prescriptions
                 .Include(p => p.Medicine)
@@ -58,35 +58,46 @@ namespace AppointMed.API.Repository.Implementation
                 .ToListAsync();
         }
 
-        public async Task FulfillPrescriptionAsync(int prescriptionId, string userId)
+        public async Task FulfillPrescriptionAsync(int id)
         {
             var prescription = await context.Prescriptions
                 .Include(p => p.Medicine)
-                .FirstOrDefaultAsync(p => p.PrescriptionId == prescriptionId);
+                .FirstOrDefaultAsync(p => p.PrescriptionId == id);
 
-            if (prescription == null || prescription.IsFulfilled)
-                return;
+            if (prescription == null)
+                throw new InvalidOperationException("Prescription not found");
 
+            if (prescription.IsFulfilled)
+                throw new InvalidOperationException("Prescription is already fulfilled");
+
+            // Mark as fulfilled
             prescription.IsFulfilled = true;
             prescription.FulfilledDate = DateTime.UtcNow;
-            prescription.UpdatedAt = DateTime.UtcNow;
 
             // Get or create account
-            var account = await accountRepository.GetOrCreateAccountAsync(userId);
+            var account = await accountRepository.GetOrCreateAccountAsync(prescription.UserId);
 
             // Calculate total cost
-            decimal totalCost = prescription.Medicine.Price * prescription.Quantity;
+            decimal totalCost = (decimal)(prescription.Medicine.Price * prescription.Quantity);
 
             // Add transaction to account
             await accountRepository.AddTransactionAsync(
-                account.AccountId,
-                "Prescription",
-                totalCost,
-                $"{prescription.Medicine.Name} x{prescription.Quantity}",
-                prescriptionId: prescriptionId
+                accountId: account.AccountId,
+                transactionType: "Prescription",
+                amount: totalCost,
+                description: $"Prescription for {prescription.Medicine.Name} (x{prescription.Quantity})",
+                appointmentId: null,
+                prescriptionId: prescription.PrescriptionId
             );
 
             await context.SaveChangesAsync();
+        }
+
+        public async Task<List<Prescription>> GetPrescriptionEntitiesByAppointmentIdAsync(int appointmentId)
+        {
+            return await context.Prescriptions
+                .Where(p => p.AppointmentId == appointmentId)
+                .ToListAsync();
         }
     }
 }

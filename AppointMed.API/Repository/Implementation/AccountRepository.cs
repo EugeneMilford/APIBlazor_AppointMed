@@ -72,7 +72,7 @@ namespace AppointMed.API.Repository.Implementation
 
             context.AccountTransactions.Add(transaction);
 
-            // Updating account balance
+            // Update account balance
             var account = await context.Accounts.FindAsync(accountId);
             if (account != null)
             {
@@ -91,30 +91,9 @@ namespace AppointMed.API.Repository.Implementation
                 throw new InvalidOperationException($"Account {accountId} not found");
             }
 
-            // First, try to find transaction by appointmentId
+            // Find the original transaction for this appointment
             var originalTransaction = await context.AccountTransactions
                 .FirstOrDefaultAsync(t => t.AccountId == accountId && t.AppointmentId == appointmentId);
-
-            // If not found, try to find by description (fallback for old records)
-            if (originalTransaction == null)
-            {
-                // Get the appointment details to match description
-                var appointment = await context.Appointments.FindAsync(appointmentId);
-                if (appointment != null)
-                {
-                    // Try to find transaction by matching description pattern
-                    var transactions = await context.AccountTransactions
-                        .Where(t => t.AccountId == accountId &&
-                                   t.TransactionType == "Appointment" &&
-                                   t.AppointmentId == null &&
-                                   t.Amount == 200)
-                        .OrderByDescending(t => t.TransactionDate)
-                        .ToListAsync();
-
-                    // Take the most recent unlinked appointment transaction
-                    originalTransaction = transactions.FirstOrDefault();
-                }
-            }
 
             if (originalTransaction == null)
             {
@@ -122,13 +101,13 @@ namespace AppointMed.API.Repository.Implementation
                 return; // No transaction to refund
             }
 
-            Console.WriteLine($"Refunding transaction {originalTransaction.TransactionId} with amount {originalTransaction.Amount}");
+            Console.WriteLine($"Refunding appointment transaction {originalTransaction.TransactionId} with amount {originalTransaction.Amount}");
 
             // Deduct the amount from account balance (refund)
             account.Balance -= originalTransaction.Amount;
-            account.UpdatedAt = System.DateTime.UtcNow;
+            account.UpdatedAt = DateTime.UtcNow;
 
-            // Creating a reversal/refund transaction
+            // Create a reversal/refund transaction
             var refundTransaction = new AccountTransaction
             {
                 AccountId = accountId,
@@ -136,7 +115,46 @@ namespace AppointMed.API.Repository.Implementation
                 Amount = -originalTransaction.Amount,
                 Description = $"Refund for cancelled appointment #{appointmentId}",
                 AppointmentId = appointmentId,
-                TransactionDate = System.DateTime.UtcNow
+                TransactionDate = DateTime.UtcNow
+            };
+
+            context.AccountTransactions.Add(refundTransaction);
+            await context.SaveChangesAsync();
+        }
+
+        public async Task RefundPrescriptionAsync(int accountId, int prescriptionId)
+        {
+            var account = await context.Accounts.FindAsync(accountId);
+            if (account == null)
+            {
+                throw new InvalidOperationException($"Account {accountId} not found");
+            }
+
+            // Find the original transaction for this prescription
+            var originalTransaction = await context.AccountTransactions
+                .FirstOrDefaultAsync(t => t.AccountId == accountId && t.PrescriptionId == prescriptionId);
+
+            if (originalTransaction == null)
+            {
+                Console.WriteLine($"No transaction found for prescription {prescriptionId} in account {accountId}");
+                return; // No transaction to refund
+            }
+
+            Console.WriteLine($"Refunding prescription transaction {originalTransaction.TransactionId} with amount {originalTransaction.Amount}");
+
+            // Deduct the amount from account balance (refund)
+            account.Balance -= originalTransaction.Amount;
+            account.UpdatedAt = DateTime.UtcNow;
+
+            // Create a reversal/refund transaction
+            var refundTransaction = new AccountTransaction
+            {
+                AccountId = accountId,
+                TransactionType = "Refund",
+                Amount = -originalTransaction.Amount,
+                Description = $"Refund for cancelled prescription #{prescriptionId}",
+                PrescriptionId = prescriptionId,
+                TransactionDate = DateTime.UtcNow
             };
 
             context.AccountTransactions.Add(refundTransaction);

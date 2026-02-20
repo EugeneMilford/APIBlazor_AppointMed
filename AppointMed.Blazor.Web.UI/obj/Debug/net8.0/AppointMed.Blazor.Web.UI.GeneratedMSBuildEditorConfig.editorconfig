@@ -67,10 +67,6 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xEb2N0b3JzXERldGFpbHMucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Projects/AppointMed Project/AppointMed/AppointMed.Blazor.Web.UI/Components/Pages/Doctors/DoctorTable.razor]
-build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xEb2N0b3JzXERvY3RvclRhYmxlLnJhem9y
-build_metadata.AdditionalFiles.CssScope = 
-
 [D:/Projects/AppointMed Project/AppointMed/AppointMed.Blazor.Web.UI/Components/Pages/Doctors/Index.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xEb2N0b3JzXEluZGV4LnJhem9y
 build_metadata.AdditionalFiles.CssScope = 

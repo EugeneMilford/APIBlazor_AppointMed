@@ -3,7 +3,6 @@ using AppointMed.API.Repository.Interface;
 using AppointMed.API.Static;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Security.Claims;
 
 namespace AppointMed.API.Controllers
 {
@@ -32,7 +31,6 @@ namespace AppointMed.API.Controllers
                     return Unauthorized();
 
                 var account = await repository.GetAccountByUserIdAsync(userId);
-
                 if (account == null)
                 {
                     // Create account if it doesn't exist

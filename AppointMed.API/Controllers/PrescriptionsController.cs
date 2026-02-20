@@ -5,7 +5,6 @@ using AppointMed.API.Static;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Security.Claims;
 
 namespace AppointMed.API.Controllers
 {
@@ -15,12 +14,18 @@ namespace AppointMed.API.Controllers
     public class PrescriptionsController : ControllerBase
     {
         private readonly IPrescriptionRepository repository;
+        private readonly IAccountRepository accountRepository;
         private readonly IMapper mapper;
         private readonly ILogger<PrescriptionsController> logger;
 
-        public PrescriptionsController(IPrescriptionRepository repository, IMapper mapper, ILogger<PrescriptionsController> logger)
+        public PrescriptionsController(
+            IPrescriptionRepository repository,
+            IAccountRepository accountRepository,
+            IMapper mapper,
+            ILogger<PrescriptionsController> logger)
         {
             this.repository = repository;
+            this.accountRepository = accountRepository;
             this.mapper = mapper;
             this.logger = logger;
         }
@@ -68,7 +73,7 @@ namespace AppointMed.API.Controllers
         {
             try
             {
-                var prescription = await repository.GetPrescriptionDetailsAsync(id);
+                var prescription = await repository.GetPrescriptionAsync(id);
                 if (prescription == null)
                     return NotFound();
 
@@ -123,11 +128,11 @@ namespace AppointMed.API.Controllers
             {
                 var prescription = mapper.Map<Prescription>(prescriptionDto);
                 prescription.PrescribedDate = DateTime.UtcNow;
-                prescription.CreatedAt = DateTime.UtcNow;
+                prescription.IsFulfilled = false;
 
                 await repository.AddAsync(prescription);
 
-                var createdPrescription = await repository.GetPrescriptionDetailsAsync(prescription.PrescriptionId);
+                var createdPrescription = await repository.GetPrescriptionAsync(prescription.PrescriptionId);
                 return CreatedAtAction(nameof(GetPrescription), new { id = prescription.PrescriptionId }, createdPrescription);
             }
             catch (Exception ex)
@@ -143,7 +148,7 @@ namespace AppointMed.API.Controllers
         {
             try
             {
-                var prescription = await repository.GetPrescriptionDetailsAsync(id);
+                var prescription = await repository.GetPrescriptionAsync(id);
                 if (prescription == null)
                     return NotFound();
 
@@ -157,7 +162,7 @@ namespace AppointMed.API.Controllers
                 if (prescription.IsFulfilled)
                     return BadRequest("Prescription already fulfilled");
 
-                await repository.FulfillPrescriptionAsync(id, prescription.UserId);
+                await repository.FulfillPrescriptionAsync(id);
 
                 return Ok(new { message = "Prescription fulfilled successfully" });
             }
@@ -175,15 +180,28 @@ namespace AppointMed.API.Controllers
         {
             try
             {
-                if (!await repository.Exists(id))
+                var prescription = await repository.GetAsync(id);
+                if (prescription == null)
                     return NotFound();
 
+                // Only refund if prescription was fulfilled
+                if (prescription.IsFulfilled)
+                {
+                    // Get the user's account
+                    var account = await accountRepository.GetOrCreateAccountAsync(prescription.UserId);
+
+                    // Refund the prescription cost
+                    await accountRepository.RefundPrescriptionAsync(account.AccountId, id);
+                }
+
+                // Delete the prescription
                 await repository.DeleteAsync(id);
+
                 return NoContent();
             }
             catch (Exception ex)
             {
-                logger.LogError(ex, $"Error in {nameof(DeletePrescription)}");
+                logger.LogError(ex, $"Error in {nameof(DeletePrescription)}: {ex.Message}");
                 return StatusCode(500, Messages.Error500Message);
             }
         }

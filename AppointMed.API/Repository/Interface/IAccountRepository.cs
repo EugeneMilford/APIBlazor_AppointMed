@@ -9,6 +9,7 @@ namespace AppointMed.API.Repository.Interface
         Task<Account> GetOrCreateAccountAsync(string userId);
         Task<List<AccountTransactionDto>> GetTransactionsByAccountIdAsync(int accountId);
         Task AddTransactionAsync(int accountId, string transactionType, decimal amount, string description, int? appointmentId = null, int? prescriptionId = null);
-        Task RefundTransactionAsync(int accountId, int appointmentId); 
+        Task RefundTransactionAsync(int accountId, int appointmentId);
+        Task RefundPrescriptionAsync(int accountId, int prescriptionId); 
     }
 }

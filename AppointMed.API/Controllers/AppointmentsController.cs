@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using AppointMed.API.Models.Appointment;
@@ -11,8 +10,6 @@ using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using AppointMed.API.Repository.Interface;
 using AppointMed.API.Data;
-using System.Security.Claims;
-using AppointMed.API.Repository.Implementation;
 
 namespace AppointMed.API.Controllers
 {
@@ -23,17 +20,20 @@ namespace AppointMed.API.Controllers
     {
         private readonly IAppointmentRepository repository;
         private readonly IAccountRepository accountRepository;
+        private readonly IPrescriptionRepository prescriptionRepository;
         private readonly IMapper mapper;
         private readonly ILogger<AppointmentsController> logger;
 
         public AppointmentsController(
             IAppointmentRepository repository,
             IAccountRepository accountRepository,
+            IPrescriptionRepository prescriptionRepository,
             IMapper mapper,
             ILogger<AppointmentsController> logger)
         {
             this.repository = repository;
             this.accountRepository = accountRepository;
+            this.prescriptionRepository = prescriptionRepository;
             this.mapper = mapper;
             this.logger = logger;
         }
@@ -215,6 +215,7 @@ namespace AppointMed.API.Controllers
                 }
 
                 mapper.Map(appointmentDto, appointment);
+                appointment.UpdatedAt = DateTime.UtcNow;
 
                 try
                 {
@@ -241,8 +242,8 @@ namespace AppointMed.API.Controllers
             }
         }
 
+        // POST: api/Appointments
         [HttpPost]
-        [Authorize]
         public async Task<ActionResult<AppointmentDto>> PostAppointment(AddAppointmentDto addAppointmentDto)
         {
             try
@@ -257,24 +258,23 @@ namespace AppointMed.API.Controllers
                 // Create the appointment entity
                 var appointment = mapper.Map<Appointment>(addAppointmentDto);
                 appointment.UserId = userId;
-                appointment.CreatedAt = System.DateTime.UtcNow;
+                appointment.CreatedAt = DateTime.UtcNow;
 
-                // Adds to database
                 await repository.AddAsync(appointment);
 
-                //Get the created appointment as DTO 
                 var createdAppointmentDto = await repository.GetAppointmentAsync(appointment.AppointmentId);
 
                 // Get or create user account
                 var account = await accountRepository.GetOrCreateAccountAsync(userId);
 
-                //Create transaction with the appointment ID
+                // Create transaction with the appointment ID
                 await accountRepository.AddTransactionAsync(
                     accountId: account.AccountId,
                     transactionType: "Appointment",
                     amount: 200,
                     description: $"Appointment with {createdAppointmentDto.DoctorName} on {appointment.AppointmentDateTime:dd/MM/yyyy HH:mm}",
-                    appointmentId: createdAppointmentDto.AppointmentId  //Links the transaction
+                    appointmentId: createdAppointmentDto.AppointmentId,
+                    prescriptionId: null
                 );
 
                 return CreatedAtAction(
@@ -290,26 +290,50 @@ namespace AppointMed.API.Controllers
             }
         }
 
+        // DELETE: api/Appointments/5
         [HttpDelete("{id}")]
         [Authorize(Roles = "Administrator")]
         public async Task<IActionResult> DeleteAppointment(int id)
         {
-            var appointment = await repository.GetAsync(id);
-            if (appointment == null)
+            try
             {
-                return NotFound();
+                var appointment = await repository.GetAsync(id);
+                if (appointment == null)
+                {
+                    return NotFound();
+                }
+
+                // Get the user's account
+                var account = await accountRepository.GetOrCreateAccountAsync(appointment.UserId);
+
+                // STEP 1: Handle related prescriptions first
+                var prescriptions = await prescriptionRepository.GetPrescriptionEntitiesByAppointmentIdAsync(id);
+
+                foreach (var prescription in prescriptions)
+                {
+                    // Refund fulfilled prescriptions
+                    if (prescription.IsFulfilled)
+                    {
+                        await accountRepository.RefundPrescriptionAsync(account.AccountId, prescription.PrescriptionId);
+                    }
+
+                    // Delete the prescription
+                    await prescriptionRepository.DeleteAsync(prescription.PrescriptionId);
+                }
+
+                // STEP 2: Refund the appointment charge
+                await accountRepository.RefundTransactionAsync(account.AccountId, id);
+
+                // STEP 3: Now safe to delete the appointment
+                await repository.DeleteAsync(id);
+
+                return NoContent();
             }
-
-            // Gets the user's account
-            var account = await accountRepository.GetOrCreateAccountAsync(appointment.UserId);
-
-            // Refunds the R200 appointment charge
-            await accountRepository.RefundTransactionAsync(account.AccountId, id);
-
-            // Deletes the appointment
-            await repository.DeleteAsync(id);
-
-            return NoContent();
+            catch (Exception ex)
+            {
+                logger.LogError(ex, $"Error deleting appointment {id}: {ex.Message}");
+                return StatusCode(500, "An error occurred while deleting the appointment.");
+            }
         }
     }
 }

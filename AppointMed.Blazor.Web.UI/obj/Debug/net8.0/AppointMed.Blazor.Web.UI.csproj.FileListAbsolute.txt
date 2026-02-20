@@ -293,3 +293,4 @@ D:\Projects\AppointMed Project\AppointMed\AppointMed.Blazor.Web.UI\obj\Debug\net
 D:\Projects\AppointMed Project\AppointMed\AppointMed.Blazor.Web.UI\obj\Debug\net8.0\AppointMed.Blazor.Web.UI.pdb
 D:\Projects\AppointMed Project\AppointMed\AppointMed.Blazor.Web.UI\obj\Debug\net8.0\AppointMed.Blazor.Web.UI.genruntimeconfig.cache
 D:\Projects\AppointMed Project\AppointMed\AppointMed.Blazor.Web.UI\obj\Debug\net8.0\ref\AppointMed.Blazor.Web.UI.dll
+D:\Projects\AppointMed Project\AppointMed\AppointMed.Blazor.Web.UI\obj\Debug\net8.0\AppointMed.Blazor.Web.UI.sourcelink.json

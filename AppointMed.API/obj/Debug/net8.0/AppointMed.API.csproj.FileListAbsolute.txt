@@ -284,3 +284,4 @@ D:\Projects\AppointMed Project\AppointMed\AppointMed.API\obj\Debug\net8.0\refint
 D:\Projects\AppointMed Project\AppointMed\AppointMed.API\obj\Debug\net8.0\AppointMed.API.pdb
 D:\Projects\AppointMed Project\AppointMed\AppointMed.API\obj\Debug\net8.0\AppointMed.API.genruntimeconfig.cache
 D:\Projects\AppointMed Project\AppointMed\AppointMed.API\obj\Debug\net8.0\ref\AppointMed.API.dll
+D:\Projects\AppointMed Project\AppointMed\AppointMed.API\obj\Debug\net8.0\AppointMed.API.sourcelink.json

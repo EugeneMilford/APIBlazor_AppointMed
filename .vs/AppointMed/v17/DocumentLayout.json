@@ -1,7 +1,16 @@
 {
   "Version": 1,
   "WorkspaceRootPath": "D:\\Projects\\AppointMed Project\\AppointMed\\",
-  "Documents": [],
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{252FE43F-1A13-4645-85B8-7A6653E990EF}|AppointMed.Blazor.Web.UI\\AppointMed.Blazor.Web.UI.csproj|d:\\projects\\appointmed project\\appointmed\\appointmed.blazor.web.ui\\components\\pages\\doctors\\index.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{252FE43F-1A13-4645-85B8-7A6653E990EF}|AppointMed.Blazor.Web.UI\\AppointMed.Blazor.Web.UI.csproj|solutionrelative:appointmed.blazor.web.ui\\components\\pages\\doctors\\index.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{252FE43F-1A13-4645-85B8-7A6653E990EF}|AppointMed.Blazor.Web.UI\\AppointMed.Blazor.Web.UI.csproj|d:\\projects\\appointmed project\\appointmed\\appointmed.blazor.web.ui\\components\\_imports.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{252FE43F-1A13-4645-85B8-7A6653E990EF}|AppointMed.Blazor.Web.UI\\AppointMed.Blazor.Web.UI.csproj|solutionrelative:appointmed.blazor.web.ui\\components\\_imports.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    }
+  ],
   "DocumentGroupContainers": [
     {
       "Orientation": 0,
@@ -9,11 +18,37 @@
       "DocumentGroups": [
         {
           "DockedWidth": 27,
-          "SelectedChildIndex": -1,
+          "SelectedChildIndex": 1,
           "Children": [
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{d78612c7-9962-4b83-95d9-268046dad23a}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Index.razor",
+              "DocumentMoniker": "D:\\Projects\\AppointMed Project\\AppointMed\\AppointMed.Blazor.Web.UI\\Components\\Pages\\Doctors\\Index.razor",
+              "RelativeDocumentMoniker": "AppointMed.Blazor.Web.UI\\Components\\Pages\\Doctors\\Index.razor",
+              "ToolTip": "D:\\Projects\\AppointMed Project\\AppointMed\\AppointMed.Blazor.Web.UI\\Components\\Pages\\Doctors\\Index.razor",
+              "RelativeToolTip": "AppointMed.Blazor.Web.UI\\Components\\Pages\\Doctors\\Index.razor",
+              "ViewState": "AgIAAAkAAAAAAAAAAAAAABYAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-02-20T13:38:39.863Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "_Imports.razor",
+              "DocumentMoniker": "D:\\Projects\\AppointMed Project\\AppointMed\\AppointMed.Blazor.Web.UI\\Components\\_Imports.razor",
+              "RelativeDocumentMoniker": "AppointMed.Blazor.Web.UI\\Components\\_Imports.razor",
+              "ToolTip": "D:\\Projects\\AppointMed Project\\AppointMed\\AppointMed.Blazor.Web.UI\\Components\\_Imports.razor",
+              "RelativeToolTip": "AppointMed.Blazor.Web.UI\\Components\\_Imports.razor",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-02-20T13:34:36.62Z",
+              "EditorCaption": ""
             }
           ]
         },

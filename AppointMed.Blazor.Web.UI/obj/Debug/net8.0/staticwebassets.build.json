@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "ElA2ZWVS30Ao7uD8B90fiASZ58/vDAznfFv/Q2hOdBI=",
+  "Hash": "v0hoElmceST8tsbbhTRwfHv3izvtSm+CHetUhOAnKoY=",
   "Source": "AppointMed.Blazor.Web.UI",
   "BasePath": "_content/AppointMed.Blazor.Web.UI",
   "Mode": "Default",
@@ -85,8 +85,8 @@
       "RelatedAsset": "",
       "AssetTraitName": "",
       "AssetTraitValue": "",
-      "Fingerprint": "da95v2qkru",
-      "Integrity": "u9qEka1auR7E3rd3/8/j8hkQdSOYj9bRJ4nYiFDR1sE=",
+      "Fingerprint": "v5b7vqvy3h",
+      "Integrity": "Q8siP9SiZV8GNOzlkHETapY6R/XrhQbE90aAnlHmHFo=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\app.css"
@@ -167,7 +167,7 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "2591"
+          "Value": "2540"
         },
         {
           "Name": "Content-Type",
@@ -175,11 +175,11 @@
         },
         {
           "Name": "ETag",
-          "Value": "\"u9qEka1auR7E3rd3/8/j8hkQdSOYj9bRJ4nYiFDR1sE=\""
+          "Value": "\"Q8siP9SiZV8GNOzlkHETapY6R/XrhQbE90aAnlHmHFo=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Thu, 22 Jan 2026 12:23:26 GMT"
+          "Value": "Tue, 17 Feb 2026 10:13:02 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -189,12 +189,12 @@
       "EndpointProperties": [
         {
           "Name": "integrity",
-          "Value": "sha256-u9qEka1auR7E3rd3/8/j8hkQdSOYj9bRJ4nYiFDR1sE="
+          "Value": "sha256-Q8siP9SiZV8GNOzlkHETapY6R/XrhQbE90aAnlHmHFo="
         }
       ]
     },
     {
-      "Route": "app.da95v2qkru.css",
+      "Route": "app.v5b7vqvy3h.css",
       "AssetFile": "D:\\Projects\\AppointMed Project\\AppointMed\\AppointMed.Blazor.Web.UI\\wwwroot\\app.css",
       "Selectors": [],
       "ResponseHeaders": [
@@ -204,7 +204,7 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "2591"
+          "Value": "2540"
         },
         {
           "Name": "Content-Type",
@@ -212,11 +212,11 @@
         },
         {
           "Name": "ETag",
-          "Value": "\"u9qEka1auR7E3rd3/8/j8hkQdSOYj9bRJ4nYiFDR1sE=\""
+          "Value": "\"Q8siP9SiZV8GNOzlkHETapY6R/XrhQbE90aAnlHmHFo=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Thu, 22 Jan 2026 12:23:26 GMT"
+          "Value": "Tue, 17 Feb 2026 10:13:02 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -226,7 +226,7 @@
       "EndpointProperties": [
         {
           "Name": "fingerprint",
-          "Value": "da95v2qkru"
+          "Value": "v5b7vqvy3h"
         },
         {
           "Name": "label",
@@ -234,7 +234,7 @@
         },
         {
           "Name": "integrity",
-          "Value": "sha256-u9qEka1auR7E3rd3/8/j8hkQdSOYj9bRJ4nYiFDR1sE="
+          "Value": "sha256-Q8siP9SiZV8GNOzlkHETapY6R/XrhQbE90aAnlHmHFo="
         }
       ]
     },
@@ -261,7 +261,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Sun, 08 Feb 2026 11:55:57 GMT"
+          "Value": "Fri, 20 Feb 2026 12:19:55 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -298,7 +298,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Sun, 08 Feb 2026 11:55:57 GMT"
+          "Value": "Fri, 20 Feb 2026 12:19:55 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -335,7 +335,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Sun, 08 Feb 2026 11:55:57 GMT"
+          "Value": "Fri, 20 Feb 2026 12:19:55 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -380,7 +380,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Sun, 08 Feb 2026 11:55:57 GMT"
+          "Value": "Fri, 20 Feb 2026 12:19:55 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -425,7 +425,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Thu, 22 Jan 2026 12:23:26 GMT"
+          "Value": "Tue, 17 Feb 2026 10:13:02 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -470,7 +470,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Thu, 22 Jan 2026 12:23:26 GMT"
+          "Value": "Tue, 17 Feb 2026 10:13:02 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -507,7 +507,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Thu, 22 Jan 2026 12:23:26 GMT"
+          "Value": "Tue, 17 Feb 2026 10:13:02 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -552,7 +552,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Thu, 22 Jan 2026 12:23:26 GMT"
+          "Value": "Tue, 17 Feb 2026 10:13:02 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -589,7 +589,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Thu, 22 Jan 2026 12:23:26 GMT"
+          "Value": "Tue, 17 Feb 2026 10:13:02 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -634,7 +634,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Thu, 22 Jan 2026 12:23:26 GMT"
+          "Value": "Tue, 17 Feb 2026 10:13:02 GMT"
         },
         {
           "Name": "Cache-Control",

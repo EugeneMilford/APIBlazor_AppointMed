@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("AppointMed.API")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+ac488087f6eee2a66ae6b0740810ffed78152c37")]
 [assembly: System.Reflection.AssemblyProductAttribute("AppointMed.API")]
 [assembly: System.Reflection.AssemblyTitleAttribute("AppointMed.API")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
