@@ -403,18 +403,8 @@ Doctor (1) ──────< (N) Appointments
 
 ### JWT Token-Based Authentication
 
-AppointMed uses **JWT (JSON Web Token)** for secure, stateless authentication:
+AppointMed uses **JWT (JSON Web Token)** for secure, stateless authentication
 
-```csharp
-// Token contains encrypted claims
-{
-  "sub": "user-id-guid",
-  "email": "lisa.wilson@email.com",
-  "role": "User",
-  "firstName": "Lisa",
-  "lastName": "Wilson",
-  "exp": 1234567890  // Expiration timestamp
-}
 ```
 
 **Security Features:**
