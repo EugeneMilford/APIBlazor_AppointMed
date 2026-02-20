@@ -3,6 +3,70 @@
   "WorkspaceRootPath": "D:\\Projects\\AppointMed Project\\AppointMed\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{E6C59658-7FD1-44EF-9EAE-60678F426D21}|AppointMed.Tests\\AppointMed.Tests.csproj|d:\\projects\\appointmed project\\appointmed\\appointmed.tests\\frontendtests\\pages\\loginpagetests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E6C59658-7FD1-44EF-9EAE-60678F426D21}|AppointMed.Tests\\AppointMed.Tests.csproj|solutionrelative:appointmed.tests\\frontendtests\\pages\\loginpagetests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E6C59658-7FD1-44EF-9EAE-60678F426D21}|AppointMed.Tests\\AppointMed.Tests.csproj|d:\\projects\\appointmed project\\appointmed\\appointmed.tests\\frontendtests\\helpers\\datetimehelperstests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E6C59658-7FD1-44EF-9EAE-60678F426D21}|AppointMed.Tests\\AppointMed.Tests.csproj|solutionrelative:appointmed.tests\\frontendtests\\helpers\\datetimehelperstests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E6C59658-7FD1-44EF-9EAE-60678F426D21}|AppointMed.Tests\\AppointMed.Tests.csproj|d:\\projects\\appointmed project\\appointmed\\appointmed.tests\\frontendtests\\models\\medicinemodeltests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E6C59658-7FD1-44EF-9EAE-60678F426D21}|AppointMed.Tests\\AppointMed.Tests.csproj|solutionrelative:appointmed.tests\\frontendtests\\models\\medicinemodeltests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E6C59658-7FD1-44EF-9EAE-60678F426D21}|AppointMed.Tests\\AppointMed.Tests.csproj|d:\\projects\\appointmed project\\appointmed\\appointmed.tests\\frontendtests\\models\\appointmentmodeltests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E6C59658-7FD1-44EF-9EAE-60678F426D21}|AppointMed.Tests\\AppointMed.Tests.csproj|solutionrelative:appointmed.tests\\frontendtests\\models\\appointmentmodeltests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E6C59658-7FD1-44EF-9EAE-60678F426D21}|AppointMed.Tests\\AppointMed.Tests.csproj|d:\\projects\\appointmed project\\appointmed\\appointmed.tests\\frontendtests\\models\\doctormodeltests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E6C59658-7FD1-44EF-9EAE-60678F426D21}|AppointMed.Tests\\AppointMed.Tests.csproj|solutionrelative:appointmed.tests\\frontendtests\\models\\doctormodeltests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E6C59658-7FD1-44EF-9EAE-60678F426D21}|AppointMed.Tests\\AppointMed.Tests.csproj|d:\\projects\\appointmed project\\appointmed\\appointmed.tests\\frontendtests\\pages\\registrationpagetests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E6C59658-7FD1-44EF-9EAE-60678F426D21}|AppointMed.Tests\\AppointMed.Tests.csproj|solutionrelative:appointmed.tests\\frontendtests\\pages\\registrationpagetests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E6C59658-7FD1-44EF-9EAE-60678F426D21}|AppointMed.Tests\\AppointMed.Tests.csproj|d:\\projects\\appointmed project\\appointmed\\appointmed.tests\\frontendtests\\components\\doctorcardtests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E6C59658-7FD1-44EF-9EAE-60678F426D21}|AppointMed.Tests\\AppointMed.Tests.csproj|solutionrelative:appointmed.tests\\frontendtests\\components\\doctorcardtests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E6C59658-7FD1-44EF-9EAE-60678F426D21}|AppointMed.Tests\\AppointMed.Tests.csproj|d:\\projects\\appointmed project\\appointmed\\appointmed.tests\\frontendtests\\components\\navigationtests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E6C59658-7FD1-44EF-9EAE-60678F426D21}|AppointMed.Tests\\AppointMed.Tests.csproj|solutionrelative:appointmed.tests\\frontendtests\\components\\navigationtests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E6C59658-7FD1-44EF-9EAE-60678F426D21}|AppointMed.Tests\\AppointMed.Tests.csproj|d:\\projects\\appointmed project\\appointmed\\appointmed.tests\\backendtests\\authcontrollertests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E6C59658-7FD1-44EF-9EAE-60678F426D21}|AppointMed.Tests\\AppointMed.Tests.csproj|solutionrelative:appointmed.tests\\backendtests\\authcontrollertests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E6C59658-7FD1-44EF-9EAE-60678F426D21}|AppointMed.Tests\\AppointMed.Tests.csproj|d:\\projects\\appointmed project\\appointmed\\appointmed.tests\\backendtests\\appointmentscontrollertests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E6C59658-7FD1-44EF-9EAE-60678F426D21}|AppointMed.Tests\\AppointMed.Tests.csproj|solutionrelative:appointmed.tests\\backendtests\\appointmentscontrollertests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E6C59658-7FD1-44EF-9EAE-60678F426D21}|AppointMed.Tests\\AppointMed.Tests.csproj|d:\\projects\\appointmed project\\appointmed\\appointmed.tests\\frontendtests\\services\\apiclientservicetests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E6C59658-7FD1-44EF-9EAE-60678F426D21}|AppointMed.Tests\\AppointMed.Tests.csproj|solutionrelative:appointmed.tests\\frontendtests\\services\\apiclientservicetests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E6C59658-7FD1-44EF-9EAE-60678F426D21}|AppointMed.Tests\\AppointMed.Tests.csproj|d:\\projects\\appointmed project\\appointmed\\appointmed.tests\\frontendtests\\services\\authenticationservicetests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E6C59658-7FD1-44EF-9EAE-60678F426D21}|AppointMed.Tests\\AppointMed.Tests.csproj|solutionrelative:appointmed.tests\\frontendtests\\services\\authenticationservicetests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E6C59658-7FD1-44EF-9EAE-60678F426D21}|AppointMed.Tests\\AppointMed.Tests.csproj|d:\\projects\\appointmed project\\appointmed\\appointmed.tests\\backendtests\\medicinescontrollertests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E6C59658-7FD1-44EF-9EAE-60678F426D21}|AppointMed.Tests\\AppointMed.Tests.csproj|solutionrelative:appointmed.tests\\backendtests\\medicinescontrollertests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E6C59658-7FD1-44EF-9EAE-60678F426D21}|AppointMed.Tests\\AppointMed.Tests.csproj|d:\\projects\\appointmed project\\appointmed\\appointmed.tests\\backendtests\\doctorscontrollertests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E6C59658-7FD1-44EF-9EAE-60678F426D21}|AppointMed.Tests\\AppointMed.Tests.csproj|solutionrelative:appointmed.tests\\backendtests\\doctorscontrollertests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E6C59658-7FD1-44EF-9EAE-60678F426D21}|AppointMed.Tests\\AppointMed.Tests.csproj|d:\\projects\\appointmed project\\appointmed\\appointmed.tests\\backendtests\\prescriptionscontrollertests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E6C59658-7FD1-44EF-9EAE-60678F426D21}|AppointMed.Tests\\AppointMed.Tests.csproj|solutionrelative:appointmed.tests\\backendtests\\prescriptionscontrollertests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E6C59658-7FD1-44EF-9EAE-60678F426D21}|AppointMed.Tests\\AppointMed.Tests.csproj|d:\\projects\\appointmed project\\appointmed\\appointmed.tests\\appointmed.tests.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{E6C59658-7FD1-44EF-9EAE-60678F426D21}|AppointMed.Tests\\AppointMed.Tests.csproj|solutionrelative:appointmed.tests\\appointmed.tests.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{252FE43F-1A13-4645-85B8-7A6653E990EF}|AppointMed.Blazor.Web.UI\\AppointMed.Blazor.Web.UI.csproj|d:\\projects\\appointmed project\\appointmed\\appointmed.blazor.web.ui\\components\\pages\\doctors\\index.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{252FE43F-1A13-4645-85B8-7A6653E990EF}|AppointMed.Blazor.Web.UI\\AppointMed.Blazor.Web.UI.csproj|solutionrelative:appointmed.blazor.web.ui\\components\\pages\\doctors\\index.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
@@ -18,7 +82,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 27,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": 6,
           "Children": [
             {
               "$type": "Bookmark",
@@ -26,20 +90,228 @@
             },
             {
               "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "DateTimeHelpersTests.cs",
+              "DocumentMoniker": "D:\\Projects\\AppointMed Project\\AppointMed\\AppointMed.Tests\\FrontEndTests\\Helpers\\DateTimeHelpersTests.cs",
+              "RelativeDocumentMoniker": "AppointMed.Tests\\FrontEndTests\\Helpers\\DateTimeHelpersTests.cs",
+              "ToolTip": "D:\\Projects\\AppointMed Project\\AppointMed\\AppointMed.Tests\\FrontEndTests\\Helpers\\DateTimeHelpersTests.cs",
+              "RelativeToolTip": "AppointMed.Tests\\FrontEndTests\\Helpers\\DateTimeHelpersTests.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAFUAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-20T17:19:41.634Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "MedicineModelTests.cs",
+              "DocumentMoniker": "D:\\Projects\\AppointMed Project\\AppointMed\\AppointMed.Tests\\FrontEndTests\\Models\\MedicineModelTests.cs",
+              "RelativeDocumentMoniker": "AppointMed.Tests\\FrontEndTests\\Models\\MedicineModelTests.cs",
+              "ToolTip": "D:\\Projects\\AppointMed Project\\AppointMed\\AppointMed.Tests\\FrontEndTests\\Models\\MedicineModelTests.cs",
+              "RelativeToolTip": "AppointMed.Tests\\FrontEndTests\\Models\\MedicineModelTests.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAEIAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-20T17:18:44.793Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "AppointmentModelTests.cs",
+              "DocumentMoniker": "D:\\Projects\\AppointMed Project\\AppointMed\\AppointMed.Tests\\FrontEndTests\\Models\\AppointmentModelTests.cs",
+              "RelativeDocumentMoniker": "AppointMed.Tests\\FrontEndTests\\Models\\AppointmentModelTests.cs",
+              "ToolTip": "D:\\Projects\\AppointMed Project\\AppointMed\\AppointMed.Tests\\FrontEndTests\\Models\\AppointmentModelTests.cs",
+              "RelativeToolTip": "AppointMed.Tests\\FrontEndTests\\Models\\AppointmentModelTests.cs",
+              "ViewState": "AgIAADQAAAAAAAAAAAAuwFMAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-20T17:18:15.916Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "DoctorModelTests.cs",
+              "DocumentMoniker": "D:\\Projects\\AppointMed Project\\AppointMed\\AppointMed.Tests\\FrontEndTests\\Models\\DoctorModelTests.cs",
+              "RelativeDocumentMoniker": "AppointMed.Tests\\FrontEndTests\\Models\\DoctorModelTests.cs",
+              "ToolTip": "D:\\Projects\\AppointMed Project\\AppointMed\\AppointMed.Tests\\FrontEndTests\\Models\\DoctorModelTests.cs",
+              "RelativeToolTip": "AppointMed.Tests\\FrontEndTests\\Models\\DoctorModelTests.cs",
+              "ViewState": "AgIAACYAAAAAAAAAAAAqwEoAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-20T17:17:30.675Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "RegistrationPageTests.cs",
+              "DocumentMoniker": "D:\\Projects\\AppointMed Project\\AppointMed\\AppointMed.Tests\\FrontEndTests\\Pages\\RegistrationPageTests.cs",
+              "RelativeDocumentMoniker": "AppointMed.Tests\\FrontEndTests\\Pages\\RegistrationPageTests.cs",
+              "ToolTip": "D:\\Projects\\AppointMed Project\\AppointMed\\AppointMed.Tests\\FrontEndTests\\Pages\\RegistrationPageTests.cs",
+              "RelativeToolTip": "AppointMed.Tests\\FrontEndTests\\Pages\\RegistrationPageTests.cs",
+              "ViewState": "AgIAAC0AAAAAAAAAAAAqwFcAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-20T17:16:53.838Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
               "DocumentIndex": 0,
+              "Title": "LoginPageTests.cs",
+              "DocumentMoniker": "D:\\Projects\\AppointMed Project\\AppointMed\\AppointMed.Tests\\FrontEndTests\\Pages\\LoginPageTests.cs",
+              "RelativeDocumentMoniker": "AppointMed.Tests\\FrontEndTests\\Pages\\LoginPageTests.cs",
+              "ToolTip": "D:\\Projects\\AppointMed Project\\AppointMed\\AppointMed.Tests\\FrontEndTests\\Pages\\LoginPageTests.cs",
+              "RelativeToolTip": "AppointMed.Tests\\FrontEndTests\\Pages\\LoginPageTests.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAALUAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-20T17:16:24.296Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "DoctorCardTests.cs",
+              "DocumentMoniker": "D:\\Projects\\AppointMed Project\\AppointMed\\AppointMed.Tests\\FrontEndTests\\Components\\DoctorCardTests.cs",
+              "RelativeDocumentMoniker": "AppointMed.Tests\\FrontEndTests\\Components\\DoctorCardTests.cs",
+              "ToolTip": "D:\\Projects\\AppointMed Project\\AppointMed\\AppointMed.Tests\\FrontEndTests\\Components\\DoctorCardTests.cs",
+              "RelativeToolTip": "AppointMed.Tests\\FrontEndTests\\Components\\DoctorCardTests.cs",
+              "ViewState": "AgIAADsAAAAAAAAAAAAAAFEAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-20T17:15:25.498Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "NavigationTests.cs",
+              "DocumentMoniker": "D:\\Projects\\AppointMed Project\\AppointMed\\AppointMed.Tests\\FrontEndTests\\Components\\NavigationTests.cs",
+              "RelativeDocumentMoniker": "AppointMed.Tests\\FrontEndTests\\Components\\NavigationTests.cs",
+              "ToolTip": "D:\\Projects\\AppointMed Project\\AppointMed\\AppointMed.Tests\\FrontEndTests\\Components\\NavigationTests.cs",
+              "RelativeToolTip": "AppointMed.Tests\\FrontEndTests\\Components\\NavigationTests.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAJsAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-20T17:09:32.509Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "ApiClientServiceTests.cs",
+              "DocumentMoniker": "D:\\Projects\\AppointMed Project\\AppointMed\\AppointMed.Tests\\FrontEndTests\\Services\\ApiClientServiceTests.cs",
+              "RelativeDocumentMoniker": "AppointMed.Tests\\FrontEndTests\\Services\\ApiClientServiceTests.cs",
+              "ToolTip": "D:\\Projects\\AppointMed Project\\AppointMed\\AppointMed.Tests\\FrontEndTests\\Services\\ApiClientServiceTests.cs",
+              "RelativeToolTip": "AppointMed.Tests\\FrontEndTests\\Services\\ApiClientServiceTests.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAMAAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-20T17:07:44.407Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "AuthenticationServiceTests.cs",
+              "DocumentMoniker": "D:\\Projects\\AppointMed Project\\AppointMed\\AppointMed.Tests\\FrontEndTests\\Services\\AuthenticationServiceTests.cs",
+              "RelativeDocumentMoniker": "AppointMed.Tests\\FrontEndTests\\Services\\AuthenticationServiceTests.cs",
+              "ToolTip": "D:\\Projects\\AppointMed Project\\AppointMed\\AppointMed.Tests\\FrontEndTests\\Services\\AuthenticationServiceTests.cs",
+              "RelativeToolTip": "AppointMed.Tests\\FrontEndTests\\Services\\AuthenticationServiceTests.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAG8AAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-20T17:06:27.82Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "AppointmentsControllerTests.cs",
+              "DocumentMoniker": "D:\\Projects\\AppointMed Project\\AppointMed\\AppointMed.Tests\\BackEndTests\\AppointmentsControllerTests.cs",
+              "RelativeDocumentMoniker": "AppointMed.Tests\\BackEndTests\\AppointmentsControllerTests.cs",
+              "ToolTip": "D:\\Projects\\AppointMed Project\\AppointMed\\AppointMed.Tests\\BackEndTests\\AppointmentsControllerTests.cs",
+              "RelativeToolTip": "AppointMed.Tests\\BackEndTests\\AppointmentsControllerTests.cs",
+              "ViewState": "AgIAAFMAAAAAAAAAAAAewGgAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-20T16:41:22.625Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "AuthControllerTests.cs",
+              "DocumentMoniker": "D:\\Projects\\AppointMed Project\\AppointMed\\AppointMed.Tests\\BackEndTests\\AuthControllerTests.cs",
+              "RelativeDocumentMoniker": "AppointMed.Tests\\BackEndTests\\AuthControllerTests.cs",
+              "ToolTip": "D:\\Projects\\AppointMed Project\\AppointMed\\AppointMed.Tests\\BackEndTests\\AuthControllerTests.cs",
+              "RelativeToolTip": "AppointMed.Tests\\BackEndTests\\AuthControllerTests.cs",
+              "ViewState": "AgIAAFEAAAAAAAAAAAAYwFEAAAAMAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-20T15:43:59.535Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "MedicinesControllerTests.cs",
+              "DocumentMoniker": "D:\\Projects\\AppointMed Project\\AppointMed\\AppointMed.Tests\\BackEndTests\\MedicinesControllerTests.cs",
+              "RelativeDocumentMoniker": "AppointMed.Tests\\BackEndTests\\MedicinesControllerTests.cs",
+              "ToolTip": "D:\\Projects\\AppointMed Project\\AppointMed\\AppointMed.Tests\\BackEndTests\\MedicinesControllerTests.cs",
+              "RelativeToolTip": "AppointMed.Tests\\BackEndTests\\MedicinesControllerTests.cs",
+              "ViewState": "AgIAAAgBAAAAAAAAAAAuwCcBAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-20T16:38:33.258Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "DoctorsControllerTests.cs",
+              "DocumentMoniker": "D:\\Projects\\AppointMed Project\\AppointMed\\AppointMed.Tests\\BackEndTests\\DoctorsControllerTests.cs",
+              "RelativeDocumentMoniker": "AppointMed.Tests\\BackEndTests\\DoctorsControllerTests.cs",
+              "ToolTip": "D:\\Projects\\AppointMed Project\\AppointMed\\AppointMed.Tests\\BackEndTests\\DoctorsControllerTests.cs",
+              "RelativeToolTip": "AppointMed.Tests\\BackEndTests\\DoctorsControllerTests.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAOMAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-20T16:23:22.802Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "PrescriptionsControllerTests.cs",
+              "DocumentMoniker": "D:\\Projects\\AppointMed Project\\AppointMed\\AppointMed.Tests\\BackEndTests\\PrescriptionsControllerTests.cs",
+              "RelativeDocumentMoniker": "AppointMed.Tests\\BackEndTests\\PrescriptionsControllerTests.cs",
+              "ToolTip": "D:\\Projects\\AppointMed Project\\AppointMed\\AppointMed.Tests\\BackEndTests\\PrescriptionsControllerTests.cs",
+              "RelativeToolTip": "AppointMed.Tests\\BackEndTests\\PrescriptionsControllerTests.cs",
+              "ViewState": "AgIAAKAAAAAAAAAAAAAuwCQAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-20T16:18:42.099Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 15,
+              "Title": "AppointMed.Tests",
+              "DocumentMoniker": "D:\\Projects\\AppointMed Project\\AppointMed\\AppointMed.Tests\\AppointMed.Tests.csproj",
+              "RelativeDocumentMoniker": "AppointMed.Tests\\AppointMed.Tests.csproj",
+              "ToolTip": "D:\\Projects\\AppointMed Project\\AppointMed\\AppointMed.Tests\\AppointMed.Tests.csproj",
+              "RelativeToolTip": "AppointMed.Tests\\AppointMed.Tests.csproj",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABMAAAANAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2026-02-20T16:07:57.089Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 16,
               "Title": "Index.razor",
               "DocumentMoniker": "D:\\Projects\\AppointMed Project\\AppointMed\\AppointMed.Blazor.Web.UI\\Components\\Pages\\Doctors\\Index.razor",
               "RelativeDocumentMoniker": "AppointMed.Blazor.Web.UI\\Components\\Pages\\Doctors\\Index.razor",
               "ToolTip": "D:\\Projects\\AppointMed Project\\AppointMed\\AppointMed.Blazor.Web.UI\\Components\\Pages\\Doctors\\Index.razor",
               "RelativeToolTip": "AppointMed.Blazor.Web.UI\\Components\\Pages\\Doctors\\Index.razor",
-              "ViewState": "AgIAAAkAAAAAAAAAAAAAABYAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAACIAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
               "WhenOpened": "2026-02-20T13:38:39.863Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 17,
               "Title": "_Imports.razor",
               "DocumentMoniker": "D:\\Projects\\AppointMed Project\\AppointMed\\AppointMed.Blazor.Web.UI\\Components\\_Imports.razor",
               "RelativeDocumentMoniker": "AppointMed.Blazor.Web.UI\\Components\\_Imports.razor",

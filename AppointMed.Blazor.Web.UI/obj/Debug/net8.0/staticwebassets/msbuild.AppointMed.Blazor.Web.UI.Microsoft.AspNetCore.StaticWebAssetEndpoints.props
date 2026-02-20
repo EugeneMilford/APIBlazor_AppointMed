@@ -16,13 +16,13 @@
       <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\AppointMed.Blazor.Web.UI.uh6pthaase.bundle.scp.css'))</AssetFile>
       <Selectors><![CDATA[[]]]></Selectors>
       <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-3tEYwvmtuQ2XzaWO\u002BcgMIP9RJq4yNcarh4LCkburfcE="}]]]></EndpointProperties>
-      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"no-cache"},{"Name":"Content-Length","Value":"5931"},{"Name":"Content-Type","Value":"text/css"},{"Name":"ETag","Value":"\u00223tEYwvmtuQ2XzaWO\u002BcgMIP9RJq4yNcarh4LCkburfcE=\u0022"},{"Name":"Last-Modified","Value":"Fri, 20 Feb 2026 12:19:55 GMT"}]]]></ResponseHeaders>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"no-cache"},{"Name":"Content-Length","Value":"5931"},{"Name":"Content-Type","Value":"text/css"},{"Name":"ETag","Value":"\u00223tEYwvmtuQ2XzaWO\u002BcgMIP9RJq4yNcarh4LCkburfcE=\u0022"},{"Name":"Last-Modified","Value":"Fri, 20 Feb 2026 16:53:46 GMT"}]]]></ResponseHeaders>
     </StaticWebAssetEndpoint>
     <StaticWebAssetEndpoint Include="_content/AppointMed.Blazor.Web.UI/AppointMed.Blazor.Web.UI.uh6pthaase.bundle.scp.css">
       <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\AppointMed.Blazor.Web.UI.uh6pthaase.bundle.scp.css'))</AssetFile>
       <Selectors><![CDATA[[]]]></Selectors>
       <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"uh6pthaase"},{"Name":"integrity","Value":"sha256-3tEYwvmtuQ2XzaWO\u002BcgMIP9RJq4yNcarh4LCkburfcE="},{"Name":"label","Value":"_content/AppointMed.Blazor.Web.UI/AppointMed.Blazor.Web.UI.bundle.scp.css"}]]]></EndpointProperties>
-      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"5931"},{"Name":"Content-Type","Value":"text/css"},{"Name":"ETag","Value":"\u00223tEYwvmtuQ2XzaWO\u002BcgMIP9RJq4yNcarh4LCkburfcE=\u0022"},{"Name":"Last-Modified","Value":"Fri, 20 Feb 2026 12:19:55 GMT"}]]]></ResponseHeaders>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"5931"},{"Name":"Content-Type","Value":"text/css"},{"Name":"ETag","Value":"\u00223tEYwvmtuQ2XzaWO\u002BcgMIP9RJq4yNcarh4LCkburfcE=\u0022"},{"Name":"Last-Modified","Value":"Fri, 20 Feb 2026 16:53:46 GMT"}]]]></ResponseHeaders>
     </StaticWebAssetEndpoint>
     <StaticWebAssetEndpoint Include="_content/AppointMed.Blazor.Web.UI/bootstrap/bootstrap.min.bpk8xqwxhs.css">
       <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\bootstrap\bootstrap.min.css'))</AssetFile>
